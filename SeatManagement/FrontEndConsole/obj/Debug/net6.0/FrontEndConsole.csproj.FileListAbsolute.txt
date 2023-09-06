@@ -1,0 +1,15 @@
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\bin\Debug\net6.0\FrontEndConsole.exe
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\bin\Debug\net6.0\FrontEndConsole.deps.json
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\bin\Debug\net6.0\FrontEndConsole.runtimeconfig.json
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\bin\Debug\net6.0\FrontEndConsole.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\bin\Debug\net6.0\FrontEndConsole.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.csproj.AssemblyReference.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.AssemblyInfoInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.AssemblyInfo.cs
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.csproj.CoreCompileInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\refint\FrontEndConsole.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\FrontEndConsole.genruntimeconfig.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\FrontEndConsole\obj\Debug\net6.0\ref\FrontEndConsole.dll

@@ -1,0 +1,17 @@
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.csproj.AssemblyReference.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.AssemblyInfoInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.AssemblyInfo.cs
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.csproj.CoreCompileInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.exe
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.deps.json
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.runtimeconfig.json
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.csproj.CopyComplete
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\refint\SeatManagementConsole.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.genruntimeconfig.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\ref\SeatManagementConsole.dll

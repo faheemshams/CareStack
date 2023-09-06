@@ -1,0 +1,14 @@
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.csproj.AssemblyReference.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.AssemblyInfoInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.AssemblyInfo.cs
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.deps.json
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.runtimeconfig.json
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\refint\DataAccessLayer.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.genruntimeconfig.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\ref\DataAccessLayer.dll

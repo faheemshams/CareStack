@@ -1,0 +1,17 @@
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\bin\Debug\net6.0\BuisnessLayer.deps.json
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\bin\Debug\net6.0\BuisnessLayer.runtimeconfig.json
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\bin\Debug\net6.0\BuisnessLayer.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\bin\Debug\net6.0\BuisnessLayer.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\bin\Debug\net6.0\DataAccessLayer.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\bin\Debug\net6.0\DataAccessLayer.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.csproj.AssemblyReference.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.GeneratedMSBuildEditorConfig.editorconfig
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.AssemblyInfoInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.AssemblyInfo.cs
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.csproj.CoreCompileInputs.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.csproj.CopyComplete
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\refint\BuisnessLayer.dll
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.pdb
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\BuisnessLayer.genruntimeconfig.cache
+D:\.NET\.NET\MvcAug18\SeatManagement\BuisnessLayer\obj\Debug\net6.0\ref\BuisnessLayer.dll
