@@ -2492,11 +2492,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagement\\PresentationLayer.csproj",
+      "projectUniqueName": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagement\\PresentationLayer.csproj",
       "projectName": "PresentationLayer",
-      "projectPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagement\\PresentationLayer.csproj",
+      "projectPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagement\\PresentationLayer.csproj",
       "packagesPath": "C:\\Users\\muhammedfaheem\\.nuget\\packages\\",
-      "outputPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagement\\obj\\",
+      "outputPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagement\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2518,11 +2518,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\BuisnessLayer\\BuisnessLayer.csproj": {
-              "projectPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\BuisnessLayer\\BuisnessLayer.csproj"
+            "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\BuisnessLayer\\BuisnessLayer.csproj": {
+              "projectPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\BuisnessLayer\\BuisnessLayer.csproj"
             },
-            "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj": {
-              "projectPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj"
+            "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj": {
+              "projectPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj"
             }
           }
         }

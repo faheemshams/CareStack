@@ -3,6 +3,7 @@ using BuisnessLayer.ServiceInterfaces;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace BuisnessLayer.Services
 {

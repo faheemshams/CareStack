@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <script src="main.js" defer></script>
+    <title>Todo App</title>
+</head>
+
+<header>
+    <div class="navbar">CARENOTE</div>
+    </div>
+</header>
+
+<body>
+    <div class="container">
+        <div class="left-pane">
+            <h2>Task List</h2>
+            <hr>
+            <ul id="page-list"></ul>
+            <button id="create-page-btn">Add Task</button>
+        </div>
+        <div class="right-pane">
+            <h2>Task</h2>
+            <hr>
+            <div id="page-content"></div>
+        </div>
+    </div>
+    <div id="page-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Task</h2>
+            <input type="text" id="page-title" placeholder="Task Title">
+            <textarea id="page-text" placeholder="Task Description"></textarea>
+            <button id="save-page-btn">Save</button>
+            <button id="edit-page-btn" style="display: none;">Edit</button>
+            <button id="cancel-edit-btn" style="display: none;">Cancel Edit</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -30,9 +30,9 @@ namespace DataAccessLayer.Implementations
             }
         }
 
-        public IEnumerable<T> GetAllItems()
+        public IQueryable<T> GetAllItems()
         {
-            return appDbContext.Set<T>().ToArray();
+            return appDbContext.Set<T>();
         }
 
         public T GetItemById(int? id)

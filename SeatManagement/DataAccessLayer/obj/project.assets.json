@@ -2019,11 +2019,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj",
+      "projectUniqueName": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj",
       "projectName": "DataAccessLayer",
-      "projectPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj",
+      "projectPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\DataAccessLayer\\DataAccessLayer.csproj",
       "packagesPath": "C:\\Users\\muhammedfaheem\\.nuget\\packages\\",
-      "outputPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\DataAccessLayer\\obj\\",
+      "outputPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\DataAccessLayer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

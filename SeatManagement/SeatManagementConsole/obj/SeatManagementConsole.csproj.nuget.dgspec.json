@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj": {}
+    "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj": {}
   },
   "projects": {
-    "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj": {
+    "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj",
+        "projectUniqueName": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj",
         "projectName": "SeatManagementConsole",
-        "projectPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj",
+        "projectPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj",
         "packagesPath": "C:\\Users\\muhammedfaheem\\.nuget\\packages\\",
-        "outputPath": "D:\\.NET\\.NET\\MvcAug18\\SeatManagement\\SeatManagementConsole\\obj\\",
+        "outputPath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagementConsole\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
