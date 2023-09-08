@@ -67,7 +67,12 @@
                         }
                         break;
 
-                    case "7":/*
+                    case "7":
+                        
+                        
+                        
+                        
+                        /*
                         Console.WriteLine("Generate Report For \n1.AllocatedSeat\n2.UnAllocatedSeat\n");
                         int input = Convert.ToInt32(Console.ReadLine());
                         if (input == 1)

@@ -15,3 +15,11 @@ D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\refi
 D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.pdb
 D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.genruntimeconfig.cache
 D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\ref\SeatManagementConsole.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.csproj.AssemblyReference.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.AssemblyInfoInputs.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.AssemblyInfo.cs
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.csproj.CoreCompileInputs.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\refint\SeatManagementConsole.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.pdb

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SeatManagementConsole.Interfaces;
+using SeatManagementConsole.Dto.ReportDto;
+using SeatManagementConsole.Implementation;
 
 namespace SeatManagementConsole
 {
@@ -10,7 +8,7 @@ namespace SeatManagementConsole
     {
         public void Allocatedreport()
         {
-            IAllocationManagerApi<AllocatedSeat> Allocatedreport = new SeatManagementAPICall<AllocatedSeat>("Allocated");
+            IAllocationManagerApi<OpenRoomView> Allocatedreport = new SeatManagementAPICall<OpenRoomView>("OpenRoomView");
             var report = Allocatedreport.GetData();
             Console.WriteLine("Allocated Seats:\n");
             if (report != null)

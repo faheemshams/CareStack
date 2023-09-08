@@ -5,6 +5,8 @@ using DataAccessLayer.Entities;
 using DataAccessLayer.Implementations;
 using BuisnessLayer.ServiceInterfaces;
 using BuisnessLayer.Services;
+using BuisnessLayer.ReportImplementations;
+using DataAccessLayer.Dto.ReportDto;
 
 namespace PresentationLayer
 {
@@ -45,6 +47,8 @@ namespace PresentationLayer
             builder.Services.AddScoped<IService<OpenRoomSeatMap>, EmployeeAllocationService<OpenRoomSeatMap>>();
             builder.Services.AddScoped<IService<CabinRoom>, CabinService<CabinRoom>>();
             builder.Services.AddScoped<IService<MeetingRoom>, MeetingRoomService<MeetingRoom>>();
+
+            builder.Services.AddScoped<IReport<OpenRoomView>, OpenRoomSeatReport<OpenRoomView>>();
 
 
             var app = builder.Build();

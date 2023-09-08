@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BuisnessLayer.ReportImplementations
 {
-    public class OpenRoomSeatReport<T> : IReport<OpenRoomSeatAllocationDto>
+    public class OpenRoomSeatReport<T> : IReport<OpenRoomView>
     {
         private readonly IRepository<OpenRoomSeatMap> _openRoomSeatMapRepository;
 
@@ -20,7 +20,7 @@ namespace BuisnessLayer.ReportImplementations
             this._openRoomSeatMapRepository = _openRoomSeatMapRepository;
         }
 
-        public OpenRoomSeatAllocationDto[] GetView()
+        public OpenRoomView[] GetView()
         {
             var item = _openRoomSeatMapRepository.GetAllItems()
                .Include(x => x.OpenRoom)
@@ -28,7 +28,7 @@ namespace BuisnessLayer.ReportImplementations
                .Include(x => x.OpenRoom.Facilities.City)
                .Include(x => x.OpenRoom.Facilities.Building)
                .Include(x => x.Employee)
-               .Select(x => new OpenRoomSeatAllocationDto
+               .Select(x => new OpenRoomView
                {
                    SeatNumber = x.SeatNumber,
                    EmployeeId = x.EmployeeId,

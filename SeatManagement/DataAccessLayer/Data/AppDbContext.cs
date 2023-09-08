@@ -1,4 +1,5 @@
-﻿using DataAccessLayer.Entities;
+﻿using DataAccessLayer.Dto.ReportDto;
+using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.Data

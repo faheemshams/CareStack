@@ -12,3 +12,17 @@ D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\refint\Dat
 D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.pdb
 D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.genruntimeconfig.cache
 D:\.NET\.NET\MvcAug18\SeatManagement\DataAccessLayer\obj\Debug\net6.0\ref\DataAccessLayer.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.deps.json
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.runtimeconfig.json
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\bin\Debug\net6.0\DataAccessLayer.pdb
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.AssemblyInfoInputs.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.AssemblyInfo.cs
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\refint\DataAccessLayer.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.pdb
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\DataAccessLayer.genruntimeconfig.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\DataAccessLayer\obj\Debug\net6.0\ref\DataAccessLayer.dll

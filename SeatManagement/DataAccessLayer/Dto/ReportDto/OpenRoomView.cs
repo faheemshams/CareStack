@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Dto.ReportDto
 {
-    public class OpenRoomSeatAllocationDto
+    public class OpenRoomView
     {
         public int SeatNumber { get; set; }
         public int? EmployeeId { get; set; }
