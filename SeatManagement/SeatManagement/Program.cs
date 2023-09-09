@@ -7,6 +7,7 @@ using BuisnessLayer.ServiceInterfaces;
 using BuisnessLayer.Services;
 using BuisnessLayer.ReportImplementations;
 using DataAccessLayer.Dto.ReportDto;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer
 {
@@ -36,15 +37,15 @@ namespace PresentationLayer
             builder.Services.AddScoped<IRepository<LookupAsset>, SqlRepository<LookupAsset>>();
             builder.Services.AddScoped<IRepository<MeetingRoom>, SqlRepository<MeetingRoom>>();
             builder.Services.AddScoped<IRepository<OpenRoom>, SqlRepository<OpenRoom>>();
-            builder.Services.AddScoped<IRepository<OpenRoomSeatMap>, SqlRepository<OpenRoomSeatMap>>();
+            builder.Services.AddScoped<IRepository<OpenRoomSeatAllocation>, SqlRepository<OpenRoomSeatAllocation>>();
 
-            builder.Services.AddScoped<IService<City>, CityService<City>>();
-            builder.Services.AddScoped<IService<Building>, BuildingService<Building>>();
-            builder.Services.AddScoped<IService<Facility>, FacilityService<Facility>>();
-            builder.Services.AddScoped<IService<OpenRoom>, OpenRoomService<OpenRoom>>();
-            builder.Services.AddScoped<IService<CabinRoom>, CabinRoomService<CabinRoom>>();
-            builder.Services.AddScoped<IService<Employee>, EmployeeService<Employee>>();
-            builder.Services.AddScoped<IService<OpenRoomSeatMap>, EmployeeAllocationService<OpenRoomSeatMap>>();
+            builder.Services.AddScoped<IService<CityDto, City>, CityService<CityDto, City>>();
+            builder.Services.AddScoped<IService<BuildingDto, Building>, BuildingService<BuildingDto, Building>>();
+            builder.Services.AddScoped<IService<FacilityDto, Facility>, FacilityService<FacilityDto, Facility>>();
+            builder.Services.AddScoped<IService<OpenRoomDto, OpenRoom>, OpenRoomService<OpenRoomDto, OpenRoom>>();
+            builder.Services.AddScoped<IService<CabinRoomDto, CabinRoom>, CabinRoomService<CabinRoomDto, CabinRoom>>();
+            builder.Services.AddScoped<IService<EmployeeDto, Employee>, EmployeeService<EmployeeDto, Employee>>();
+            builder.Services.AddScoped<IService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation>, OpenRoomSeatAllocationService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation>>();
             builder.Services.AddScoped<IService<CabinRoom>, CabinService<CabinRoom>>();
             builder.Services.AddScoped<IService<MeetingRoom>, MeetingRoomService<MeetingRoom>>();
 

@@ -2,7 +2,7 @@
 using DataAccessLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer.Data
+namespace DataAccessLayer.Context
 {
     public class AppDbContext : DbContext
     {
@@ -21,7 +21,7 @@ namespace DataAccessLayer.Data
         public DbSet<LookupAsset> LookupAssets { get; set; }
         public DbSet<MeetingRoom> MeetingRooms { get; set; }
         public DbSet<OpenRoom> OpenRooms { get; set; }
-        public DbSet<OpenRoomSeatMap> OpenRoomSeatMaps { get; set; }
+        public DbSet<OpenRoomSeatAllocation> OpenRoomSeatMaps { get; set; }
         public DbSet<LookupRoomType> LookupRoomsType { get; set;}
     }
 }

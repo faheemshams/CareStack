@@ -3,7 +3,7 @@ using BuisnessLayer.ServiceInterfaces;
 
 using Microsoft.AspNetCore.Mvc;
 using System;
-using DataAccessLayer.Dto;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
 {
@@ -56,11 +56,11 @@ namespace PresentationLayer.Controllers
             try
             {
                 if (meetingRoomDto == null)
-                    return BadRequest();
+                return BadRequest();
 
                 MeetingRoom meetingRoom = new MeetingRoom()
                 {
-                    MeetingRoomName = meetingRoomDto.MeetingRoomName,
+                    MeetingRoomName = meetingRoomDto.MeetingRoomNumber,
                     SeatCount = meetingRoomDto.SeatCount,
                     FacilityId = meetingRoomDto.FacilityId,
                 };
@@ -88,7 +88,7 @@ namespace PresentationLayer.Controllers
             MeetingRoom meetingRoom = new MeetingRoom()
             {
                 MeetingRoomId = id,
-                MeetingRoomName = meetingRoomDto.MeetingRoomName,
+                MeetingRoomName = meetingRoomDto.MeetingRoomNumber,
                 SeatCount = meetingRoomDto.SeatCount,
                 FacilityId = meetingRoomDto.FacilityId,
             };

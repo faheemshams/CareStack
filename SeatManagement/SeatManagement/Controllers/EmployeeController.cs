@@ -35,6 +35,14 @@ namespace PresentationLayer.Controllers
         [HttpGet("{id:int}")]
         public IActionResult GetEmployee(int id)
         {
+            if (int.TryParse(EmployeeId, out int id))
+            {
+
+            }
+            else
+                return null;
+
+
             try
             {
                 var employee = _employeeService.GetItemById(id);

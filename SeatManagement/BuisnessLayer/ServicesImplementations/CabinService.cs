@@ -1,10 +1,11 @@
 ﻿using DataAccessLayer.Entities;
 using BuisnessLayer.ServiceInterfaces;
 using DataAccessLayer.Interfaces;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace BuisnessLayer.Services
 {
-    public class CabinService<T> : IService<CabinRoom>
+    public class CabinService<Tin, Tout> : IService<CabinRoomDto, CabinRoom>
     {
         private readonly IRepository<CabinRoom> _cabinRepository;
         private readonly IRepository<Employee> _employeeRepository;
@@ -20,52 +21,59 @@ namespace BuisnessLayer.Services
             return _cabinRepository.GetAllItems().ToArray();
         }
 
-        public CabinRoom GetItemById(int id)
+        public CabinRoom GetItem(string cabinNumber)
         {
-            return _cabinRepository.GetItemById(id);
+            return _cabinRepository.GetAllItems().FirstOrDefault(x => x.CabinNumber == cabinNumber);
         }
 
-        public CabinRoom AddItem(CabinRoom cabin)
+        public CabinRoom AddItem(CabinRoomDto cabin)
         {
             if (cabin == null)
             return null;
 
-            cabin.EmployeeId = null;
+            int cabinRoomCount =  _cabinRepository.GetAllItems().Where(x => x.FacilityId == cabin.FacilityId).ToArray().Length;
 
-            _cabinRepository.AddItem(cabin);
-            return cabin;
+            CabinRoom newCabin = new CabinRoom()
+            {
+                CabinNumber = string.Format("C{0:D3}", cabinRoomCount + 1),
+                EmployeeId = null
+            };
+
+            _cabinRepository.AddItem(newCabin);
+            return newCabin;
         }
 
-        public CabinRoom DeleteItem(int id)
+        public CabinRoom DeleteItem(string id)
         {
-            var cabin = _cabinRepository.GetItemById(id);
-
+            /*var cabin = _cabinRepository.GetItemById(id);
+            
             if (cabin == null)
-                return null;
+            return null;
+
+            var employee = _employeeRepository.GetItemById(cabin.EmployeeId);
+            employee.RoomTypeId = 1;
 
             _cabinRepository.DeleteItem(id);
-            return cabin;
+            _employeeRepository.UpdateItem(employee);
+            return cabin;*/
+            return null;
         }
 
-        public CabinRoom UpdateItem(CabinRoom newCabin)
+        public CabinRoom UpdateItem(CabinRoomDto cabinDto)
         {
-            var existingCabin = _cabinRepository.GetItemById(newCabin.CabinId);
-            var existingEmployee = _employeeRepository.GetItemById(newCabin.EmployeeId);
+            var cabin = _cabinRepository.GetAllItems().FirstOrDefault(x => x.CabinNumber == cabinDto.CabinNumber);
+            var existingEmployee = _employeeRepository.GetItemById(cabinDto.EmployeeId);
 
-            if (existingCabin == null || existingEmployee == null)
-            {
-                return null;
-            }
+            if (cabin == null)
+            return null;
 
-            existingCabin.CabinName = newCabin.CabinName;
-            existingCabin.FacilityId = newCabin.FacilityId; 
-            existingCabin.EmployeeId = newCabin.EmployeeId;
+            cabin.EmployeeId = cabinDto.EmployeeId;
             existingEmployee.RoomTypeId = 3;
 
-            _cabinRepository.UpdateItem(existingCabin);
+            _cabinRepository.UpdateItem(cabin);
             _employeeRepository.UpdateItem(existingEmployee);   
            
-            return newCabin;
+            return cabin;
         }
     }
 }

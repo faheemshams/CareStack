@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Dto
+namespace DataAccessLayer.Dto.ServiceDto
 {
-    public class CreateCabinRoomDto
+    public class OpenRoomDto
     {
-        public string CabinName { get; set; }
+        public string OpenRoomName { get; set; }
+        public int SeatCount { get; set; }
         public int FacilityId { get; set; }
     }
 }

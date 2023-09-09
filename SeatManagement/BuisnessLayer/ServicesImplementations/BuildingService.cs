@@ -5,10 +5,11 @@ using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace BuisnessLayer.Services
 {
-    public class BuildingService<T> : IService<Building>
+    public class BuildingService<Tin, Tout> : IService<BuildingDto, Building>
     {
         private readonly IRepository<Building> _buildingRepository;
         public BuildingService(IRepository<Building> _repository)
@@ -20,49 +21,56 @@ namespace BuisnessLayer.Services
             return _buildingRepository.GetAllItems().ToArray();
         }
 
-        public Building GetItemById(int id)
+        public Building GetItem(string buildingAbbreviation)
         {
-            return _buildingRepository.GetItemById(id);
+            var building = _buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingAbbreviation == buildingAbbreviation);
+
+            if (building != null)
+            return null;
+
+            return _buildingRepository.GetItemById(building.BuildingId);
         }
 
-        public Building AddItem(Building building)
+        public Building AddItem(BuildingDto building)
         {
-            Building[] buildings = _buildingRepository.GetAllItems().ToArray();
+            var existingBuilding = _buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingAbbreviation == building.BuildingAbbreviation);
 
-            for (int i = 0; i < buildings.Length; i++)
+            if (existingBuilding != null)
+            return null;
+
+            Building newBuilding = new Building()
             {
-                if (buildings[i].BuildingAbbreviation.Equals(building.BuildingAbbreviation))
-                    return null;
-            }
+                BuildingAbbreviation = building.BuildingAbbreviation,
+                BuildingName = building.BuildingName,
+            };
 
-            _buildingRepository.AddItem(building);
-            return building;
+            _buildingRepository.AddItem(newBuilding);
+            return newBuilding;
         }
 
-        public Building DeleteItem(int id)
+        public Building DeleteItem(string buildingAbbreviation)
         {
-            var city = _buildingRepository.GetItemById(id);
-
-            if (city == null)
-                return null;
-
-            _buildingRepository.DeleteItem(id);
-            return city;
-        }
-
-        public Building UpdateItem(Building newBuilding)
-        {
-            var existingBuilding = _buildingRepository.GetItemById(newBuilding.BuildingId);
+            var existingBuilding = _buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingAbbreviation == buildingAbbreviation);
 
             if (existingBuilding == null)
-            {
-                return null;
-            }
+            return null;
 
-            existingBuilding.BuildingName = newBuilding.BuildingName;
-            existingBuilding.BuildingAbbreviation = newBuilding.BuildingAbbreviation;
+            _buildingRepository.DeleteItem(existingBuilding.BuildingId);
+            return existingBuilding;
+        }
+
+        public Building UpdateItem(BuildingDto buildingDto)
+        {
+            var existingBuilding = _buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingAbbreviation == buildingDto.BuildingAbbreviation);
+
+            if (existingBuilding == null)
+            return null;
+
+            existingBuilding.BuildingName = buildingDto.BuildingName;
+            existingBuilding.BuildingAbbreviation = buildingDto.BuildingAbbreviation;
+            
             _buildingRepository.UpdateItem(existingBuilding);
-            return newBuilding;
+            return existingBuilding;
         }
     }
 }

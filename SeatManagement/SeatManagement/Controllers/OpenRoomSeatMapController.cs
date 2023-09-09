@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using DataAccessLayer.Entities; 
-using BuisnessLayer.ServiceInterfaces; 
-using DataAccessLayer.Dto; 
+using DataAccessLayer.Entities;
+using BuisnessLayer.ServiceInterfaces;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
 {
@@ -11,9 +11,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class OpenRoomSeatMapController : ControllerBase
     {
-        private readonly IService<OpenRoomSeatMap> _employeeAllocation;
+        private readonly IService<OpenRoomSeatAllocation> _employeeAllocation;
 
-        public OpenRoomSeatMapController(IService<OpenRoomSeatMap> _employeeAllocation)
+        public OpenRoomSeatMapController(IService<OpenRoomSeatAllocation> _employeeAllocation)
         {
             this._employeeAllocation = _employeeAllocation;
         }
@@ -50,35 +50,6 @@ namespace PresentationLayer.Controllers
             }
         }
 
-       /* [HttpPost]
-        public IActionResult AllocateOpenRoomSeat(OpenRoomSeatAllocationDto openRoomSeatMapDto)
-        {
-            try
-            {
-                if (openRoomSeatMapDto == null)
-                return BadRequest();
-
-                var openRoomSeat = new OpenRoomSeatMap
-                {
-                    SeatNumber = openRoomSeatMapDto.SeatNumber,
-                    OpenRoomId = openRoomSeatMapDto.OpenRoomId,
-                    EmployeeId = openRoomSeatMapDto.EmployeeId
-                };  
-
-                var createdSeatCheck = _employeeAllocation.AddItem(openRoomSeat);
-
-                if (createdSeatCheck == null)
-                return StatusCode(500, "Cannot allocate seat");
-
-                return Ok(createdSeatCheck);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error allocating open seat");
-            }
-        }
-       */
-
         [HttpPut("{id:int}")]
         public IActionResult UpdateOpenRoomSeatMap(int id, OpenRoomSeatAllocationDto openRoomSeatMapDto)
         {
@@ -90,7 +61,7 @@ namespace PresentationLayer.Controllers
                 var existingAllocatedSeat = _employeeAllocation.GetItemById(id);
 
                 if (existingAllocatedSeat == null)
-                    return NotFound("No allocated seat found");
+                return NotFound("Seat doesn't exist");
 
                 existingAllocatedSeat.SeatNumber = openRoomSeatMapDto.SeatNumber;
                 existingAllocatedSeat.OpenRoomId = openRoomSeatMapDto.OpenRoomId;

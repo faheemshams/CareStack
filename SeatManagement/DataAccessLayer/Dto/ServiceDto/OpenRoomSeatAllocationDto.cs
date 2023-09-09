@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.Dto
+namespace DataAccessLayer.Dto.ServiceDto
 {
     public class OpenRoomSeatAllocationDto
     {
-        public int SeatNumber { get; set; } 
-        public int OpenRoomId { get; set; } 
-        public int EmployeeId { get; set; } 
+        public string SeatNumber { get; set; }
+        public int OpenRoomId { get; set; }
+        public int EmployeeId { get; set; }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using BuisnessLayer.ServiceInterfaces;
+using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 
 namespace BuisnessLayer.Services
 {
-    public class EmployeeService<T> : IService<Employee>
+    public class EmployeeService<Tin, Tout> : IService<EmployeeDto, Employee>
     {
         private readonly IRepository<Employee> _employeeRepository;
 
@@ -18,19 +19,33 @@ namespace BuisnessLayer.Services
             return _employeeRepository.GetAllItems().ToArray();
         }
 
-        public Employee GetItemById(int id)
+        public Employee GetItem(string employeeId)
         {
+            if (int.TryParse(employeeId, out int id))
             return _employeeRepository.GetItemById(id);
+            else
+            return null;
         }
 
-        public Employee AddItem(Employee employee)
+        public Employee AddItem(EmployeeDto employeeDto)
         {
+            if (employeeDto == null)
+            return null;
+
+            Employee employee = new Employee()
+            {
+                EmployeeName = employeeDto.EmployeeName,
+                DeptId = employeeDto.DeptId,
+                RoomTypeId = 1                   //default value -> not allocated to any room
+            };
+                                
             _employeeRepository.AddItem(employee);
             return employee;
         }
 
-        public Employee DeleteItem(int id)
+        public Employee DeleteItem(string id)
         {
+            /*refactor 
             var employee = _employeeRepository.GetItemById(id);
 
             if (employee == null)
@@ -38,22 +53,23 @@ namespace BuisnessLayer.Services
 
             _employeeRepository.DeleteItem(id);
             return employee;
+            */
+            return null;
         }
 
-        public Employee UpdateItem(Employee newEmployee)
+        public Employee UpdateItem(EmployeeDto employeeDto)
         {
-            var existingEmployee = _employeeRepository.GetItemById(newEmployee.EmployeeId);
+            var employee = _employeeRepository.GetItemById(employeeDto.EmployeeId);
 
-            if (existingEmployee == null)
-            {
-                return null;
-            }
+            if (employee == null)
+            return null;
 
-            existingEmployee.EmployeeName = newEmployee.EmployeeName;
-            existingEmployee.RoomTypeId = newEmployee.RoomTypeId;
-            existingEmployee.DeptId = newEmployee.DeptId;
-            _employeeRepository.UpdateItem(existingEmployee);
-            return newEmployee;
+            employee.EmployeeName = employeeDto.EmployeeName;
+            employee.DeptId = employeeDto.DeptId;
+            //existingEmployee.RoomTypeId = newEmployee.RoomTypeId;            need to change allocation too
+
+            _employeeRepository.UpdateItem(employee);
+            return employee;
         }
     }
 }

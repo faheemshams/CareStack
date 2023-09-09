@@ -8,7 +8,7 @@ namespace DataAccessLayer.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MeetingRoomId { get; set; }
-        public string MeetingRoomName { get; set; }
+        public string MeetingRoomNumber { get; set; }
         public int SeatCount { get; set; }
         [ForeignKey("Facility")]
         public int FacilityId { get; set; }

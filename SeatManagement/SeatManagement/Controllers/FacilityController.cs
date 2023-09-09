@@ -2,7 +2,7 @@
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using BuisnessLayer.ServiceInterfaces;
-using DataAccessLayer.Dto;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
 {

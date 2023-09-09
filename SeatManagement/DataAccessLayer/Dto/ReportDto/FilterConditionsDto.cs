@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Dto.ReportDto
 {
-    public class FilterDto
+    public class FilterConditionsDto
     {
         public String[] SeatType { get; set; }
         public String[] Locations { get; set; }

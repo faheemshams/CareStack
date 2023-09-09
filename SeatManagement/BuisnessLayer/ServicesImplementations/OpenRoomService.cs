@@ -1,19 +1,20 @@
 ﻿using DataAccessLayer.Entities;
 using BuisnessLayer.ServiceInterfaces;
 using DataAccessLayer.Interfaces;
-using DataAccessLayer.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Globalization;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace BuisnessLayer.Services
 {
-    public class OpenRoomService<T> : IService<OpenRoom>
+    public class OpenRoomService<Tin, Tout> : IService<OpenRoomDto, OpenRoom>
     {
         private readonly IRepository<OpenRoom> _openRoomRepository;
-        private readonly IRepository<OpenRoomSeatMap> _openRoomSeatMapRepository;
+        private readonly IRepository<OpenRoomSeatAllocation> _openRoomSeatMapRepository;
          
-        public OpenRoomService(IRepository<OpenRoom> _repository,IRepository<OpenRoomSeatMap> _seatRepository)
+        public OpenRoomService(IRepository<OpenRoom> _repository,IRepository<OpenRoomSeatAllocation> _seatRepository)
         {
             this._openRoomRepository = _repository;
             this._openRoomSeatMapRepository = _seatRepository;
@@ -23,76 +24,80 @@ namespace BuisnessLayer.Services
             return _openRoomRepository.GetAllItems().ToArray();
         }
 
-        public OpenRoom GetItemById(int id)
+        public OpenRoom GetItem(string openRoomId)
         {
-            return _openRoomRepository.GetItemById(id);
+            if (int.TryParse(openRoomId, out int id))
+            return _openRoomRepository.GetAllItems().FirstOrDefault(x => x.OpenRoomId == id);
+            
+            else
+            return null;
         }
 
-        public OpenRoom AddItem(OpenRoom openRoom)
+        public OpenRoom AddItem(OpenRoomDto openRoomDto)
         {
-            var alreadyExist = _openRoomRepository.GetItemById(openRoom.OpenRoomId);
-            if (alreadyExist != null)
+            if (_openRoomRepository.GetAllItems().FirstOrDefault(x => x.FacilityId == openRoomDto.FacilityId) != null)
             return null;
             
-            var createdOpenRoom = _openRoomRepository.AddItem(openRoom);
-
-            if (createdOpenRoom == null)
-            return null;
-
-            for(int i=1; i<=openRoom.SeatCount; ++i)
+            OpenRoom newOpenRoom = new OpenRoom()
             {
-                OpenRoomSeatMap seat = new OpenRoomSeatMap
+                FacilityId = openRoomDto.FacilityId,
+                SeatCount = openRoomDto.SeatCount,  
+            };
+
+            if (_openRoomRepository.AddItem(newOpenRoom) != null)
+            {
+                for (int i = 1; i <= openRoomDto.SeatCount; ++i)
                 {
-                    SeatNumber = i,                   
-                    OpenRoomId = createdOpenRoom.OpenRoomId,      
-                    EmployeeId = null
-                };
-                _openRoomSeatMapRepository.AddItem(seat);
-            }
-            return openRoom;
-        }
-
-        public OpenRoom DeleteItem(int id)
-        {
-            var openRoom = _openRoomRepository.GetItemById(id);
-
-            if (openRoom == null)
-            return null;
-
-            _openRoomRepository.DeleteItem(id);
-            return openRoom;
-        }
-
-        public OpenRoom UpdateItem(OpenRoom newOpenRoom)
-        {
-            var existingOpenRoom = _openRoomRepository.GetItemById(newOpenRoom.OpenRoomId);
-
-            if (existingOpenRoom == null)
-            {
-                return null;
-            }
-
-            existingOpenRoom.OpenRoomName = newOpenRoom.OpenRoomName;
-            existingOpenRoom.FacilityId = newOpenRoom.FacilityId;
-            
-            if(newOpenRoom.SeatCount > existingOpenRoom.SeatCount)
-            {
-                existingOpenRoom.SeatCount = newOpenRoom.SeatCount;
-                int seatNumber = _openRoomRepository.GetAllItems().ToArray().Length;
-
-                for (int i = seatNumber; i <= newOpenRoom.SeatCount; ++i)
-                {
-                    OpenRoomSeatMap seat = new OpenRoomSeatMap
+                    OpenRoomSeatAllocation seat = new OpenRoomSeatAllocation
                     {
-                        SeatNumber = i,
+                        SeatNumber = string.Format("S{0:D3}", i),
                         OpenRoomId = newOpenRoom.OpenRoomId,
+                        EmployeeId = null
                     };
                     _openRoomSeatMapRepository.AddItem(seat);
                 }
             }
-   
-            _openRoomRepository.UpdateItem(existingOpenRoom);
             return newOpenRoom;
+        }
+
+        public OpenRoom DeleteItem(string id)
+        {
+            /*refactoring needed
+             var openRoom = _openRoomRepository.GetItemById(id);
+
+             if (openRoom == null)
+             return null;
+
+
+             _openRoomRepository.DeleteItem(id);
+             return openRoom;
+            */
+            return null;
+        }
+
+        public OpenRoom UpdateItem(OpenRoomDto newOpenRoom)
+        {
+            var existingOpenRoom = _openRoomRepository.GetAllItems().FirstOrDefault(x=> x.FacilityId == newOpenRoom.FacilityId);
+
+            if (existingOpenRoom == null)
+            return null;
+            
+            if(newOpenRoom.SeatCount > existingOpenRoom.SeatCount)
+            {
+                for (int i = existingOpenRoom.SeatCount+1; i <= newOpenRoom.SeatCount; ++i)
+                {
+                    OpenRoomSeatAllocation seat = new OpenRoomSeatAllocation
+                    {
+                        SeatNumber = string.Format("S{0:D3}", i),
+                        OpenRoomId = existingOpenRoom.OpenRoomId,
+                        EmployeeId = null
+                    };
+                    _openRoomSeatMapRepository.AddItem(seat);
+                }
+                existingOpenRoom.SeatCount = newOpenRoom.SeatCount;
+                _openRoomRepository.UpdateItem(existingOpenRoom);
+            }
+            return existingOpenRoom;
         }
     }
 }

@@ -1,14 +1,11 @@
-﻿
-using DataAccessLayer.Entities;
+﻿using DataAccessLayer.Entities;
 using BuisnessLayer.ServiceInterfaces;
 using DataAccessLayer.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace BuisnessLayer.Services
 {
-    public class CityService<T> : IService<City>
+    public class CityService<Tin, Tout> : IService<CityDto, City>
     { 
         private readonly IRepository<City> _cityRepository;
         public CityService(IRepository<City> _repository)
@@ -20,49 +17,55 @@ namespace BuisnessLayer.Services
             return _cityRepository.GetAllItems().ToArray();
         }
 
-        public City GetItemById(int id)
+        public City GetItem(string cityAbbreviation)
         {
-            return _cityRepository.GetItemById(id);
-        }
+            var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == cityAbbreviation);
 
-        public City AddItem(City city)
-        {
-            City[] cities = _cityRepository.GetAllItems().ToArray();
+            if (city == null)
+            return null;
             
-            for(int i=0; i<cities.Length; i++) 
-            {
-                if (cities[i].CityAbbreviation.Equals(city.CityAbbreviation))
-                return null;
-            }
-
-            _cityRepository.AddItem(city);
-            return city;
+            return _cityRepository.GetItemById(city.CityId);
         }
 
-        public City DeleteItem(int id)
+        public City AddItem(CityDto cityDto)
         {
-            var city = _cityRepository.GetItemById(id);
+            var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == cityDto.CityAbbreviation);
+
+            if (city != null)
+            return null;
+
+            City newCity = new City()
+            {
+                CityAbbreviation = cityDto.CityAbbreviation,
+                CityName = cityDto.CityName
+            };
+
+            _cityRepository.AddItem(newCity);
+            return newCity;
+        }
+
+        public City DeleteItem(string cityAbbreviation)
+        {
+            var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == cityAbbreviation);
 
             if (city == null)
             return null;
 
-            _cityRepository.DeleteItem(id);
+            _cityRepository.DeleteItem(city.CityId);
             return city;
         } 
 
-        public City UpdateItem(City newCity)
+        public City UpdateItem(CityDto newCity)
         {
-            var existingCity = _cityRepository.GetItemById(newCity.CityId);
+            var existingCity = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == newCity.CityAbbreviation);
 
-             if (existingCity == null)
-             {
-                return null;
-             }
+            if (existingCity == null)
+            return null;
 
-             existingCity.CityName = newCity.CityName;
-             existingCity.CityAbbreviation = newCity.CityAbbreviation;
-             _cityRepository.UpdateItem(existingCity);
-             return newCity;
+            existingCity.CityName = newCity.CityName;
+            existingCity.CityAbbreviation = newCity.CityAbbreviation;
+            _cityRepository.UpdateItem(existingCity);
+            return existingCity;
         }
     }
 }

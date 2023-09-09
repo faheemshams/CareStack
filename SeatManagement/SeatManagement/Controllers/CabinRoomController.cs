@@ -2,7 +2,7 @@
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using BuisnessLayer.ServiceInterfaces;
-using DataAccessLayer.Dto;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
 {
@@ -48,7 +48,7 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCabinRoom(CreateCabinRoomDto cabinRoomDto)
+        public IActionResult CreateCabinRoom(CabinRoomDto cabinRoomDto)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace PresentationLayer.Controllers
 
                 CabinRoom cabinRoom = new CabinRoom()
                 {
-                    CabinName = cabinRoomDto.CabinName,
+                    CabinName = cabinRoomDto.CabinNumber,
                     FacilityId = cabinRoomDto.FacilityId,
                 };
 
@@ -82,7 +82,7 @@ namespace PresentationLayer.Controllers
             CabinRoom cabinRoom = new CabinRoom()
             {
                 CabinId = id,
-                CabinName = cabinRoomDto.CabinName,
+                CabinName = cabinRoomDto.CabinNumber,
                 FacilityId = cabinRoomDto.FacilityId,
                 EmployeeId = cabinRoomDto.EmployeeId,
             };

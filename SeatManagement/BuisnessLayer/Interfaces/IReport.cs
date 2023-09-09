@@ -1,6 +1,6 @@
 ﻿using DataAccessLayer.Dto.ReportDto;
 
-namespace BuisnessLayer.ServiceInterfaces
+namespace BuisnessLayer.Interfaces
 {
     public interface IReport<T> where T : class 
     {
