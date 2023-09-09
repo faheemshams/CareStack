@@ -11,24 +11,26 @@ using System.Threading.Tasks;
 
 namespace BuisnessLayer.ReportImplementations
 {
-    public class OpenRoomSeatReport<T> : IReport<OpenRoomView>
+    public class ReportService<T> : IReport<ReportView>
     {
         private readonly IRepository<OpenRoomSeatMap> _openRoomSeatMapRepository;
+        private readonly IRepository<CabinRoom> _cabinRoomRepository;
 
-        public OpenRoomSeatReport(IRepository<OpenRoomSeatMap> _openRoomSeatMapRepository)
+        public ReportService(IRepository<OpenRoomSeatMap> _openRoomSeatMapRepository, IRepository<CabinRoom> _cabinRoomRepository)
         {
             this._openRoomSeatMapRepository = _openRoomSeatMapRepository;
+            this._cabinRoomRepository = _cabinRoomRepository;
         }
 
-        public OpenRoomView[] GetView()
+        public ReportView[] GetView(FilterConditionsDto filterCondition)
         {
-            var item = _openRoomSeatMapRepository.GetAllItems()
+            var openRoomReport = _openRoomSeatMapRepository.GetAllItems()
                .Include(x => x.OpenRoom)
                .Include(x => x.OpenRoom.Facilities)
                .Include(x => x.OpenRoom.Facilities.City)
                .Include(x => x.OpenRoom.Facilities.Building)
                .Include(x => x.Employee)
-               .Select(x => new OpenRoomView
+               .Select(x => new ReportView
                {
                    SeatNumber = x.SeatNumber,
                    EmployeeId = x.EmployeeId,
@@ -39,7 +41,23 @@ namespace BuisnessLayer.ReportImplementations
                    BuildingAbbreviation = x.OpenRoom.Facilities.Building.BuildingAbbreviation
                }).ToArray();
 
-            return item;
+            var CabinRoomReport = _cabinRoomRepository.GetAllItems()
+                .Include(x => x.Employee)
+                .Include(x => x.Facility)
+                .Include(x => x.Facility.Building)
+                .Include(x => x.Facility.City)
+                .Select(x => new ReportView
+                {
+                    SeatNumber = 10,
+                    EmployeeId = x.EmployeeId,
+                    EmployeeName = x.Employee.EmployeeName,
+                    FacilityName = x.Facility.FacilityName,
+                    Floor = x.Facility.Floor,
+                    CityAbbreviation = x.Facility.City.CityAbbreviation,
+                    BuildingAbbreviation = x.Facility.Building.BuildingAbbreviation
+                }).ToArray();
+
+            return openRoomReport;
         }
     }
 }

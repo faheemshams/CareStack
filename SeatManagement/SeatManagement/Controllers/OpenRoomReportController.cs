@@ -8,19 +8,19 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class OpenRoomReportController : ControllerBase
     {
-        private readonly IReport<OpenRoomView> _openRoomReportService;
-        public OpenRoomReportController(IReport<OpenRoomView> _openRoomReportService)
+        private readonly IReport<ReportView> _openRoomReportService;
+        public OpenRoomReportController(IReport<ReportView> _openRoomReportService)
         {
             this._openRoomReportService = _openRoomReportService;
         }
 
 
         [HttpGet]
-        public IActionResult GetOpenRoomSeatView()
+        public IActionResult GetOpenRoomSeatView(string type)
         {
             try
             {
-                return Ok(_openRoomReportService.GetView());
+                return Ok(_openRoomReportService.GetView(type));
             }
             catch (Exception)
             {

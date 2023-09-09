@@ -48,7 +48,7 @@ namespace PresentationLayer
             builder.Services.AddScoped<IService<CabinRoom>, CabinService<CabinRoom>>();
             builder.Services.AddScoped<IService<MeetingRoom>, MeetingRoomService<MeetingRoom>>();
 
-            builder.Services.AddScoped<IReport<OpenRoomView>, OpenRoomSeatReport<OpenRoomView>>();
+            builder.Services.AddScoped<IReport<ReportView>, ReportService<ReportView>>();
 
 
             var app = builder.Build();
