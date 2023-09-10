@@ -1,40 +1,37 @@
-var quill = new Quill("#page-text", {theme:"snow"});
+var quill = new Quill("#page-text", { theme: "snow" });
 
 const addTaskButton = document.getElementById('add-task-btn');
 const pageModal = document.getElementById('page-modal');
 const saveButton = document.getElementById('save-page-btn');
 const pageTitleInput = document.getElementById('page-title');
-const pageText= document.getElementById('page-text');
+const pageText = document.getElementById('page-text');
 const taskList = document.getElementById('task-list');
 const rightPane = document.getElementById('right-pane');
 const taskDetails = document.getElementById('task-details');
+const subtaskList = document.getElementById('subtask-list');
 let selectedTask = null;
 
-
-addTaskButton.addEventListener('click', ()=>
-{
+addTaskButton.addEventListener('click', () => {
     taskDetails.innerHTML = '';
     pageModal.style.display = 'block';
-    const taskDetailsTitle = document.getElementById('task-details-titles');
+    const taskDetailsTitle = document.getElementById('task-details-title');
     taskDetailsTitle.textContent = "Add New Task";
 });
 
-saveButton.addEventListener('click', (e)=>
-{   
+saveButton.addEventListener('click', (e) => {
     e.preventDefault();
     const title = pageTitleInput.value;
     const text = pageText.value;
- 
-    const task =
-    {
-        title : title,
-        text : text,
-        subTask : [],
-        favorite : 'false'
+
+    const task = {
+        title: title,
+        text: text,
+        subTask: [],
+        favorite: false,
     };
 
     let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    existingTasks.push(task);   
+    existingTasks.push(task);
     localStorage.setItem('tasks', JSON.stringify(existingTasks));
 
     pageModal.style.display = 'none';
@@ -43,20 +40,19 @@ saveButton.addEventListener('click', (e)=>
     renderStoredTasks();
 });
 
-function renderStoredTasks() 
-{
-    const taskList = document.getElementById('task-list');
+function renderStoredTasks() {
+    const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+    existingTasks.sort((a, b) => (b.favorite - a.favorite));
+
     taskList.innerHTML = '';
 
-    const existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    existingTasks.forEach((task, index) => 
-    {
-        const sublistlistItem = document.createElement('li');
-        sublistlistItem.classList.add('new-task');
-        sublistlistItem.textContent = task.title;
+    existingTasks.forEach((task, index) => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('new-task');
+        listItem.textContent = task.title;
 
-        sublistlistItem.addEventListener('click', () => 
-        {
+        listItem.addEventListener('click', () => {
             renderTaskDetails(task);
         });
 
@@ -64,15 +60,35 @@ function renderStoredTasks()
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('delete-button');
 
+
+        deleteButton.addEventListener('click', () => {
+            deleteTask(task);
+        });
+
         const favoriteButton = document.createElement('button');
-        favoriteButton.textContent = 'Favorite';
+        favoriteButton.textContent = task.favorite ? 'Unfavorite' : 'Favorite';
         favoriteButton.classList.add('favorite-button');
-        
-        sublistlistItem.appendChild(favoriteButton);
-        sublistlistItem.appendChild(deleteButton);
-        
-        taskList.appendChild(sublistlistItem);
+
+        favoriteButton.addEventListener('click', () => {
+            toggleFavorite(task);
+        });
+
+        listItem.appendChild(favoriteButton);
+        listItem.appendChild(deleteButton);
+
+        taskList.appendChild(listItem);
     });
+}
+
+function toggleFavorite(task) {
+    task.favorite = !task.favorite; 
+
+    let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskIndex = existingTasks.findIndex(t => t.title === task.title);
+    existingTasks[taskIndex] = task;
+    localStorage.setItem('tasks', JSON.stringify(existingTasks));
+
+    renderStoredTasks();
 }
 
 function renderTaskDetails(task) {
@@ -103,12 +119,10 @@ function renderTaskDetails(task) {
     }
 
     const subtaskList = document.getElementById('subtask-list');
-    subtaskList.innerHTML = ''; 
+    subtaskList.innerHTML = '';
 
-    if (task.subTask && task.subTask.length > 0) 
-    {
-        task.subTask.forEach((subtask) => 
-        {
+    if (task.subTask && task.subTask.length > 0) {
+        task.subTask.forEach((subtask) => {
             const subtaskItem = document.createElement('li');
             subtaskItem.textContent = subtask.title;
 
@@ -116,14 +130,8 @@ function renderTaskDetails(task) {
             deleteButton.textContent = 'Delete';
             deleteButton.classList.add('delete-button');
 
-            deleteButton.addEventListener('click', () => 
-            {
-                const index = task.subTask.indexOf(subtask);
-                if (index !== -1) 
-                {
-                    task.subTask.splice(index, 1);
-                    renderTaskDetails(task); 
-                }
+            deleteButton.addEventListener('click', () => {
+                deleteSubTask(task, subtask);
             });
 
             subtaskItem.appendChild(deleteButton);
@@ -137,39 +145,35 @@ function renderTaskDetails(task) {
     taskDetails.appendChild(addSubTaskButton);
 }
 
-function addSubTask()
-{
-    if(selectedTask == null)
-    return;
+function addSubTask() {
+    if (selectedTask == null)
+        return;
 
     const subTaskForm = document.getElementById('subtask-form');
     subTaskForm.style.display = 'block';
 
     taskDetails.innerHTML = '';
-    
+
     const subtaskTitle = document.getElementById('subtask-title');
     const subtaskText = document.getElementById('subtask-text');
     const saveSubtaskButton = document.getElementById('save-subtask-btn');
 
-    saveSubtaskButton.addEventListener('click', () =>
-    {
+    saveSubtaskButton.addEventListener('click', () => {
         const title = subtaskTitle.value;
         const text = subtaskText.value;
 
-        const subTask = 
-        {
-            title : title,
-            text : text,
+        const subTask = {
+            title: title,
+            text: text,
         }
-        console.log(subTask);
 
-        if(!selectedTask.subTask)
-        selectedTask.subTask = [];
+        if (!selectedTask.subTask)
+            selectedTask.subTask = [];
 
         selectedTask.subTask.push(subTask);
-        
+
         let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        const taskIndex = existingTasks.findIndex(task => task.title === selectedTask.title);
+        const taskIndex = existingTasks.findIndex(t => t.title === selectedTask.title);
         existingTasks[taskIndex] = selectedTask;
         localStorage.setItem('tasks', JSON.stringify(existingTasks));
 
@@ -177,28 +181,33 @@ function addSubTask()
         pageText.value = '';
         subTaskForm.style.display = 'none';
         renderTaskDetails(selectedTask);
-    }); 
+    });
 }
 
+function deleteTask(task) {
+    let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    existingTasks = existingTasks.filter(t => t.title !== task.title);
+    localStorage.setItem('tasks', JSON.stringify(existingTasks));
+    renderStoredTasks();
+}
 
-window.addEventListener('load', () => 
-{
+function deleteSubTask(task, subTask) {
+    if (!task.subTask)
+        return;
+
+    const subTaskIndex = task.subTask.indexOf(subTask);
+    if (subTaskIndex !== -1) {
+        task.subTask.splice(subTaskIndex, 1);
+
+        let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        const taskIndex = existingTasks.findIndex(t => t.title === task.title);
+        existingTasks[taskIndex] = task;
+        localStorage.setItem('tasks', JSON.stringify(existingTasks));
+
+        renderTaskDetails(task);
+    }
+}
+
+window.addEventListener('load', () => {
     renderStoredTasks();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
