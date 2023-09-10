@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <script src="main.js" defer></script>
+    <title>Todo App</title>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script><link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+
+<header>
+    <div class="navbar">CARENOTE</div>
+    <button id="add-task-btn">Add Task</button>
+
+</header>
+
+<body>
+    <div class="container">
+        
+        <div class="left-pane">
+            <h2>Task List</h2>
+            <hr>
+            <ul id="task-list"></ul>
+        </div>
+
+        <div class="right-pane">
+            <div id="task-details"></div>
+            <div id="page-modal" class="modal">
+                <span class="close">&times;</span>
+                <h2>Add Task</h2>
+                <hr>
+                <div class="modal-content"> 
+                    <input type="text" id="page-title" placeholder="Task Title">
+                    <textarea id="page-text" placeholder="Task Description"></textarea>
+                    <button id="save-page-btn">Save</button>
+                    <button id="edit-page-btn" style="display: none;">Edit</button>
+                    <button id="cancel-edit-btn" style="display: none;">Cancel Edit</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+</html>
