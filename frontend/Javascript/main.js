@@ -29,7 +29,8 @@ saveButton.addEventListener('click', (e)=>
     {
         title : title,
         text : text,
-        subTask : []
+        subTask : [],
+        favorite : 'false'
     };
 
     let existingTasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -62,8 +63,14 @@ function renderStoredTasks()
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
         deleteButton.classList.add('delete-button');
+
+        const favoriteButton = document.createElement('button');
+        favoriteButton.textContent = 'Favorite';
+        favoriteButton.classList.add('favorite-button');
         
+        sublistlistItem.appendChild(favoriteButton);
         sublistlistItem.appendChild(deleteButton);
+        
         taskList.appendChild(sublistlistItem);
     });
 }

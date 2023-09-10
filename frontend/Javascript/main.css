@@ -82,6 +82,7 @@ html, body {
 }
 
 .left-pane ul li {
+    display: flex;
     cursor: pointer;
     margin-bottom: 30px;
 }
@@ -99,6 +100,7 @@ html, body {
 
 .left-pane .delete-button { 
     background-color: #ff0000a6;
+    margin-left : 0px;
     color: #fff; 
     align-items: right;
     border: none;
@@ -263,16 +265,5 @@ textarea {
     background-color: #45a049; 
 }
 
-.favorite-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #ffc107;
-    font-size: 1rem;
-    margin-right: 5px;
-}
 
-.favorite-button:focus {
-    outline: none; /* Remove focus outline */
-}
   
