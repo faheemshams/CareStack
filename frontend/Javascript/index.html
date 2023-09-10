@@ -4,31 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <script src="main.js" defer></script>
     <title>Todo App</title>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script><link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 
-<header>
-    <div class="navbar">CARENOTE</div>
-    <button id="add-task-btn">Add Task</button>
-
-</header>
-
 <body>
+    <header>
+        <div class="navbar">CARENOTE</div>
+        <button id="add-task-btn">Add Task</button>
+    </header>
+
     <div class="container">
-        
         <div class="left-pane">
             <h2>Task List</h2>
             <hr>
             <ul id="task-list"></ul>
+            <ul id="subtask-list"></ul>
         </div>
 
-        <div class="right-pane">
+        <div class="right-pane" id="right-pane">
             <div id="task-details"></div>
             <div id="page-modal" class="modal">
                 <span class="close">&times;</span>
-                <h2>Add Task</h2>
+                <h2 id="task-details-title">Add Task</h2>
                 <hr>
                 <div class="modal-content"> 
                     <input type="text" id="page-title" placeholder="Task Title">
@@ -38,9 +35,18 @@
                     <button id="cancel-edit-btn" style="display: none;">Cancel Edit</button>
                 </div>
             </div>
-
-
+            <form id="subtask-form" style="display: none;">
+                <label for="subtask-title">Title:</label>
+                <input type="text" id="subtask-title" required>
+                <label for="subtask-text">Text:</label>
+                <textarea id="subtask-text" rows="4" required></textarea>
+                <button type="submit" id="save-subtask-btn">Save</button>
+            </form>
         </div>
     </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <script src="main.js" defer></script>
 </body>
 </html>

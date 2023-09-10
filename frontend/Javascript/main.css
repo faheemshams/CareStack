@@ -21,7 +21,7 @@ header
     font-weight: bold;
 }
 
-body {
+html, body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
     color: #333; 
@@ -86,10 +86,23 @@ body {
     margin-bottom: 30px;
 }
 
+.new-task
+ {
+    display: flex;
+    align-items: center; 
+    background-color: #d5e5d5c8;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .left-pane .delete-button { 
-    background-color: #ff0000a6; /* Red color */
-    color: #fff; /* Text color */
+    background-color: #ff0000a6;
+    color: #fff; 
+    align-items: right;
     border: none;
+    width : 20%;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
@@ -100,13 +113,37 @@ body {
     background-color: #cc0000dd; 
 }
 
-.new-task {
-    background-color: #d5e5d5c8;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
+#subtask-list {
+    list-style-type: none; 
+    padding: 0;
+    margin: 0; 
+}
+
+#subtask-list li {
+    display: flex; 
+    margin-left: 30px;
+    align-items: center; 
+    justify-content: space-between;
+    padding: 5px 0; 
+    border-bottom: 1px solid #ddd;
+}
+
+#subtask-list li:last-child {
+    border-bottom: none; /* Remove bottom border for the last subtask */
+}
+
+#subtask-list button.delete-button {
+    background-color: #ff4136; /* Red background color for delete buttons */
+    color: white;
+    border: none;
+    padding: 5px 10px;
     cursor: pointer;
 }
+
+#subtask-list button.delete-button:hover {
+    background-color: #d63031; /* Darker red on hover */
+}
+
 
 /* -------------------------------------------Right pane-------------------------------------------*/
 
@@ -117,6 +154,8 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 20px;
     border-radius: 5px;
+    height : auto;
+    overflow:scroll;
 }
 
 .right-pane h2 {
@@ -129,6 +168,11 @@ hr
 {
     margin-bottom: 20px;
 }
+
+
+
+
+
 
 /*-----------------------------------------------------Modal-------------------------------------*/
 
@@ -150,6 +194,7 @@ hr
     width: 100%;
     border-radius: 5px;
     position: relative;
+
 }
 
 .close {
@@ -181,7 +226,8 @@ button
     margin: 10px auto;
     margin-top: 10px;
     margin-right: 10px;
-    width: 10%;
+    width: auto;
+    min-width: 80px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -218,11 +264,15 @@ textarea {
 }
 
 .favorite-button {
-    background: none;
+    background-color: transparent;
     border: none;
-    font-size: 1.2rem;
     cursor: pointer;
     color: #ffc107;
-    margin-right: 5px; 
+    font-size: 1rem;
+    margin-right: 5px;
+}
+
+.favorite-button:focus {
+    outline: none; /* Remove focus outline */
 }
   
