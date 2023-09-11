@@ -1,3 +1,6 @@
+import Database from './database.js';
+import Student from './student.js'; 
+
 const addStudentButton = document.getElementById('add-student-btn');
 const modal = document.getElementById('myModal');
 const closeModalBtn = document.getElementById('closeModalBtn');
@@ -7,11 +10,7 @@ const deleteModal = document.getElementById('deleteModal');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 
-const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-if (!indexedDB)
-{
-    console.log("IndexedDB could not be found in this browser.");
-}
+const database = new Database("studentDb");
 
 addStudentButton.addEventListener('click', ()=>
 {
@@ -33,22 +32,18 @@ modalSaveButton.addEventListener('click', ()=>
     const studentClass = document.getElementById('class').value;
     const address = document.getElementById('address').value;
 
-    const student = 
-    {
-        name,
-        age,
-        class: studentClass,
-        address
-    };
+    const student = new Student(name, age, studentClass, address);
 
     addStudentToDB(student);
+    fetchStudentsFromDB();
+
     document.getElementById('studentForm').reset();
     document.getElementById('myModal').style.display = 'none';
 })
 
 function addStudentToDB(student) 
 {
-    const request = openDatabase();
+    const request = database.openDatabase();
 
     request.onsuccess = function () {
         const db = request.result;
@@ -63,7 +58,6 @@ function addStudentToDB(student)
             console.log( "Student added to the database :" + id);
         };
     };
-    fetchStudentsFromDB();
 }
 
 function generateUniqueId() 
@@ -132,7 +126,7 @@ function showDeleteModal(studentId)
 
 function deleteStudent(studentId) 
 {
-    const request = openDatabase();
+    const request = database.openDatabase();
 
     request.onsuccess = function () {
         const db = request.result;
@@ -156,32 +150,9 @@ function deleteStudent(studentId)
     };
 }
 
-function openDatabase() 
-{
-    if (!indexedDB) {
-        console.log("IndexedDB not available.");
-        return;
-    }
-    const request = indexedDB.open("studentDb", 1);
-
-    request.onerror = function (event) {
-        console.error("An error occurred with IndexedDB");
-        console.error(event);
-    };
-
-    request.onupgradeneeded = function (event) {
-        const db = event.target.result;
-
-        if (!db.objectStoreNames.contains("students")) {
-            db.createObjectStore("students", { keyPath: "id" });
-        }
-    };
-    return request;
-}
-
 function fetchStudentsFromDB() 
 {
-    const request = openDatabase();
+    const request = database.openDatabase();
 
     request.onsuccess = function () {
         const db = request.result;
