@@ -1,5 +1,6 @@
 import Database from './database.js';
 import Student from './student.js'; 
+import './main.css';
 
 const addStudentButton = document.getElementById('add-student-btn');
 const modal = document.getElementById('myModal');

@@ -1,23 +1,27 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.html',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+  entry: 
+  { 
+    index: path.resolve(__dirname, './src/main.js')
   },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          },
-        },
-      },
-    ],
+  output: 
+  {
+    path: path.resolve(__dirname, './build'),
+    filename: '[name].bundle.js'
   },
-};
+  plugins:[
+    new HtmlWebpackPlugin({
+        template:path.resolve(__dirname, './src/index.html')
+    })
+],
+  module:{
+    rules:[
+        {
+            test:/\.css$/,
+            use : ["style-loader","css-loader"]
+        }
+    ]
+  }
+}
