@@ -1,6 +1,5 @@
-﻿
-using DataAccessLayer.Entities;
-using BuisnessLayer.ServiceInterfaces;
+﻿using DataAccessLayer.Entities;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

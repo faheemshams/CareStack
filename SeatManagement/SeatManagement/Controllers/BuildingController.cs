@@ -1,4 +1,5 @@
-﻿using BuisnessLayer.ServiceInterfaces;
+﻿using BuisnessLayer.Interfaces;
+using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class BuildingController : ControllerBase
     {
-        IService<Building> _buildingService;
+        IService<BuildingDto, Building> _buildingService;
 
-        public BuildingController(IService<Building> _buildingService) 
+        public BuildingController(IService<BuildingDto, Building> _buildingService) 
         {
             this._buildingService = _buildingService;
         }
@@ -28,12 +29,11 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult GetBuilding(int id)
+        public IActionResult GetBuilding(string buildingAbreviation)
         {
             try
             {
-                var result = _buildingService.GetItemById(id);
+                var result = _buildingService.GetItem(buildingAbreviation);
 
                 if (result == null)
                     return NotFound();
@@ -47,14 +47,14 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBuilding(Building building)
+        public IActionResult CreateBuilding(BuildingDto buildingDto)
         {
             try
             {
-                if (building == null)
+                if (buildingDto == null)
                 return BadRequest();
 
-                if (_buildingService.AddItem(building) == null)
+                if (_buildingService.AddItem(buildingDto) == null)
                     return StatusCode(StatusCodes.Status500InternalServerError, "Duplicate abbreviation");
 
                 return Ok();
@@ -65,12 +65,9 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateBuilding(int id, Building newBuilding)
+        [HttpPut]
+        public IActionResult UpdateBuilding(BuildingDto newBuilding)
         {
-            if (id != newBuilding.BuildingId)
-                return BadRequest();
-
             try
             {
                 var result = _buildingService.UpdateItem(newBuilding);
@@ -89,11 +86,11 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteBuilding(int id)
+        public IActionResult DeleteBuilding(string buildingAbbreviation)
         {
             try
             {
-                var result = _buildingService.DeleteItem(id);
+                var result = _buildingService.DeleteItem(buildingAbbreviation);
 
                 if (result == null)
                     return NotFound("Building not found");

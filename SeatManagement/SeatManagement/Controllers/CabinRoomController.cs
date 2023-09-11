@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
-using BuisnessLayer.ServiceInterfaces;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
@@ -10,8 +10,8 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class CabinRoomController : ControllerBase
     {
-        IService<CabinRoom> _cabinRoomService;
-        public CabinRoomController(IService<CabinRoom> _cabinRoomService)
+        IService<CabinRoomDto, CabinRoom> _cabinRoomService;
+        public CabinRoomController(IService<CabinRoomDto, CabinRoom> _cabinRoomService)
         {
             this._cabinRoomService = _cabinRoomService;
         }
@@ -29,12 +29,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult GetCabinRoom(int id)
+        [HttpGet("{id:string}")]
+        public IActionResult GetCabinRoom(string CabinNumber)
         {
             try
             {
-                var result = _cabinRoomService.GetItemById(id);
+                var result = _cabinRoomService.GetItem(CabinNumber);
 
                 if (result == null)
                     return NotFound();
@@ -53,16 +53,10 @@ namespace PresentationLayer.Controllers
             try
             {
                 if (cabinRoomDto == null)
-                    return BadRequest();
+                return BadRequest();
 
-                CabinRoom cabinRoom = new CabinRoom()
-                {
-                    CabinName = cabinRoomDto.CabinNumber,
-                    FacilityId = cabinRoomDto.FacilityId,
-                };
-
-                if (_cabinRoomService.AddItem(cabinRoom) == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Cannot create a CabinRoom");
+                if (_cabinRoomService.AddItem(cabinRoomDto) == null)
+                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot create a CabinRoom");
 
                 return Ok();
 
@@ -73,32 +67,19 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateCabinRoom(int id, UpdateCabinRoomDto cabinRoomDto)
+        [HttpPut]
+        public IActionResult UpdateCabinRoom(CabinRoomDto cabinRoomDto)
         {
             if (cabinRoomDto == null)
             return BadRequest();
 
-            CabinRoom cabinRoom = new CabinRoom()
-            {
-                CabinId = id,
-                CabinName = cabinRoomDto.CabinNumber,
-                FacilityId = cabinRoomDto.FacilityId,
-                EmployeeId = cabinRoomDto.EmployeeId,
-            };
-
             try
             {
-                var checkId = _cabinRoomService.GetItemById(id);
-                if (checkId == null)
-                return NotFound("Item doesn't exist");
-
-                var result = _cabinRoomService.UpdateItem(cabinRoom);
+                var result = _cabinRoomService.UpdateItem(cabinRoomDto);
 
                 if (result == null)
-                {
-                    return NotFound("Cabinroom doesn't exist");
-                }
+                return NotFound("Cabinroom doesn't exist");
+                
                 return Ok(result);
             }
             catch (Exception)
@@ -108,16 +89,15 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteCabinRoom(int id)
+        public IActionResult DeleteCabinRoom(string CabinNumber)
         {
             try
             {
-                var result = _cabinRoomService.DeleteItem(id);
+                var result = _cabinRoomService.DeleteItem(CabinNumber);
 
                 if (result == null)
                 return NotFound("Cabinroom not found");
-
-                _cabinRoomService.DeleteItem(id);
+                else
                 return Ok("Deleted successfully");
             }
             catch (Exception)

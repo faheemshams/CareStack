@@ -1,5 +1,5 @@
 ﻿using DataAccessLayer.Entities;
-using BuisnessLayer.ServiceInterfaces;
+using BuisnessLayer.Interfaces;
 
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,9 +11,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class MeetingRoomController : ControllerBase
     {
-        private readonly IService<MeetingRoom> _meetingRoomService;
+        private readonly IService<MeetingRoomDto, MeetingRoom> _meetingRoomService;
 
-        public MeetingRoomController(IService<MeetingRoom> meetingRoomService)
+        public MeetingRoomController(IService<MeetingRoomDto, MeetingRoom> meetingRoomService)
         {
             this._meetingRoomService = meetingRoomService;
         }
@@ -33,14 +33,14 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetMeetingRoom(int id)
+        public IActionResult GetMeetingRoom(string MeetingRoomName)
         {
             try
             {
-                var meetingRoom = _meetingRoomService.GetItemById(id);
+                var meetingRoom = _meetingRoomService.GetItem(MeetingRoomName);
 
                 if (meetingRoom == null)
-                    return NotFound();
+                return NotFound();
 
                 return Ok(meetingRoom);
             }
@@ -58,14 +58,7 @@ namespace PresentationLayer.Controllers
                 if (meetingRoomDto == null)
                 return BadRequest();
 
-                MeetingRoom meetingRoom = new MeetingRoom()
-                {
-                    MeetingRoomName = meetingRoomDto.MeetingRoomNumber,
-                    SeatCount = meetingRoomDto.SeatCount,
-                    FacilityId = meetingRoomDto.FacilityId,
-                };
-
-                var createdMeetingRoom = _meetingRoomService.AddItem(meetingRoom);
+                var createdMeetingRoom = _meetingRoomService.AddItem(meetingRoomDto);
 
                 if (createdMeetingRoom == null)
                 return StatusCode(StatusCodes.Status500InternalServerError, "Cannot add meeting room");
@@ -78,31 +71,18 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateMeetingRoom(int id, MeetingRoomDto meetingRoomDto)
+        [HttpPut]
+        public IActionResult UpdateMeetingRoom(MeetingRoomDto meetingRoomDto)
         {
             if (meetingRoomDto == null)
-                return BadRequest();
-
-
-            MeetingRoom meetingRoom = new MeetingRoom()
-            {
-                MeetingRoomId = id,
-                MeetingRoomName = meetingRoomDto.MeetingRoomNumber,
-                SeatCount = meetingRoomDto.SeatCount,
-                FacilityId = meetingRoomDto.FacilityId,
-            };
+            return BadRequest();
 
             try
             {
-                var checkId = _meetingRoomService.GetItemById(id);
-                if (checkId == null)
-                    return NotFound("Meeting room doesn't exist");
-
-                var updatedMeetingRoom = _meetingRoomService.UpdateItem(meetingRoom);
+                var updatedMeetingRoom = _meetingRoomService.UpdateItem(meetingRoomDto);
 
                 if (updatedMeetingRoom == null)
-                    return NotFound("Meeting room not found");
+                return NotFound("Meeting room not found");
 
                 return Ok(updatedMeetingRoom);
             }
@@ -112,15 +92,15 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteMeetingRoom(int id)
+        [HttpDelete]
+        public IActionResult DeleteMeetingRoom(string MeetingRoomName)
         {
             try
             {
-                var deletedMeetingRoom = _meetingRoomService.DeleteItem(id);
+                var deletedMeetingRoom = _meetingRoomService.DeleteItem(MeetingRoomName);
 
                 if (deletedMeetingRoom == null)
-                    return NotFound("Meeting room not found");
+                return NotFound("Meeting room not found");
 
                 return Ok("Meeting room deleted successfully");
             }

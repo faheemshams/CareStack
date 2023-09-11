@@ -7,6 +7,12 @@ const deleteModal = document.getElementById('deleteModal');
 const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
 const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 
+const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+if (!indexedDB)
+{
+    console.log("IndexedDB could not be found in this browser.");
+}
+
 addStudentButton.addEventListener('click', ()=>
 {
     modal.style.display = 'flex';
@@ -42,24 +48,7 @@ modalSaveButton.addEventListener('click', ()=>
 
 function addStudentToDB(student) 
 {
-    const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-    if (!indexedDB) {
-        console.log("IndexedDB could not be found in this browser.");
-        return;
-    }
-
-    const request = indexedDB.open("studentDb", 1);
-
-    request.onerror = function (event) {
-        console.error("An error occurred with IndexedDB");
-        console.error(event);
-    };
-
-    request.onupgradeneeded = function () {
-        const db = request.result;
-        db.createObjectStore("students", { keyPath: "id" });
-    };
+    const request = openDatabase();
 
     request.onsuccess = function () {
         const db = request.result;
@@ -71,7 +60,7 @@ function addStudentToDB(student)
 
         transaction.oncomplete = function () {
             db.close();
-            console.log("Student added to the database");
+            console.log( "Student added to the database :" + id);
         };
     };
     fetchStudentsFromDB();
@@ -80,46 +69,6 @@ function addStudentToDB(student)
 function generateUniqueId() 
 {
     return Date.now();
-}
-
-function fetchStudentsFromDB() 
-{
-    const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-    if (!indexedDB) 
-    {
-        console.log("IndexedDB could not be found in this browser.");
-        return;
-    }
-
-    const request = indexedDB.open("studentDb", 1);
-
-    request.onerror = function (event) {
-        console.error("An error occurred with IndexedDB");
-        console.error(event);
-    };
-
-    request.onsuccess = function () {
-        const db = request.result;
-        const transaction = db.transaction("students", "readonly");
-        const store = transaction.objectStore("students");
-
-        const students = [];
-
-        store.openCursor().onsuccess = function (event) {
-            const cursor = event.target.result;
-            if (cursor) 
-            {
-                students.push(cursor.value);
-                cursor.continue();
-            } 
-            else 
-            {
-                renderStudentsTable(students);
-                db.close();
-            }
-        };
-    };
 }
 
 function renderStudentsTable(students) 
@@ -181,20 +130,9 @@ function showDeleteModal(studentId)
     };
 }
 
-function deleteStudent(studentId) {
-    const indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-    if (!indexedDB) {
-        console.log("IndexedDB could not be found in this browser.");
-        return;
-    }
-
-    const request = indexedDB.open("studentDb", 1);
-
-    request.onerror = function (event) {
-        console.error("An error occurred with IndexedDB");
-        console.error(event);
-    };
+function deleteStudent(studentId) 
+{
+    const request = openDatabase();
 
     request.onsuccess = function () {
         const db = request.result;
@@ -205,7 +143,7 @@ function deleteStudent(studentId) {
 
         deleteRequest.onsuccess = function () {
             console.log(`Student with ID ${studentId} deleted from the database`);
-            fetchStudentsFromDB(); // Refresh the table after deletion
+            fetchStudentsFromDB(); 
         };
 
         deleteRequest.onerror = function (event) {
@@ -218,8 +156,54 @@ function deleteStudent(studentId) {
     };
 }
 
+function openDatabase() 
+{
+    if (!indexedDB) {
+        console.log("IndexedDB not available.");
+        return;
+    }
+    const request = indexedDB.open("studentDb", 1);
+
+    request.onerror = function (event) {
+        console.error("An error occurred with IndexedDB");
+        console.error(event);
+    };
+
+    request.onupgradeneeded = function (event) {
+        const db = event.target.result;
+
+        if (!db.objectStoreNames.contains("students")) {
+            db.createObjectStore("students", { keyPath: "id" });
+        }
+    };
+    return request;
+}
+
+function fetchStudentsFromDB() 
+{
+    const request = openDatabase();
+
+    request.onsuccess = function () {
+        const db = request.result;
+        const transaction = db.transaction("students", "readonly");
+        const store = transaction.objectStore("students");
+
+        const students = [];
+
+        store.openCursor().onsuccess = function (event) {
+            const cursor = event.target.result;
+            if (cursor) 
+            {
+                students.push(cursor.value);
+                cursor.continue();
+            } 
+            else 
+            {
+                renderStudentsTable(students);
+                db.close();
+            }
+        };
+    };
+}
 
 fetchStudentsFromDB();
-
-
-

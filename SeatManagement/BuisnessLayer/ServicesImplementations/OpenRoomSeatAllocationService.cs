@@ -1,5 +1,5 @@
 ﻿using DataAccessLayer.Entities;
-using BuisnessLayer.ServiceInterfaces;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Interfaces;
 using System;
 using System.Linq;

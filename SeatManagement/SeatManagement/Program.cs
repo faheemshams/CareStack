@@ -3,7 +3,7 @@ using DataAccessLayer.Data;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Implementations;
-using BuisnessLayer.ServiceInterfaces;
+using BuisnessLayer.Interfaces;
 using BuisnessLayer.Services;
 using BuisnessLayer.ReportImplementations;
 using DataAccessLayer.Dto.ReportDto;
@@ -46,8 +46,8 @@ namespace PresentationLayer
             builder.Services.AddScoped<IService<CabinRoomDto, CabinRoom>, CabinRoomService<CabinRoomDto, CabinRoom>>();
             builder.Services.AddScoped<IService<EmployeeDto, Employee>, EmployeeService<EmployeeDto, Employee>>();
             builder.Services.AddScoped<IService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation>, OpenRoomSeatAllocationService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation>>();
-            builder.Services.AddScoped<IService<CabinRoom>, CabinService<CabinRoom>>();
-            builder.Services.AddScoped<IService<MeetingRoom>, MeetingRoomService<MeetingRoom>>();
+            builder.Services.AddScoped<IService<CabinRoomDto, CabinRoom>, CabinService<CabinRoomDto, CabinRoom>>();
+            builder.Services.AddScoped<IService<MeetingRoomDto, MeetingRoom>, MeetingRoomService<MeetingRoomDto, MeetingRoom>>();
 
             builder.Services.AddScoped<IReport<ReportView>, ReportService<ReportView>>();
 

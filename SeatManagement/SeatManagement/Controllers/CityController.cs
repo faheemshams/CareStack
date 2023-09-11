@@ -1,4 +1,5 @@
-﻿using BuisnessLayer.ServiceInterfaces;
+﻿using BuisnessLayer.Interfaces;
+using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        IService<City> _cityService;
+        IService<CityDto,City> _cityService;
 
-        public CityController(IService<City> _cityService)
+        public CityController(IService<CityDto, City> _cityService)
         {
             this._cityService = _cityService;   
         }
@@ -29,11 +30,11 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetCity(int id)  
+        public IActionResult GetCity(string cityAbbreviation)  
         {
             try
             {
-                var result = _cityService.GetItemById(id);
+                var result = _cityService.GetItem(cityAbbreviation);
                 
                 if(result == null)
                 return NotFound();
@@ -47,14 +48,14 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCity(City city) 
+        public IActionResult CreateCity(CityDto cityDto) 
         {
             try
             {
-                if(city == null)
+                if(cityDto == null)
                 return BadRequest();
 
-                if(_cityService.AddItem(city) == null)
+                if(_cityService.AddItem(cityDto) == null)
                 return StatusCode(StatusCodes.Status500InternalServerError, "Duplicate abbreviation");
 
                 return Ok();
@@ -65,12 +66,9 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateCity(int id, City newCity)
+        [HttpPut]
+        public IActionResult UpdateCity(CityDto newCity)
         {
-            if(id != newCity.CityId) 
-            return BadRequest();   
-            
             try
             {
                 var result = _cityService.UpdateItem(newCity);
@@ -89,11 +87,11 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteCity(int id)
+        public IActionResult DeleteCity(string cityAbbreviation)
         {
             try
             {
-                var result = _cityService.DeleteItem(id);
+                var result = _cityService.GetItem(cityAbbreviation);
 
                 if (result == null)
                 return NotFound("City not found");

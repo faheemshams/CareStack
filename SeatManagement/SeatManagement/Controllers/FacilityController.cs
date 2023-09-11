@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
-using BuisnessLayer.ServiceInterfaces;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
@@ -10,8 +10,8 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class FacilityController : ControllerBase
     { 
-        IService<Facility> _facilityService;
-        public FacilityController(IService<Facility> _facilityService)
+        IService<FacilityDto, Facility> _facilityService;
+        public FacilityController(IService<FacilityDto, Facility> _facilityService)
         {
             this._facilityService = _facilityService;
         }
@@ -30,11 +30,11 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetFacility(int id)
+        public IActionResult GetFacility(string FacilityName)
         {
             try
             {
-                var result = _facilityService.GetItemById(id);
+                var result = _facilityService.GetItem(FacilityName);
 
                 if (result == null)
                 return NotFound();
@@ -53,21 +53,12 @@ namespace PresentationLayer.Controllers
             try
             {
                 if(facilityDto == null)
-                    return BadRequest();
+                return BadRequest();
 
-                Facility facility = new Facility()
-                {
-                    FacilityName = facilityDto.FacilityName,
-                    CityId = facilityDto.CityId,
-                    BuildingId = facilityDto.BuildingId,    
-                    Floor = facilityDto.Floor
-                };
-
-                if (_facilityService.AddItem(facility) == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Cannot add facility");
+                if (_facilityService.AddItem(facilityDto) == null)
+                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot add facility");
 
                 return Ok();
-
             }
             catch (Exception)
             {
@@ -75,28 +66,14 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateFacility(int id, FacilityDto facilityDto)
+        [HttpPut]
+        public IActionResult UpdateFacility(FacilityDto facilityDto)
         {
             if(facilityDto == null)
             return BadRequest();
-            
-            Facility facility = new Facility()
-            {
-                FacilityId = id,
-                FacilityName = facilityDto.FacilityName,
-                CityId = facilityDto.CityId,
-                BuildingId = facilityDto.BuildingId,
-                Floor  = facilityDto.Floor, 
-            };
-            
             try
             {
-                var checkId = _facilityService.GetItemById(id);
-                if (checkId == null)
-                return NotFound("Item doesn't exist");
-                
-                var result = _facilityService.UpdateItem(facility);
+                var result = _facilityService.UpdateItem(facilityDto);
 
                 if (result == null)
                 {
@@ -111,16 +88,15 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteFacility(int id)
+        public IActionResult DeleteFacility(string FacilityName)
         {
             try
             {
-                var result = _facilityService.DeleteItem(id);
+                var result = _facilityService.DeleteItem(FacilityName);
 
                 if (result == null)
                 return NotFound("facility not found");
-
-                _facilityService.DeleteItem(id);
+                else
                 return Ok("Deleted successfully");
             }
             catch (Exception)

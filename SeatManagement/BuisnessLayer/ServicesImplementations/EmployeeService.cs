@@ -1,4 +1,4 @@
-﻿using BuisnessLayer.ServiceInterfaces;
+﻿using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;

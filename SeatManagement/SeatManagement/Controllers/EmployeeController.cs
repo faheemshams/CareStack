@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using DataAccessLayer.Entities;
-
-using BuisnessLayer.ServiceInterfaces;
-using DataAccessLayer.Dto;
+using BuisnessLayer.Interfaces;
+using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
 {
@@ -11,9 +9,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IService<Employee> _employeeService;
+        private readonly IService<EmployeeDto,Employee> _employeeService;
 
-        public EmployeeController(IService<Employee> employeeService)
+        public EmployeeController(IService<EmployeeDto, Employee> employeeService)
         {
             _employeeService = employeeService;
         }
@@ -32,24 +30,16 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult GetEmployee(int id)
+        [HttpGet("{id:string}")]
+        public IActionResult GetEmployee(string EmployeeId)
         {
-            if (int.TryParse(EmployeeId, out int id))
-            {
-
-            }
-            else
-                return null;
-
-
             try
             {
-                var employee = _employeeService.GetItemById(id);
+                var employee = _employeeService.GetItem(EmployeeId);
 
                 if (employee == null)
-                    return NotFound();
-
+                return NotFound();
+                else
                 return Ok(employee);
             }
             catch (Exception)
@@ -59,24 +49,17 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateEmployee(CreateEmployeeDto employeeDto)
+        public IActionResult CreateEmployee(EmployeeDto employeeDto)
         {
             try
             {
                 if (employeeDto == null)
                 return BadRequest();
 
-                Employee employee = new Employee()
-                {
-                    EmployeeName = employeeDto.EmployeeName,
-                    DeptId = employeeDto.DeptId,
-                    RoomTypeId = 1
-                };
-
-                var createdEmployee = _employeeService.AddItem(employee);
+                var createdEmployee = _employeeService.AddItem(employeeDto);
 
                 if (createdEmployee == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Cannot create employee");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot create employee");
 
                 return Ok(createdEmployee);
             }
@@ -86,33 +69,17 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateEmployee(int id, UpdateEmployeeDto employeeDto)
+        public IActionResult UpdateEmployee(EmployeeDto employeeDto)
         {
             if (employeeDto == null)
-                return BadRequest();
-
-            Employee employee = new Employee()
-            {
-                EmployeeId = id,
-                EmployeeName = employeeDto.EmployeeName,
-                DeptId = employeeDto.DeptId,
-                RoomTypeId = employeeDto.RoomTypeId,
-            };
+            return BadRequest();
 
             try
             {
-                var existingEmployee = _employeeService.GetItemById(id);
-
-                if (existingEmployee == null)
-                    return NotFound("Employee not found");
-
-                employee.EmployeeId = id;
-
-                var updatedEmployee = _employeeService.UpdateItem(employee);
+               var updatedEmployee = _employeeService.UpdateItem(employeeDto);
 
                 if (updatedEmployee == null)
-                    return NotFound("Employee not found");
+                return NotFound("Employee not found");
 
                 return Ok(updatedEmployee);
             }
@@ -122,15 +89,15 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteEmployee(int id)
+        [HttpDelete("{id:string}")]
+        public IActionResult DeleteEmployee(string EmployeeId)
         {
             try
             {
-                var deletedEmployee = _employeeService.DeleteItem(id);
+                var deletedEmployee = _employeeService.DeleteItem(EmployeeId);
 
                 if (deletedEmployee == null)
-                    return NotFound("Employee not found");
+                return NotFound("Employee not found");
 
                 return Ok("Employee deleted successfully");
             }
