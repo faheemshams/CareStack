@@ -1,0 +1,28 @@
+.container
+{
+    padding: 12px;
+    background: rgb(188, 209, 188);
+    display: flex;
+
+    &__categories
+    {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        width:50%;
+        justify-content: space-between;
+    }
+    &__offers
+    {
+        display: flex;
+        flex-direction: column;
+        padding: 4px;
+        gap: 10px;
+    }
+}
+
+.button
+{
+    width: 30px;
+}
+

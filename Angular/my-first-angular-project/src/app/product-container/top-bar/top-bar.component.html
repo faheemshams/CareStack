@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="container__categories">
+        <ng-container *ngFor="let category of categories">
+            <div (click)="addToTempCategoryList(category)">
+                {{category.name}}
+            </div>
+        </ng-container>
+        <button (click)="addToCategories()">Add to cart</button>
+    </div>
+    
+    <div class="container__offers">
+        <ng-container *ngFor="let offer of offers">
+            <div (click)="addToTempOfferList(offer)">
+                {{offer.OfferName}}
+            </div>
+        </ng-container>
+        <button (click)="addToOffers()">Add to Offers</button>
+    </div>
+</div>
