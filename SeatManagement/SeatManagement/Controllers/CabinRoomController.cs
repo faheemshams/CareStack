@@ -29,7 +29,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:string}")]
+        [HttpGet("{CabinNumber}")]
         public IActionResult GetCabinRoom(string CabinNumber)
         {
             try

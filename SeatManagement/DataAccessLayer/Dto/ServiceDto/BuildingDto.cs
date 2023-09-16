@@ -8,8 +8,9 @@ namespace DataAccessLayer.Dto.ServiceDto
 {
     public class BuildingDto
     {
-        public string BuildingName { get; set; }
         public string BuildingAbbreviation { get; set; }
+        public string BuildingName { get; set; }
         public int FloorCount { get; set; }
+        public string? newAbbreviation { get; set; }
     }
 }

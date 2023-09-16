@@ -1,0 +1,29 @@
+    <div class="book-container">
+        <h1>BOOKS</h1>
+        <div class="book-container__form">
+            <div>
+                <label>Enter book title</label>
+                <input type="text" name="title" [(ngModel)]="form.title">
+            </div>
+            <div>
+                <label>Enter Author</label>
+                <input type="text" name="author" [(ngModel)]="form.author">
+            </div>
+            <div>
+                <label>Enter Summary</label>
+                <input type="text" name="summary" [(ngModel)]="form.summary">
+            </div>
+            <div>
+                <label>Notes</label>
+                <input type="text" name="notes" [(ngModel)]="form.notes">
+            </div>
+            <div>
+                <label>Rating</label>
+                <input type="text" name="rating" [(ngModel)]="form.rating">
+            </div>
+        </div>
+        <button class="book-container__buttons-submit" (click)="onSubmit()">Submit</button>
+        <button class="book-container__buttons-submit" (click)="onReset()">Reset</button>
+        <button class="book-container__buttons-submit" (click)="onViewBooks()">View Books</button>
+    </div>
+    

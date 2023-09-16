@@ -1,28 +1,44 @@
-.container
-{
-    padding: 12px;
-    background: rgb(188, 209, 188);
-    display: flex;
-
-    &__categories
-    {
-        display: flex;
-        gap: 20px;
-        flex-direction: column;
-        width:50%;
-        justify-content: space-between;
-    }
-    &__offers
-    {
-        display: flex;
-        flex-direction: column;
-        padding: 4px;
-        gap: 10px;
-    }
-}
-
-.button
-{
-    width: 30px;
-}
-
+/* Style for the container */
+.container__books {
+    margin: 20px;
+  }
+  
+  /* Style for the table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+  
+  /* Style for the table headers */
+  th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Style for the table cells */
+  td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  /* Style for the table rows */
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Style for the "Edit" button */
+  button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

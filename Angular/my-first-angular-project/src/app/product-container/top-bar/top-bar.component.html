@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div class="container__categories">
         <ng-container *ngFor="let category of categories">
             <div (click)="addToTempCategoryList(category)">
@@ -15,5 +15,46 @@
             </div>
         </ng-container>
         <button (click)="addToOffers()">Add to Offers</button>
-    </div>
-</div>
+    </div> 
+</div> -->
+
+<!-- <div class="container__books"> 
+    <ng-container *ngFor="let book of books">
+      <div>
+        {{ book.title }}  
+        {{ book.author }}
+        {{book.summary}}
+        {{book.notes}}
+        {{book.rating}}
+      </div>
+    </ng-container>
+  </div> -->
+
+  <div class="container__books">
+    <h1>BOOK LIST</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Summary</th>
+          <th>Notes</th>
+          <th>Rating</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let book of books">
+          <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.summary }}</td>
+            <td>{{ book.notes }}</td>
+            <td>{{ book.rating }}</td>
+            <td><button (click)="editBook(book)">Edit</button></td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  

@@ -29,7 +29,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{openRoomId}")]
         public IActionResult GetOpenRoom(string openRoomId)
         {
             try

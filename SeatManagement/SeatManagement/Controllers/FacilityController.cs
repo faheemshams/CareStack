@@ -29,7 +29,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{FacilityName}")]
         public IActionResult GetFacility(string FacilityName)
         {
             try
@@ -41,7 +41,7 @@ namespace PresentationLayer.Controllers
 
                 return Ok(result);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error while retrieving file");
             }
@@ -49,7 +49,7 @@ namespace PresentationLayer.Controllers
 
         [HttpPost]
         public IActionResult CreateFacility(FacilityDto facilityDto)
-        {
+        {   
             try
             {
                 if(facilityDto == null)

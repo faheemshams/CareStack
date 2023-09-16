@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ICategoryList, IOffer, IProductList } from './product-container.interface';
+import { BookServiceService } from '../Services/book-service.service';
+import { IBookDetails } from '../Interfaces/app.interface';
 
 @Component({
   selector: 'app-product-container',
@@ -16,6 +18,13 @@ export class ProductContainerComponent
 
   public offers : Array<IOffer>=[];
   public selectedOffers : Array<IOffer>=[];
+
+  public bookList : Array<IBookDetails>=[];
+
+  constructor(private readonly bookService: BookServiceService)
+  {
+
+  }
 
   public ngOnInit(): void 
   {
@@ -43,6 +52,8 @@ export class ProductContainerComponent
       {OfferId: 5, OfferName:"E", OfferPercentage:10},
       {OfferId: 6, OfferName:"F", OfferPercentage:10},
     ]
+
+    this.bookList =  this.bookService.getBook();
   }
 
   public addToCart(product : IProductList)

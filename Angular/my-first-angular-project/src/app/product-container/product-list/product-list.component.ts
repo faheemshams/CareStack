@@ -14,6 +14,7 @@ export class ProductListComponent
 
   public addToCart(product : IProductList)
   {
+    
     this.Cart.emit(product);
   }
 }

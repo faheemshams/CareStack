@@ -1,0 +1,33 @@
+.signup-container
+{
+    margin : 12px;
+    &__form
+    {
+        padding : 12px;
+
+        &-label
+        {
+            font-weight: bold;
+        }
+    }
+
+    &__bottons
+    {
+        display: flex;
+        gap: 8px;
+        &-signup
+        {
+            color: green;
+        }
+
+        &-reset
+        {
+            background: red;
+        }
+    }
+}
+
+.validation-error
+{
+    color: red;
+}

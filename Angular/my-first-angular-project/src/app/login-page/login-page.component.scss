@@ -1,0 +1,31 @@
+.signin-container {
+    margin: 12px;
+
+    .error {
+        color: red;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 12px;
+
+        &-label {
+            font-weight: bold;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 6px;
+
+        &-signin {
+            background: aqua;
+        }
+
+        &-reset {
+            background: lightgray;
+        }
+    }
+}

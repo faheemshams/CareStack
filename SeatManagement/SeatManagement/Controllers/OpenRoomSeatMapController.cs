@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Entities;
-using BuisnessLayer.ServiceInterfaces;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 
 namespace PresentationLayer.Controllers
@@ -11,11 +11,11 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class OpenRoomSeatMapController : ControllerBase
     {
-        private readonly IService<OpenRoomSeatAllocation> _employeeAllocation;
+        private readonly IService<OpenRoomSeatAllocationDto,OpenRoomSeatAllocation> _openSeatAllocation;
 
-        public OpenRoomSeatMapController(IService<OpenRoomSeatAllocation> _employeeAllocation)
+        public OpenRoomSeatMapController(IService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation> _openSeatAllocation)
         {
-            this._employeeAllocation = _employeeAllocation;
+            this._openSeatAllocation = _openSeatAllocation;
         }
 
         [HttpGet]
@@ -23,7 +23,7 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                var openRoomSeats = _employeeAllocation.GetAllItems();
+                var openRoomSeats = _openSeatAllocation.GetAllItems();
                 return Ok(openRoomSeats);
             }
             catch (Exception ex)
@@ -32,12 +32,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult GetAllocatedSeat(int id)
+        [HttpGet("{id}")]
+        public IActionResult GetAllocatedSeat(string id)
         {
             try
             {
-                var openRoomSeat = _employeeAllocation.GetItemById(id);
+                var openRoomSeat = _openSeatAllocation.GetItem(id);
 
                 if (openRoomSeat == null)
                 return NotFound();
@@ -50,24 +50,15 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
-        public IActionResult UpdateOpenRoomSeatMap(int id, OpenRoomSeatAllocationDto openRoomSeatMapDto)
+        [HttpPut]
+        public IActionResult UpdateOpenRoomSeatMap(OpenRoomSeatAllocationDto openRoomSeatMapDto)
         {
             if (openRoomSeatMapDto == null)
             return BadRequest();
 
             try
             {
-                var existingAllocatedSeat = _employeeAllocation.GetItemById(id);
-
-                if (existingAllocatedSeat == null)
-                return NotFound("Seat doesn't exist");
-
-                existingAllocatedSeat.SeatNumber = openRoomSeatMapDto.SeatNumber;
-                existingAllocatedSeat.OpenRoomId = openRoomSeatMapDto.OpenRoomId;
-                existingAllocatedSeat.EmployeeId = openRoomSeatMapDto.EmployeeId;
-
-                var updatedSeat = _employeeAllocation.UpdateItem(existingAllocatedSeat);
+                var updatedSeat = _openSeatAllocation.UpdateItem(openRoomSeatMapDto);
 
                 if (updatedSeat == null)
                 return NotFound("Could not update seat details");
@@ -80,12 +71,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteOpenRoomSeatMap(int id)
+        [HttpDelete("{id}")]
+        public IActionResult DeleteOpenRoomSeatMap(string id)
         {
             try
             {
-                var deleteSeatAllocation = _employeeAllocation.DeleteItem(id);
+                var deleteSeatAllocation = _openSeatAllocation.DeleteItem(id);
 
                 if (deleteSeatAllocation == null)
                     return NotFound("No allocated seat found");

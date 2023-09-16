@@ -8,7 +8,9 @@ namespace DataAccessLayer.Dto.ServiceDto
 {
     public class CityDto
     {
-        public string CityName { get; set; }
         public string CityAbbreviation { get; set; }
+        public string CityName { get; set; }
+        public string? newAbbreviation { get; set; }
+
     }
 }

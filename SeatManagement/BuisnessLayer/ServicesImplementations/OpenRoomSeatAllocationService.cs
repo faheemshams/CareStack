@@ -8,7 +8,7 @@ using DataAccessLayer.Dto.ServiceDto;
 
 namespace BuisnessLayer.Services
 {
-    public class OpenRoomSeatAllocationService<Tin, Tout> : IService<OpenRoomSeatAllocationDto, OpenRoomAllocation>
+    public class OpenRoomSeatAllocationService<Tin, Tout> : IService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation>
     {
         private readonly IRepository<OpenRoomSeatAllocation> _openRoomSeatMapRepository;
         private readonly IRepository<Employee> _employeeRepository;
@@ -35,17 +35,18 @@ namespace BuisnessLayer.Services
             //update fn contains allocation code
         }
 
-        public OpenRoomSeatAllocation DeleteItem(int id)
+        public OpenRoomSeatAllocation DeleteItem(string id)
         {
-            //refactoring needed
+            /*refactoring needed
             
             var openRoomSeatMap = _openRoomSeatMapRepository.GetItemById(id);
 
             if (openRoomSeatMap == null)
                 return null;
 
-            _openRoomSeatMapRepository.DeleteItem(id);
-            return openRoomSeatMap;
+            _openRoomSeatMapRepository.DeleteItem(id);  
+            return openRoomSeatMap;*/
+            return null;
         }
 
         public OpenRoomSeatAllocation UpdateItem(OpenRoomSeatAllocationDto newSeatAllocation)

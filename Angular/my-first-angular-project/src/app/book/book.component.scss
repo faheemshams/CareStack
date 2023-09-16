@@ -1,0 +1,61 @@
+/* Style for the container */
+.book-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Style for the form */
+  .book-container__form {
+    display: grid;
+    gap: 20px;
+  }
+  
+  /* Style for form labels */
+  .book-container__form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  /* Style for form inputs */
+  .book-container__form input[type="text"],
+  .book-container__form textarea {
+    width: 100%;
+    padding: 10px;
+    width: 95%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Style for the Submit and Reset buttons */
+  .book-container__buttons-submit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 30px;
+    margin-right: 10px;
+    font-size: 16px;
+  }
+  
+  .book-container__buttons-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Style for the View Books button */
+  .book-container__buttons-submit:last-child {
+    background-color: #28a745;
+  }
+  
+  .book-container__buttons-submit:last-child:hover {
+    background-color: #1c7430;
+  }
+  

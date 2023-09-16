@@ -17,4 +17,18 @@
         padding: 4px;
         gap: 10px;
     }
+
+    &__label
+    {
+        font : 800;
+        font-style: italic;
+        &-not-in-cart
+        {
+            color:navy;
+        }
+        &-in-cart
+        {
+            color : indianred;
+        }
+    }
 }

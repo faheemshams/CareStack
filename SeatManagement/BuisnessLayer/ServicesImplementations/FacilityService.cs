@@ -39,7 +39,7 @@ namespace BuisnessLayer.Services
                 BuildingId = facilityDto.BuildingId,
                 Floor = facilityDto.Floor
             };
-
+            //exception handling required
             _facilityRepository.AddItem(facility);
             return facility;
         }
@@ -65,7 +65,7 @@ namespace BuisnessLayer.Services
             existingFacility.FacilityName = newFacility.FacilityName;
             existingFacility.BuildingId = newFacility.BuildingId;
             existingFacility.CityId = newFacility.CityId;   
-            existingFacility.Floor = newFacility.Floor;              //checking needed
+            //existingFacility.Floor = newFacility.Floor;              //checking needed
             _facilityRepository.UpdateItem(existingFacility);
             return existingFacility;
         }

@@ -1,4 +1,4 @@
-﻿using DataAccessLayer.Dto.ReportDto;
+﻿/*using DataAccessLayer.Dto.ReportDto;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
@@ -25,3 +25,4 @@ namespace BuisnessLayer.ReportImplementations
         }
     }
 }
+*/

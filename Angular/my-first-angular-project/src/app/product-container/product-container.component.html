@@ -1,4 +1,4 @@
-<app-top-bar [categories]="categories" [offers]="offers" (selectedCategories)="addToCategories($event)" (selectedOffers)="addToOffers($event)" ></app-top-bar>
+<app-top-bar [categories]="categories" [offers]="offers" [books]="bookList"   (selectedCategories)="addToCategories($event)" (selectedOffers)="addToOffers($event)" ></app-top-bar>
 <app-product-list [products]="products" (Cart)="addToCart($event)"></app-product-list>
 
 <ng-container *ngFor="let product of Cart">

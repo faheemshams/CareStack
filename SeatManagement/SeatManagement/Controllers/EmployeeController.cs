@@ -30,7 +30,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:string}")]
+        [HttpGet("{EmployeeId}")]
         public IActionResult GetEmployee(string EmployeeId)
         {
             try
@@ -69,6 +69,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
+        [HttpPut]
         public IActionResult UpdateEmployee(EmployeeDto employeeDto)
         {
             if (employeeDto == null)
@@ -89,7 +90,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpDelete("{id:string}")]
+        [HttpDelete("{EmployeeId}")]
         public IActionResult DeleteEmployee(string EmployeeId)
         {
             try

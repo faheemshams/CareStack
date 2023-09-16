@@ -29,12 +29,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
-        public IActionResult GetCity(string cityAbbreviation)  
+        [HttpGet("{cityAbbrevation}")]
+        public IActionResult GetCity(string cityAbbrevation)  
         {
             try
             {
-                var result = _cityService.GetItem(cityAbbreviation);
+                var result = _cityService.GetItem(cityAbbrevation);
                 
                 if(result == null)
                 return NotFound();

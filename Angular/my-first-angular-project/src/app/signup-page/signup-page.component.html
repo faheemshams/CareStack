@@ -1,0 +1,34 @@
+<div class="signup-container">
+    <div class="error" *ngIf="!signUpForm.valid" >All Fields are required</div>
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div>
+            <label>Enter username</label>
+            <input type="text" name="username" formControlName="name">
+            <div class="validation-error" *ngIf="signUpForm.controls['name'].hasError('required')  && signUpForm.controls['name'].touched">Name is required</div>
+        </div>
+        <div>
+            <label>Enter email</label>
+            <input type="email" name="email" formControlName="email">
+            <div class="validation-error" *ngIf="signUpForm.controls['email'].hasError('required')  && signUpForm.controls['email'].touched">email is required</div>
+            <div class="validation-error" *ngIf="signUpForm.controls['email'].hasError('invalidEmail')">email not valid</div>
+        </div>
+        <div>
+            <label>Enter password</label>
+            <input type="text" name="pswd" formControlName="password">
+            <div class="validation-error" *ngIf="signUpForm.controls['password'].hasError('required')  && signUpForm.controls['password'].touched">password is required</div>
+        </div>
+        <div>
+            <label>Confirm Password</label>
+            <input type="password" name="username" formControlName="confirmPassword">
+            <div class="validation-error" *ngIf="signUpForm.controls['confirmPassword'].hasError('required')  && signUpForm.controls['confirmPassword'].touched">confirm password is required</div>
+        </div>
+        <div class="signup-container__buttons">
+            <button class="signup-container__buttons-signup" (click)="onSubmit()">Submit</button>
+            <button type="reset" class="signup-container__buttons-reset" (click)="onReset()">Reset</button>
+            <button type="button" class="signup-container__buttons-reset" (click)="populateSignUpForm()">Populate</button>
+        </div>   
+    </form>
+</div>
+
+{{signUpForm.value| json}}
+ 

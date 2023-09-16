@@ -1,0 +1,15 @@
+<div class="signin-container">
+    <div class="signin-container__form">
+        <label>Enter username</label>
+        <input type="text" name="email" [(ngModel)]="form.email">
+    </div>
+    <div>
+        <label>Enter Password</label>
+        <input type="password" name="username" [(ngModel)]="form.password">
+    </div>
+    <div class="signin-container__buttons">
+        <button class="signin-container__buttons-Login" (click)="onSubmit()">Login</button>
+        <button class="signip-container__buttons-Signup" (click)="onSignUp()">SignUp</button>
+    </div>   
+</div>
+

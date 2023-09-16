@@ -32,7 +32,7 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{MeetingRoomName}")]
         public IActionResult GetMeetingRoom(string MeetingRoomName)
         {
             try

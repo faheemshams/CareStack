@@ -3,6 +3,7 @@ export interface IProductList
       id : number;
       label : string;
       price : number;
+      isInCart? : boolean;
 }
 
 export interface ICategoryList
