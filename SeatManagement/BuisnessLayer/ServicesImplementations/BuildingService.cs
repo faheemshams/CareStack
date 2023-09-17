@@ -20,9 +20,9 @@ namespace BuisnessLayer.Services
             return _buildingRepository.GetAllItems().ToArray();
         }
 
-        public Building GetItem(string buildingAbbreviation)
+        public Building GetItemById(int BuildingId)
         {
-            var building = _buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingAbbreviation == buildingAbbreviation);
+            var building = _buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingId == BuildingId);
 
             if (building == null)
             return null;
@@ -69,7 +69,7 @@ namespace BuisnessLayer.Services
             existingBuilding.BuildingName = buildingDto.BuildingName;
             existingBuilding.FloorCount = buildingDto.FloorCount;   
 
-            if(_buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingAbbreviation == buildingDto.newAbbreviation) == null && buildingDto.newAbbreviation != null)
+            if(buildingDto.newAbbreviation != null && _buildingRepository.GetAllItems().FirstOrDefault(x => x.BuildingAbbreviation == buildingDto.newAbbreviation) == null)
             existingBuilding.BuildingAbbreviation = buildingDto.newAbbreviation;
             
             _buildingRepository.UpdateItem(existingBuilding);

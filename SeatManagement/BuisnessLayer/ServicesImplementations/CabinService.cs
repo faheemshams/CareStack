@@ -21,9 +21,9 @@ namespace BuisnessLayer.Services
             return _cabinRepository.GetAllItems().ToArray();
         }
 
-        public CabinRoom GetItem(string cabinNumber)
+        public CabinRoom GetItemById(int cabinId)
         {
-            return _cabinRepository.GetAllItems().FirstOrDefault(x => x.CabinNumber == cabinNumber);
+            return _cabinRepository.GetAllItems().FirstOrDefault(x => x.CabinId == cabinId);
         }
 
         public CabinRoom AddItem(CabinRoomDto cabin)
@@ -36,6 +36,7 @@ namespace BuisnessLayer.Services
             CabinRoom newCabin = new CabinRoom()
             {
                 CabinNumber = string.Format("C{0:D3}", cabinRoomCount + 1),
+                FacilityId = cabin.FacilityId,
                 EmployeeId = null
             };
 
@@ -61,10 +62,10 @@ namespace BuisnessLayer.Services
 
         public CabinRoom UpdateItem(CabinRoomDto cabinDto)
         {
-            var cabin = _cabinRepository.GetAllItems().FirstOrDefault(x => x.CabinNumber == cabinDto.CabinNumber);
+            var cabin = _cabinRepository.GetAllItems().FirstOrDefault(x => x.CabinId == cabinDto.CabinRoomId);
             var existingEmployee = _employeeRepository.GetItemById(cabinDto.EmployeeId);
 
-            if (cabin == null)
+            if (cabin?.EmployeeId != null || existingEmployee?.RoomTypeId != 1)
             return null;
 
             cabin.EmployeeId = cabinDto.EmployeeId;

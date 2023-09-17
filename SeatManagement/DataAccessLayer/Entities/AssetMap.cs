@@ -15,7 +15,5 @@ namespace DataAccessLayer.Entities
         public int LookupAssetId { get; set; }
         public virtual MeetingRoom MeetingRoom { get; set; }
         public virtual LookupAsset LookupAsset { get; set; }
-
-
     }
 }

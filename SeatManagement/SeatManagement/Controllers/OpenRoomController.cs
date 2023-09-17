@@ -29,12 +29,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{openRoomId}")]
-        public IActionResult GetOpenRoom(string openRoomId)
+        [HttpGet("{id}")]
+        public IActionResult GetOpenRoom(int id)
         {
             try
             {
-                var result = _openRoomService.GetItem(openRoomId);
+                var result = _openRoomService.GetItemById(id);
 
                 if (result == null)
                 return NotFound();
@@ -62,7 +62,7 @@ namespace PresentationLayer.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,ex + "Error creating new Openroom");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new Openroom");
             }
         }
 

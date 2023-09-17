@@ -19,12 +19,9 @@ namespace BuisnessLayer.Services
             return _employeeRepository.GetAllItems().ToArray();
         }
 
-        public Employee GetItem(string employeeId)
+        public Employee GetItemById(int employeeId)
         {
-            if (int.TryParse(employeeId, out int id))
-            return _employeeRepository.GetItemById(id);
-            else
-            return null;
+            return _employeeRepository.GetItemById(employeeId);
         }
 
         public Employee AddItem(EmployeeDto employeeDto)
@@ -36,7 +33,7 @@ namespace BuisnessLayer.Services
             {
                 EmployeeName = employeeDto.EmployeeName,
                 DeptId = employeeDto.DeptId,
-                RoomTypeId = 1                   //default value -> not allocated to any room
+                RoomTypeId = 1                          //default value -> not allocated to any room
             };
                                 
             _employeeRepository.AddItem(employee);

@@ -30,12 +30,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{EmployeeId}")]
-        public IActionResult GetEmployee(string EmployeeId)
+        [HttpGet("{id}")]
+        public IActionResult GetEmployee(int id)
         {
             try
             {
-                var employee = _employeeService.GetItem(EmployeeId);
+                var employee = _employeeService.GetItemById(id);
 
                 if (employee == null)
                 return NotFound();

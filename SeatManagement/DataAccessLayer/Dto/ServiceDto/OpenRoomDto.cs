@@ -8,7 +8,7 @@ namespace DataAccessLayer.Dto.ServiceDto
 {
     public class OpenRoomDto
     {
-        public string OpenRoomName { get; set; }
+        public int? OpenRoomId { get; set; }
         public int SeatCount { get; set; }
         public int FacilityId { get; set; }
     }

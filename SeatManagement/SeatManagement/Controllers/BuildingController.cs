@@ -29,12 +29,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{BuildingAbbrevation}")]
-        public IActionResult GetBuilding(string BuildingAbbrevation)
+        [HttpGet("{id}")]
+        public IActionResult GetBuilding(int id)
         {
             try
             {
-                var result = _buildingService.GetItem(BuildingAbbrevation);
+                var result = _buildingService.GetItemById(id);
 
                 if (result == null)
                 return NotFound();

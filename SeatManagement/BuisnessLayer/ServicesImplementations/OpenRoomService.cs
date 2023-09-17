@@ -24,13 +24,9 @@ namespace BuisnessLayer.Services
             return _openRoomRepository.GetAllItems().ToArray();
         }
 
-        public OpenRoom GetItem(string openRoomId)
+        public OpenRoom GetItemById(int openRoomId)
         {
-            if (int.TryParse(openRoomId, out int id))
-            return _openRoomRepository.GetAllItems().FirstOrDefault(x => x.OpenRoomId == id);
-            
-            else
-            return null;
+            return _openRoomRepository.GetAllItems().FirstOrDefault(x => x.OpenRoomId == openRoomId);
         }
 
         public OpenRoom AddItem(OpenRoomDto openRoomDto)
@@ -77,7 +73,7 @@ namespace BuisnessLayer.Services
 
         public OpenRoom UpdateItem(OpenRoomDto newOpenRoom)
         {
-            var existingOpenRoom = _openRoomRepository.GetAllItems().FirstOrDefault(x=> x.FacilityId == newOpenRoom.FacilityId);
+            var existingOpenRoom = _openRoomRepository.GetAllItems().FirstOrDefault(x=> x.OpenRoomId == newOpenRoom.OpenRoomId);
 
             if (existingOpenRoom == null)
             return null;

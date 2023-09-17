@@ -33,11 +33,11 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetAllocatedSeat(string id)
+        public IActionResult GetAllocatedSeat(int id)
         {
             try
             {
-                var openRoomSeat = _openSeatAllocation.GetItem(id);
+                var openRoomSeat = _openSeatAllocation.GetItemById(id);
 
                 if (openRoomSeat == null)
                 return NotFound();

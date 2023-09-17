@@ -29,12 +29,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{FacilityName}")]
-        public IActionResult GetFacility(string FacilityName)
+        [HttpGet("{id}")]
+        public IActionResult GetFacility(int id)
         {
             try
             {
-                var result = _facilityService.GetItem(FacilityName);
+                var result = _facilityService.GetItemById(id);
 
                 if (result == null)
                 return NotFound();

@@ -29,12 +29,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{cityAbbrevation}")]
-        public IActionResult GetCity(string cityAbbrevation)  
+        [HttpGet("{id}")]
+        public IActionResult GetCity(int id)  
         {
             try
             {
-                var result = _cityService.GetItem(cityAbbrevation);
+                var result = _cityService.GetItemById(id);
                 
                 if(result == null)
                 return NotFound();
@@ -91,7 +91,7 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                var result = _cityService.GetItem(cityAbbreviation);
+                var result = _cityService.GetItemById(0);
 
                 if (result == null)
                 return NotFound("City not found");

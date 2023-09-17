@@ -29,12 +29,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{CabinNumber}")]
-        public IActionResult GetCabinRoom(string CabinNumber)
+        [HttpGet("{id}")]
+        public IActionResult GetCabinRoom(int id)
         {
             try
             {
-                var result = _cabinRoomService.GetItem(CabinNumber);
+                var result = _cabinRoomService.GetItemById(id);
 
                 if (result == null)
                     return NotFound();

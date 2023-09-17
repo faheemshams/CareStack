@@ -17,9 +17,9 @@ namespace BuisnessLayer.Services
             return _cityRepository.GetAllItems().ToArray();
         }
 
-        public City GetItem(string cityAbbreviation)
+        public City GetItemById(int CityId)
         {
-            var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == cityAbbreviation);
+            var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityId == CityId);
 
             if (city == null)
             return null;
@@ -59,11 +59,14 @@ namespace BuisnessLayer.Services
         {
             var existingCity = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == newCity.CityAbbreviation);
 
-            if (existingCity == null)
+            if(existingCity == null)
             return null;
 
+            if(newCity.newAbbreviation != null && _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == newCity.newAbbreviation) == null)
+            existingCity.CityAbbreviation = newCity.newAbbreviation;
+
             existingCity.CityName = newCity.CityName;
-            existingCity.CityAbbreviation = newCity.CityAbbreviation;
+           
             _cityRepository.UpdateItem(existingCity);
             return existingCity;
         }

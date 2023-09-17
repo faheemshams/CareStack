@@ -19,9 +19,9 @@ namespace BuisnessLayer.Services
             return _meetingRoomRepository.GetAllItems().ToArray();
         }
 
-        public MeetingRoom GetItem(string MeetingRoomNumber)
+        public MeetingRoom GetItemById(int MeetingRoomId)
         {
-            return _meetingRoomRepository.GetAllItems().FirstOrDefault(x => x.MeetingRoomNumber ==  MeetingRoomNumber);
+            return _meetingRoomRepository.GetAllItems().FirstOrDefault(x => x.MeetingRoomId ==  MeetingRoomId);
         }
 
         public MeetingRoom AddItem(MeetingRoomDto meetingRoom)
@@ -54,12 +54,11 @@ namespace BuisnessLayer.Services
 
         public MeetingRoom UpdateItem(MeetingRoomDto meetingRoomDto)
         {
-            var meetingRoom = _meetingRoomRepository.GetAllItems().FirstOrDefault(x => x.MeetingRoomNumber == meetingRoomDto.MeetingRoomNumber);
+            var meetingRoom = _meetingRoomRepository.GetAllItems().FirstOrDefault(x => x.MeetingRoomId == meetingRoomDto.MeetingRoomId);
 
             if (meetingRoom == null)
             return null;
 
-            //meetingRoom.FacilityId = meetingRoomDto.FacilityId;
             meetingRoom.SeatCount = meetingRoomDto.SeatCount;
 
             _meetingRoomRepository.UpdateItem(meetingRoom);

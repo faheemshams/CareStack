@@ -24,9 +24,9 @@ namespace BuisnessLayer.Services
             return _openRoomSeatMapRepository.GetAllItems().ToArray();
         }
 
-        public OpenRoomSeatAllocation GetItem(string seatNumber)
+        public OpenRoomSeatAllocation GetItemById(int seatId)
         {
-            return _openRoomSeatMapRepository.GetAllItems().FirstOrDefault(x => x.SeatNumber == seatNumber);
+            return _openRoomSeatMapRepository.GetAllItems().FirstOrDefault(x => x.SeatId == seatId);
         }
 
         public OpenRoomSeatAllocation AddItem(OpenRoomSeatAllocationDto openRoomSeatMap)
@@ -51,18 +51,19 @@ namespace BuisnessLayer.Services
 
         public OpenRoomSeatAllocation UpdateItem(OpenRoomSeatAllocationDto newSeatAllocation)
         {
-            var existingSeatAllocation = _openRoomSeatMapRepository.GetAllItems().FirstOrDefault(x => x.SeatNumber == newSeatAllocation.SeatNumber);
+            
+            var seat = _openRoomSeatMapRepository.GetAllItems().FirstOrDefault(x => x.OpenRoomId == newSeatAllocation.OpenRoomId && x.SeatNumber == newSeatAllocation.SeatNumber) ;
             var existingEmployee = _employeeRepository.GetItemById(newSeatAllocation.EmployeeId);
 
-            if (existingSeatAllocation?.EmployeeId != null  || existingEmployee?.RoomTypeId != 1)
+            if (seat?.EmployeeId != null  || existingEmployee?.RoomTypeId != 1)
             return null;
 
-            existingSeatAllocation.EmployeeId = newSeatAllocation.EmployeeId;
+            seat.EmployeeId = newSeatAllocation.EmployeeId;
             existingEmployee.RoomTypeId = 2;
 
-            _openRoomSeatMapRepository.UpdateItem(existingSeatAllocation);
+            _openRoomSeatMapRepository.UpdateItem(seat);
             _employeeRepository.UpdateItem(existingEmployee);
-            return existingSeatAllocation;
+            return seat;
         }
     }
 }

@@ -20,9 +20,9 @@ namespace BuisnessLayer.Services
             return _facilityRepository.GetAllItems().ToArray();
         }
 
-        public Facility GetItem(string FacilityName)
+        public Facility GetItemById(int FacilityId)
         {
-            var facility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityName == FacilityName);
+            var facility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityId == FacilityId);
 
             if (facility == null)
             return null;
@@ -57,7 +57,7 @@ namespace BuisnessLayer.Services
 
         public Facility UpdateItem(FacilityDto newFacility)
         {
-            var existingFacility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityName == newFacility.FacilityName);
+            var existingFacility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityId == newFacility.FacilityId);
 
             if (existingFacility == null)
             return null;
@@ -65,7 +65,8 @@ namespace BuisnessLayer.Services
             existingFacility.FacilityName = newFacility.FacilityName;
             existingFacility.BuildingId = newFacility.BuildingId;
             existingFacility.CityId = newFacility.CityId;   
-            //existingFacility.Floor = newFacility.Floor;              //checking needed
+            existingFacility.Floor = newFacility.Floor;           
+
             _facilityRepository.UpdateItem(existingFacility);
             return existingFacility;
         }

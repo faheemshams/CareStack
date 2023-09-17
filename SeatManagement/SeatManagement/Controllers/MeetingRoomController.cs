@@ -32,12 +32,12 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{MeetingRoomName}")]
-        public IActionResult GetMeetingRoom(string MeetingRoomName)
+        [HttpGet("{id}")]
+        public IActionResult GetMeetingRoom(int id)
         {
             try
             {
-                var meetingRoom = _meetingRoomService.GetItem(MeetingRoomName);
+                var meetingRoom = _meetingRoomService.GetItemById(id);
 
                 if (meetingRoom == null)
                 return NotFound();
