@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeatManagementConsole.Dto.Facility
+namespace SeatManagementConsole.Dto
 {
-    public class CreateFacilityDto
+    public class FacilityDto
     {
+        public int? FacilityId { get; set; }
         public string FacilityName { get; set; }
         public int Floor { get; set; }
         public int CityId { get; set; }

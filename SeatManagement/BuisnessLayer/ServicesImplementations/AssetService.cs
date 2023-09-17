@@ -1,28 +1,49 @@
-﻿using BuisnessLayer.Interfaces;
+﻿using BuisnessLayer.Exceptions;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BuisnessLayer.ServicesImplementations
+namespace BuisnessLayer.Services
 {
-    internal class AssetService : IService<AssetDto, AssetMap>
+    public class AssetService<T> : IService<AssetDto>
     {
         private readonly IRepository<AssetMap> _assetRepository;
+        private readonly IRepository<MeetingRoom> _meetingRoomRepository;
+        private readonly IRepository<LookupAsset> _lookupAssetRepository;
 
-        public AssetService(IRepository<AssetMap> _assetRepository)
+        public AssetService(IRepository<AssetMap> _assetRepository, IRepository<MeetingRoom> meetingRoomRepository, IRepository<LookupAsset> _lookupAsset)
         {
             this._assetRepository = _assetRepository;
+            this._meetingRoomRepository = meetingRoomRepository;
+            this._lookupAssetRepository = _lookupAsset;
         }
 
-        public AssetMap AddItem(AssetDto entity)
+        public AssetDto[] GetAllItems()
         {
-            if (entity == null)
-            return null;
+            AssetMap[] assetMappings = _assetRepository.GetAllItems().ToArray();
+            AssetDto[] assetDtos = new AssetDto[assetMappings.Length];
+
+            for(int i = 0; i < assetMappings.Length; i++)
+            {
+                assetDtos[i] = ConvertAssetToAssetDto(assetMappings[i]);
+            }
+            return assetDtos;   
+        }
+        public AssetDto GetItemById(int id)
+        {
+            var assetMap = _assetRepository.GetItemById(id);
+            if (assetMap == null)
+                throw new ExceptionWhileFetching("asset mapping not found");
+            else
+                return ConvertAssetToAssetDto(assetMap);
+        }
+        public void AddItem(AssetDto entity)
+        {
+            if (_meetingRoomRepository.GetItemById(entity.MeetingRoomId) == null)
+                throw new ExceptionWhileAdding("Meeting room doesn't exist");
+            if (_lookupAssetRepository.GetItemById(entity.LookUpAssetId) == null)
+                throw new ExceptionWhileAdding("Asset not found");
 
             AssetMap assetMap = new AssetMap()
             {
@@ -32,27 +53,27 @@ namespace BuisnessLayer.ServicesImplementations
             };
 
             _assetRepository.AddItem(assetMap);
-            return assetMap;
         }
 
-        public AssetMap DeleteItem(string name)
+        public void DeleteItem(string name)
         {
             throw new NotImplementedException();
         }
 
-        public AssetMap[] GetAllItems()
-        {
-            return _assetRepository.GetAllItems().ToArray();
-        }
-
-        public AssetMap GetItemById(int id)
-        {
-           return _assetRepository.GetItemById(id);
-        }
-
-        public AssetMap UpdateItem(AssetDto entity)
+        public void UpdateItem(AssetDto entity)
         {
             throw new NotImplementedException();
+        }
+
+        private AssetDto ConvertAssetToAssetDto(AssetMap asset)
+        {
+           return new AssetDto()
+            {
+                MeetingRoomId = asset.MeetingRoomId,
+                AssetMapId = asset.AssetMapId,
+                LookUpAssetId = asset.LookupAssetId,
+                Quantity = asset.Quantity,
+            };
         }
     }
 }

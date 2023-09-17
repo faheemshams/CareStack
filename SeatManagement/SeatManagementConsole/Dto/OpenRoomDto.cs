@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeatManagementConsole.Dto.OpenRoom
+namespace SeatManagementConsole.Dto
 {
     public class OpenRoomDto
     {
-        public int OpenRoomId { get; set; } 
-        public string OpenRoomName { get; set; }
+        public int? OpenRoomId { get; set; }
         public int SeatCount { get; set; }
         public int FacilityId { get; set; }
     }

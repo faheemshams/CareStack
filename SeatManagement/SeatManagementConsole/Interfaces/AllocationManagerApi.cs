@@ -10,8 +10,6 @@ namespace SeatManagementConsole.Interfaces
     {
         string CreateData(T data);
         List<T> GetData();
-        string Allocate(int id, T data);
-        void Deallocate(T data);
-        void DeleteData(T data);
+        string Allocate(T data);
     }
 }

@@ -3,6 +3,7 @@ using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace PresentationLayer.Controllers
 {
@@ -10,8 +11,8 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class OpenRoomController : ControllerBase
     {
-        IService<OpenRoomDto, OpenRoom> _openRoomService;
-        public OpenRoomController(IService<OpenRoomDto, OpenRoom> _openRoomService)
+        IService<OpenRoomDto> _openRoomService;
+        public OpenRoomController(IService<OpenRoomDto> _openRoomService)
         {
             this._openRoomService = _openRoomService;
         }
@@ -29,17 +30,17 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetOpenRoom(int id)
         {
             try
             {
                 var result = _openRoomService.GetItemById(id);
-
-                if (result == null)
-                return NotFound();
-
                 return Ok(result);
+            }
+            catch (ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -50,17 +51,18 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public IActionResult CreateOpenRoom(OpenRoomDto openRoomDto)
         {
+            if (openRoomDto == null)
+                return BadRequest();
             try
             {
-                if (openRoomDto == null)
-                return BadRequest();
-
-                if (_openRoomService.AddItem(openRoomDto) == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot create an OpenRoom");
-                 
-                return Ok();
+                _openRoomService.AddItem(openRoomDto);
+                return Ok("open room added successfully");
             }
-            catch (Exception ex)
+            catch (ExceptionWhileAdding ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new Openroom");
             }
@@ -74,35 +76,16 @@ namespace PresentationLayer.Controllers
 
             try
             {
-                var result = _openRoomService.UpdateItem(openRoomDto);
-
-                if (result == null)
-                {
-                    return NotFound("Openroom doesn't exist");
-                }
-                return Ok(result);
+                _openRoomService.UpdateItem(openRoomDto);
+                return Ok("Seat count increased successfully");
+            }
+            catch (ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error updating OpenRoom");
-            }
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteOpenRoom(string openRoomId)
-        {
-            try
-            {
-                var result = _openRoomService.DeleteItem(openRoomId);
-
-                if (result == null)
-                return NotFound("openroom not found");
-                else
-                return Ok("Deleted successfully");
-            }
-            catch (Exception Ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, Ex + "Error deleting the openrrom");
             }
         }
     }

@@ -6,33 +6,48 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Globalization;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace BuisnessLayer.Services
 {
-    public class OpenRoomService<Tin, Tout> : IService<OpenRoomDto, OpenRoom>
+    public class OpenRoomService<T> : IService<OpenRoomDto>
     {
         private readonly IRepository<OpenRoom> _openRoomRepository;
         private readonly IRepository<OpenRoomSeatAllocation> _openRoomSeatMapRepository;
+        private readonly IRepository<Facility> _facilityRepository;
          
-        public OpenRoomService(IRepository<OpenRoom> _repository,IRepository<OpenRoomSeatAllocation> _seatRepository)
+        public OpenRoomService(IRepository<OpenRoom> _repository,IRepository<OpenRoomSeatAllocation> _seatRepository, IRepository<Facility> _facilityRepository)
         {
             this._openRoomRepository = _repository;
             this._openRoomSeatMapRepository = _seatRepository;
+            this._facilityRepository = _facilityRepository;
         }
-        public OpenRoom[] GetAllItems()
+        public OpenRoomDto[] GetAllItems()
         {
-            return _openRoomRepository.GetAllItems().ToArray();
+            OpenRoom[] openRooms =  _openRoomRepository.GetAllItems().ToArray();
+            OpenRoomDto[] openRoomDtos = new OpenRoomDto[openRooms.Length];
+
+            for(int  i = 0; i < openRooms.Length; i++)
+                openRoomDtos[i] = ConvertEntityToDto(openRooms[i]);
+            return openRoomDtos;    
         }
 
-        public OpenRoom GetItemById(int openRoomId)
+        public OpenRoomDto GetItemById(int openRoomId)
         {
-            return _openRoomRepository.GetAllItems().FirstOrDefault(x => x.OpenRoomId == openRoomId);
+            var openRoom = _openRoomRepository.GetItemById(openRoomId);
+            if (openRoom == null)
+                throw new ExceptionWhileFetching("Open room not found");
+            else
+                return ConvertEntityToDto(openRoom);
         }
 
-        public OpenRoom AddItem(OpenRoomDto openRoomDto)
+        public void AddItem(OpenRoomDto openRoomDto)
         {
+            if (_facilityRepository.GetItemById(openRoomDto.FacilityId) == null)
+                throw new ExceptionWhileAdding("Facility doesn't exist");
+            
             if (_openRoomRepository.GetAllItems().FirstOrDefault(x => x.FacilityId == openRoomDto.FacilityId) != null)
-            return null;
+                throw new ExceptionWhileAdding("Already an open room exist for this facility");
             
             OpenRoom newOpenRoom = new OpenRoom()
             {
@@ -53,34 +68,20 @@ namespace BuisnessLayer.Services
                     _openRoomSeatMapRepository.AddItem(seat);
                 }
             }
-            return newOpenRoom;
+            else
+                throw new ExceptionWhileAdding("Could not create open room");
         }
 
-        public OpenRoom DeleteItem(string id)
-        {
-            /*refactoring needed
-             var openRoom = _openRoomRepository.GetItemById(id);
-
-             if (openRoom == null)
-             return null;
-
-
-             _openRoomRepository.DeleteItem(id);
-             return openRoom;
-            */
-            return null;
-        }
-
-        public OpenRoom UpdateItem(OpenRoomDto newOpenRoom)
+        public void UpdateItem(OpenRoomDto newOpenRoom)
         {
             var existingOpenRoom = _openRoomRepository.GetAllItems().FirstOrDefault(x=> x.OpenRoomId == newOpenRoom.OpenRoomId);
 
             if (existingOpenRoom == null)
-            return null;
-            
-            if(newOpenRoom.SeatCount > existingOpenRoom.SeatCount)
+                throw new ExceptionWhileUpdating("Open room doesn't exist");
+
+            if (newOpenRoom.SeatCount > existingOpenRoom.SeatCount)
             {
-                for (int i = existingOpenRoom.SeatCount+1; i <= newOpenRoom.SeatCount; ++i)
+                for (int i = existingOpenRoom.SeatCount + 1; i <= newOpenRoom.SeatCount; ++i)
                 {
                     OpenRoomSeatAllocation seat = new OpenRoomSeatAllocation
                     {
@@ -93,7 +94,30 @@ namespace BuisnessLayer.Services
                 existingOpenRoom.SeatCount = newOpenRoom.SeatCount;
                 _openRoomRepository.UpdateItem(existingOpenRoom);
             }
-            return existingOpenRoom;
+            else
+                throw new ExceptionWhileUpdating("Seat count can only be increased at the moment");
+        }
+        private OpenRoomDto ConvertEntityToDto(OpenRoom openRoom)
+        {
+            return new OpenRoomDto()
+            {
+                OpenRoomId=openRoom.OpenRoomId,
+                FacilityId=openRoom.FacilityId,
+                SeatCount=openRoom.SeatCount,
+            };
+        }
+        public void DeleteItem(string id)
+        {
+            /*refactoring needed
+             var openRoom = _openRoomRepository.GetItemById(id);
+
+             if (openRoom == null)
+             return null;
+
+
+             _openRoomRepository.DeleteItem(id);
+             return openRoom;
+            */
         }
     }
 }

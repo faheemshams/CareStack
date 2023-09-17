@@ -5,10 +5,11 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace BuisnessLayer.Services
 {
-    public class OpenRoomSeatAllocationService<Tin, Tout> : IService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation>
+    public class OpenRoomSeatAllocationService<T> : IService<OpenRoomSeatAllocationDto>
     {
         private readonly IRepository<OpenRoomSeatAllocation> _openRoomSeatMapRepository;
         private readonly IRepository<Employee> _employeeRepository;
@@ -19,51 +20,80 @@ namespace BuisnessLayer.Services
             this._employeeRepository = employeeRepository;
         }
 
-        public OpenRoomSeatAllocation[] GetAllItems()
+        public OpenRoomSeatAllocationDto[] GetAllItems()
         {
-            return _openRoomSeatMapRepository.GetAllItems().ToArray();
+            OpenRoomSeatAllocation[] seats = _openRoomSeatMapRepository.GetAllItems().ToArray();
+            OpenRoomSeatAllocationDto[] seatDtos = new OpenRoomSeatAllocationDto[seats.Length];
+
+            for(int i = 0; i < seatDtos.Length; i++)
+            {
+                seatDtos[i] = ConvertAllocationToAllocationDto(seats[i]);
+            }
+            return seatDtos;
         }
 
-        public OpenRoomSeatAllocation GetItemById(int seatId)
+        public OpenRoomSeatAllocationDto GetItemById(int seatId)
         {
-            return _openRoomSeatMapRepository.GetAllItems().FirstOrDefault(x => x.SeatId == seatId);
+            var seat = _openRoomSeatMapRepository.GetAllItems().FirstOrDefault(x => x.SeatId == seatId);
+            if (seat == null)
+                throw new ExceptionWhileFetching("Seat is not found");
+            else
+                return ConvertAllocationToAllocationDto(seat);
         }
 
-        public OpenRoomSeatAllocation AddItem(OpenRoomSeatAllocationDto openRoomSeatMap)
+        public void UpdateItem(OpenRoomSeatAllocationDto newSeatAllocation)
         {
-            return null;
-            //update fn contains allocation code
-        }
-
-        public OpenRoomSeatAllocation DeleteItem(string id)
-        {
-            /*refactoring needed
-            
-            var openRoomSeatMap = _openRoomSeatMapRepository.GetItemById(id);
-
-            if (openRoomSeatMap == null)
-                return null;
-
-            _openRoomSeatMapRepository.DeleteItem(id);  
-            return openRoomSeatMap;*/
-            return null;
-        }
-
-        public OpenRoomSeatAllocation UpdateItem(OpenRoomSeatAllocationDto newSeatAllocation)
-        {
-            
             var seat = _openRoomSeatMapRepository.GetAllItems().FirstOrDefault(x => x.OpenRoomId == newSeatAllocation.OpenRoomId && x.SeatNumber == newSeatAllocation.SeatNumber) ;
             var existingEmployee = _employeeRepository.GetItemById(newSeatAllocation.EmployeeId);
 
-            if (seat?.EmployeeId != null  || existingEmployee?.RoomTypeId != 1)
-            return null;
+            if (seat == null)
+                throw new ExceptionWhileUpdating("Seat not found");
+            if (existingEmployee == null)
+                throw new ExceptionWhileUpdating("Employee not found");
+            if (existingEmployee.RoomTypeId != 1)
+                throw new ExceptionWhileUpdating("Employee already seated");
+            if (seat.EmployeeId != null)
+                throw new ExceptionWhileUpdating("Seat already occupied");
 
             seat.EmployeeId = newSeatAllocation.EmployeeId;
             existingEmployee.RoomTypeId = 2;
 
             _openRoomSeatMapRepository.UpdateItem(seat);
             _employeeRepository.UpdateItem(existingEmployee);
-            return seat;
+        }
+        private OpenRoomSeatAllocationDto ConvertAllocationToAllocationDto(OpenRoomSeatAllocation seat)
+        {
+            OpenRoomSeatAllocationDto seatDto = new OpenRoomSeatAllocationDto
+            {
+                OpenRoomId = seat.OpenRoomId,
+                AllocationId = seat.SeatId,
+                SeatNumber = seat.SeatNumber,
+            };
+
+            if (seat.EmployeeId != null)
+                seatDto.EmployeeId = (int)seat.EmployeeId;
+            return seatDto;
+        }
+        private OpenRoomSeatAllocationDto ConvertEntityToDto(OpenRoomSeatAllocation seat)
+        {
+            OpenRoomSeatAllocationDto seatDto = new OpenRoomSeatAllocationDto()
+            {
+                AllocationId = seat.SeatId,
+                OpenRoomId = seat.OpenRoomId,
+                SeatNumber = seat.SeatNumber,
+            };
+            if (seat.EmployeeId != null)
+                seatDto.EmployeeId = (int)seat.EmployeeId;
+            return seatDto;
+        }
+        public void AddItem(OpenRoomSeatAllocationDto openRoomSeatMap)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteItem(string id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,9 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer.View
+namespace DataAccessLayer.Implementations
 {
-    public class View
+    public class View : IView
     {
         private readonly IRepository<OpenRoomSeatAllocation> _openRoomSeatMapRepository;
         private readonly IRepository<CabinRoom> _cabinRoomRepository;
@@ -21,7 +21,7 @@ namespace DataAccessLayer.View
             this._cabinRoomRepository = _cabinRoomRepository;
         }
 
-        public ReportView[] getView()
+        public ReportView[] GetView()
         {
             var openRoomReport = _openRoomSeatMapRepository.GetAllItems()
                .Include(x => x.OpenRoom)

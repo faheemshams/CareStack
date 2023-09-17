@@ -2,6 +2,7 @@
 using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace PresentationLayer.Controllers
 {
@@ -9,9 +10,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IService<EmployeeDto,Employee> _employeeService;
+        private readonly IService<EmployeeDto> _employeeService;
 
-        public EmployeeController(IService<EmployeeDto, Employee> employeeService)
+        public EmployeeController(IService<EmployeeDto> employeeService)
         {
             _employeeService = employeeService;
         }
@@ -30,17 +31,17 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetEmployee(int id)
         {
             try
             {
                 var employee = _employeeService.GetItemById(id);
-
-                if (employee == null)
-                return NotFound();
-                else
                 return Ok(employee);
+            }
+            catch (ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -51,17 +52,12 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public IActionResult CreateEmployee(EmployeeDto employeeDto)
         {
+            if (employeeDto == null)
+                return BadRequest();
             try
             {
-                if (employeeDto == null)
-                return BadRequest();
-
-                var createdEmployee = _employeeService.AddItem(employeeDto);
-
-                if (createdEmployee == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot create employee");
-
-                return Ok(createdEmployee);
+                _employeeService.AddItem(employeeDto);
+                return Ok("employee added successfully");
             }
             catch (Exception)
             {
@@ -77,12 +73,12 @@ namespace PresentationLayer.Controllers
 
             try
             {
-               var updatedEmployee = _employeeService.UpdateItem(employeeDto);
-
-                if (updatedEmployee == null)
-                return NotFound("Employee not found");
-
-                return Ok(updatedEmployee);
+                _employeeService.UpdateItem(employeeDto);
+                return Ok("employee updated successfully");
+            }
+            catch(ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -90,22 +86,10 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpDelete("{EmployeeId}")]
+        [HttpDelete("{EmployeeId:int}")]
         public IActionResult DeleteEmployee(string EmployeeId)
         {
-            try
-            {
-                var deletedEmployee = _employeeService.DeleteItem(EmployeeId);
-
-                if (deletedEmployee == null)
-                return NotFound("Employee not found");
-
-                return Ok("Employee deleted successfully");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting employee");
-            }
+           return BadRequest(); 
         }
     }
 }

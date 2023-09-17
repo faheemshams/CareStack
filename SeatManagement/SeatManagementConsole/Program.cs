@@ -18,9 +18,8 @@
                 Console.WriteLine("4. Onboard Cabins");
                 Console.WriteLine("5. Onboard Meeting Rooms");
                 Console.WriteLine("6. Allocate Employee");
-                Console.WriteLine("7. UnAllocate Employee");
-                Console.WriteLine("8. Generate Reports");
-                Console.WriteLine("9. Exit");
+                Console.WriteLine("7. Generate Reports");
+                Console.WriteLine("8. Exit");
 
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
@@ -67,26 +66,8 @@
                         }
                         break;
 
-                    case "7":
+                    case "7": 
                         
-                        
-                        
-                        
-                        /*
-                        Console.WriteLine("Generate Report For \n1.AllocatedSeat\n2.UnAllocatedSeat\n");
-                        int input = Convert.ToInt32(Console.ReadLine());
-                        if (input == 1)
-                        {
-                            reporting.Allocatedreport();
-                        }
-                        else if (input == 2)
-                        {
-                            reporting.unAllocatedreport();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Enter Valid input");
-                        }*/
                         break;
 
                     case "8":

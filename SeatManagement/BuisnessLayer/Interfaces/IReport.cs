@@ -2,8 +2,8 @@
 
 namespace BuisnessLayer.Interfaces
 {
-    public interface IReport<T> where T : class 
+    public interface IReport
     {
-        T[] GetView(FilterConditionsDto filters);
+        ReportView[] GetView(FilterConditionsDto filters);
     }
 }

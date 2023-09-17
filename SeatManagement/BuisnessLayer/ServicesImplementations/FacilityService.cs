@@ -5,33 +5,50 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace BuisnessLayer.Services
 {
-    public class FacilityService<Tin, Tout> : IService<FacilityDto, Facility>
+    public class FacilityService<T> : IService<FacilityDto>
     { 
         private readonly IRepository<Facility> _facilityRepository;
-        public FacilityService(IRepository<Facility> _repository)
+        private readonly IRepository<Building> _buildingRepository;
+        private readonly IRepository<City> _cityRepository;
+        public FacilityService(IRepository<Facility> _facilityRepository, IRepository<Building> _buildingRepository, IRepository<City> _cityRepository)
         {
-            this._facilityRepository = _repository;
+            this._facilityRepository = _facilityRepository;
+            this._buildingRepository = _buildingRepository; 
+            this._cityRepository = _cityRepository; 
         }
-        public Facility[] GetAllItems()
+        public FacilityDto[] GetAllItems()
         {
-            return _facilityRepository.GetAllItems().ToArray();
+            Facility[] facilities =  _facilityRepository.GetAllItems().ToArray();
+            FacilityDto[] facilityDtos = new FacilityDto[facilities.Length];
+
+            for(int i = 0; i < facilities.Length; i++)
+            {
+                facilityDtos[i] = ConvertFacilityToFacilityDto(facilities[i]);  
+            }
+            return facilityDtos;
         }
 
-        public Facility GetItemById(int FacilityId)
+        public FacilityDto GetItemById(int FacilityId)
         {
-            var facility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityId == FacilityId);
-
+            var facility = _facilityRepository.GetItemById(FacilityId);
             if (facility == null)
-            return null;
-
-            return _facilityRepository.GetItemById(facility.FacilityId);
+                throw new ExceptionWhileFetching("Facility not found");
+            else
+                return ConvertFacilityToFacilityDto(facility);
         }
 
-        public Facility AddItem(FacilityDto facilityDto)
+        public void AddItem(FacilityDto facilityDto)
         {
+            if (_buildingRepository.GetItemById(facilityDto.BuildingId) == null)
+                throw new ExceptionWhileAdding("Building not found");
+
+            if (_buildingRepository.GetItemById(facilityDto.CityId) == null)
+                throw new ExceptionWhileAdding("City not found");
+            
             Facility facility = new Facility()
             {
                 FacilityName = facilityDto.FacilityName,
@@ -39,28 +56,19 @@ namespace BuisnessLayer.Services
                 BuildingId = facilityDto.BuildingId,
                 Floor = facilityDto.Floor
             };
-            //exception handling required
             _facilityRepository.AddItem(facility);
-            return facility;
         }
 
-        public Facility DeleteItem(string FacilityName)
-        {
-            var facility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityName == FacilityName);   
-
-            if (facility == null)
-            return null;
-
-            _facilityRepository.DeleteItem(facility.FacilityId);
-            return facility;
-        }
-
-        public Facility UpdateItem(FacilityDto newFacility)
+        public void UpdateItem(FacilityDto newFacility)
         {
             var existingFacility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityId == newFacility.FacilityId);
 
             if (existingFacility == null)
-            return null;
+                throw new ExceptionWhileUpdating("Facility not found");
+            if (_buildingRepository.GetItemById(newFacility.BuildingId) == null)
+                throw new ExceptionWhileUpdating("Building not found");
+            if (_buildingRepository.GetItemById(newFacility.CityId) == null)
+                throw new ExceptionWhileUpdating("City not found");
 
             existingFacility.FacilityName = newFacility.FacilityName;
             existingFacility.BuildingId = newFacility.BuildingId;
@@ -68,7 +76,28 @@ namespace BuisnessLayer.Services
             existingFacility.Floor = newFacility.Floor;           
 
             _facilityRepository.UpdateItem(existingFacility);
-            return existingFacility;
+        }
+
+        private FacilityDto ConvertFacilityToFacilityDto(Facility facility)
+        {
+           return new FacilityDto()
+            {
+                FacilityId = facility.FacilityId,
+                FacilityName = facility.FacilityName,
+                BuildingId = facility.BuildingId,   
+                CityId = facility.CityId,   
+                Floor = facility.Floor, 
+            };
+        }
+        public void DeleteItem(string FacilityName)
+        {
+            /*var facility = _facilityRepository.GetAllItems().FirstOrDefault(x => x.FacilityName == FacilityName);   
+
+            if (facility == null)
+            return null;
+
+            _facilityRepository.DeleteItem(facility.FacilityId);
+            return ConvertFacilityToFacilityDto(facility);*/
         }
     }
 }

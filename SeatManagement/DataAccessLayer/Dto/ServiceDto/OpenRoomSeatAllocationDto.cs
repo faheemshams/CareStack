@@ -13,4 +13,4 @@ namespace DataAccessLayer.Dto.ServiceDto
         public int OpenRoomId { get; set; }
         public int EmployeeId { get; set; }
     }
-}
+} 

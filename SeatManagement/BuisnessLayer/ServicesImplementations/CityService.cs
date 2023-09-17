@@ -2,37 +2,44 @@
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace BuisnessLayer.Services
 {
-    public class CityService<Tin, Tout> : IService<CityDto, City>
+    public class CityService<T> : IService<CityDto>
     { 
         private readonly IRepository<City> _cityRepository;
         public CityService(IRepository<City> _repository)
         {
             this._cityRepository = _repository;
         }
-        public City[] GetAllItems()
+        public CityDto[] GetAllItems()
         {
-            return _cityRepository.GetAllItems().ToArray();
+            City[] cities =  _cityRepository.GetAllItems().ToArray();
+            CityDto[] cityDtos = new CityDto[cities.Length];
+
+            for(int i = 0; i < cities.Length; i++)
+            {
+                cityDtos[i] = ConvertCityToCityDto(cities[i]);
+            }
+            return cityDtos;
         }
 
-        public City GetItemById(int CityId)
+        public CityDto GetItemById(int CityId)
         {
-            var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityId == CityId);
-
+            var city = _cityRepository.GetItemById(CityId);
             if (city == null)
-            return null;
-            
-            return _cityRepository.GetItemById(city.CityId);
+                throw new ExceptionWhileFetching("City not found");
+            else
+                return ConvertCityToCityDto(city);
         }
 
-        public City AddItem(CityDto cityDto)
+        public void AddItem(CityDto cityDto)
         {
             var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == cityDto.CityAbbreviation);
 
             if (city != null)
-            return null;
+                throw new ExceptionWhileAdding("City abbrevation already exist");
 
             City newCity = new City()
             {
@@ -41,34 +48,40 @@ namespace BuisnessLayer.Services
             };
 
             _cityRepository.AddItem(newCity);
-            return newCity;
         }
 
-        public City DeleteItem(string cityAbbreviation)
+        public void DeleteItem(string cityAbbreviation)
         {
             var city = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == cityAbbreviation);
 
             if (city == null)
-            return null;
+                throw new ExceptionWhileFetching("City doesn't exist");
 
             _cityRepository.DeleteItem(city.CityId);
-            return city;
         } 
 
-        public City UpdateItem(CityDto newCity)
+        public void UpdateItem(CityDto newCity)
         {
             var existingCity = _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == newCity.CityAbbreviation);
 
-            if(existingCity == null)
-            return null;
+            if (existingCity == null)
+                throw new ExceptionWhileFetching("The city doesn't exist");
 
-            if(newCity.newAbbreviation != null && _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == newCity.newAbbreviation) == null)
+            if (newCity.newAbbreviation != null && newCity.newAbbreviation != newCity.CityAbbreviation && _cityRepository.GetAllItems().FirstOrDefault(x => x.CityAbbreviation == newCity.newAbbreviation) != null)
+                throw new ExceptionWhileUpdating("Duplicate abbrevation not allowed");
+                
             existingCity.CityAbbreviation = newCity.newAbbreviation;
-
             existingCity.CityName = newCity.CityName;
-           
             _cityRepository.UpdateItem(existingCity);
-            return existingCity;
+        }
+        private CityDto ConvertCityToCityDto(City city)
+        {
+            return new CityDto()
+            {
+                CityId = city.CityId,
+                CityName = city.CityName,
+                CityAbbreviation = city.CityAbbreviation,
+            };
         }
     }
 }

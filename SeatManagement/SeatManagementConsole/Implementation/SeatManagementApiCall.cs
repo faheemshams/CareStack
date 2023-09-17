@@ -52,14 +52,14 @@ namespace SeatManagementConsole.Implementation
                 return ex.Message;
             }
         }
-        public string Allocate(int id, T data)
+        public string Allocate(T data)
         {
             try
             {
                 var json = JsonConvert.SerializeObject(data);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = client.PutAsync($"{apiEndpoint}/{id}", content).Result;
+                var response = client.PutAsync($"{apiEndpoint}/", content).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     return "Allocated to the seat.";
@@ -72,10 +72,6 @@ namespace SeatManagementConsole.Implementation
                 return ex.Message;
             }
         }
-        public void Deallocate(T data)
-        {
 
-        }
-        public void DeleteData(T data) { }
     }
 }

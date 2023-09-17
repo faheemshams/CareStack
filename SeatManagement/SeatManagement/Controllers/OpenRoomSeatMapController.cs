@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace PresentationLayer.Controllers
 {
@@ -11,9 +12,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class OpenRoomSeatMapController : ControllerBase
     {
-        private readonly IService<OpenRoomSeatAllocationDto,OpenRoomSeatAllocation> _openSeatAllocation;
+        private readonly IService<OpenRoomSeatAllocationDto> _openSeatAllocation;
 
-        public OpenRoomSeatMapController(IService<OpenRoomSeatAllocationDto, OpenRoomSeatAllocation> _openSeatAllocation)
+        public OpenRoomSeatMapController(IService<OpenRoomSeatAllocationDto> _openSeatAllocation)
         {
             this._openSeatAllocation = _openSeatAllocation;
         }
@@ -28,21 +29,21 @@ namespace PresentationLayer.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500,ex +  "Error while retrieving Open Room Seats");
+                return StatusCode(500,"Error while retrieving Open Room Seats");
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetAllocatedSeat(int id)
         {
             try
             {
                 var openRoomSeat = _openSeatAllocation.GetItemById(id);
-
-                if (openRoomSeat == null)
-                return NotFound();
-
                 return Ok(openRoomSeat);
+            }
+            catch (ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -58,34 +59,16 @@ namespace PresentationLayer.Controllers
 
             try
             {
-                var updatedSeat = _openSeatAllocation.UpdateItem(openRoomSeatMapDto);
-
-                if (updatedSeat == null)
-                return NotFound("Could not update seat details");
-
-                return Ok(updatedSeat);
+                _openSeatAllocation.UpdateItem(openRoomSeatMapDto);
+                return Ok("employee successfully allocated");
+            }
+            catch (ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
                 return StatusCode(500, "Error updating OpenRoomSeatMap");
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult DeleteOpenRoomSeatMap(string id)
-        {
-            try
-            {
-                var deleteSeatAllocation = _openSeatAllocation.DeleteItem(id);
-
-                if (deleteSeatAllocation == null)
-                    return NotFound("No allocated seat found");
-
-                return Ok("Deleted successfully");
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Error deleting Allocated seat");
             }
         }
     }

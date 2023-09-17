@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeatManagementConsole.Dto.OpenRoomSeatAllocation
+namespace SeatManagementConsole.Dto
 {
-    public class AllocateOpenRoomAllocation
+    public class OpenRoomSeatAllocationDto
     {
-        public int SeatNumber { get; set; }
+        public int? AllocationId { get; set; }
+        public string SeatNumber { get; set; }
         public int OpenRoomId { get; set; }
         public int EmployeeId { get; set; }
     }

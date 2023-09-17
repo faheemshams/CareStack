@@ -21,8 +21,4 @@
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\ReportController\" />
-  </ItemGroup>
-
 </Project>

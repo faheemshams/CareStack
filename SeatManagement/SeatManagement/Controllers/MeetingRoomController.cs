@@ -4,6 +4,7 @@ using BuisnessLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace PresentationLayer.Controllers
 {
@@ -11,9 +12,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class MeetingRoomController : ControllerBase
     {
-        private readonly IService<MeetingRoomDto, MeetingRoom> _meetingRoomService;
+        private readonly IService<MeetingRoomDto> _meetingRoomService;
 
-        public MeetingRoomController(IService<MeetingRoomDto, MeetingRoom> meetingRoomService)
+        public MeetingRoomController(IService<MeetingRoomDto> meetingRoomService)
         {
             this._meetingRoomService = meetingRoomService;
         }
@@ -32,17 +33,17 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetMeetingRoom(int id)
         {
             try
             {
                 var meetingRoom = _meetingRoomService.GetItemById(id);
-
-                if (meetingRoom == null)
-                return NotFound();
-
                 return Ok(meetingRoom);
+            }
+            catch (ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -53,21 +54,21 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public IActionResult CreateMeetingRoom(MeetingRoomDto meetingRoomDto)
         {
+
+            if (meetingRoomDto == null)
+                return BadRequest();
             try
             {
-                if (meetingRoomDto == null)
-                return BadRequest();
-
-                var createdMeetingRoom = _meetingRoomService.AddItem(meetingRoomDto);
-
-                if (createdMeetingRoom == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot add meeting room");
-
-                return Ok(createdMeetingRoom);
+                _meetingRoomService.AddItem(meetingRoomDto);
+                return Ok("meeting room added successfully");
+            }
+            catch (ExceptionWhileAdding ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new meeting room");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error adding new meeting room");
             }
         }
 
@@ -79,12 +80,12 @@ namespace PresentationLayer.Controllers
 
             try
             {
-                var updatedMeetingRoom = _meetingRoomService.UpdateItem(meetingRoomDto);
-
-                if (updatedMeetingRoom == null)
-                return NotFound("Meeting room not found");
-
-                return Ok(updatedMeetingRoom);
+                _meetingRoomService.UpdateItem(meetingRoomDto);
+                return Ok("meeting room updated successfully");
+            }
+            catch (ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -95,19 +96,7 @@ namespace PresentationLayer.Controllers
         [HttpDelete]
         public IActionResult DeleteMeetingRoom(string MeetingRoomName)
         {
-            try
-            {
-                var deletedMeetingRoom = _meetingRoomService.DeleteItem(MeetingRoomName);
-
-                if (deletedMeetingRoom == null)
-                return NotFound("Meeting room not found");
-
-                return Ok("Meeting room deleted successfully");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the meeting room");
-            }
+           return BadRequest(); 
         }
     }
 }

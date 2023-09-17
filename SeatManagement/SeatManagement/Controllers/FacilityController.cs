@@ -3,6 +3,7 @@ using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace PresentationLayer.Controllers
 {
@@ -10,8 +11,8 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class FacilityController : ControllerBase
     { 
-        IService<FacilityDto, Facility> _facilityService;
-        public FacilityController(IService<FacilityDto, Facility> _facilityService)
+        IService<FacilityDto> _facilityService;
+        public FacilityController(IService<FacilityDto> _facilityService)
         {
             this._facilityService = _facilityService;
         }
@@ -29,17 +30,17 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetFacility(int id)
         {
             try
             {
                 var result = _facilityService.GetItemById(id);
-
-                if (result == null)
-                return NotFound();
-
                 return Ok(result);
+            }
+            catch(ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch(Exception)
             {
@@ -49,20 +50,21 @@ namespace PresentationLayer.Controllers
 
         [HttpPost]
         public IActionResult CreateFacility(FacilityDto facilityDto)
-        {   
+        {
+            if (facilityDto == null)
+                return BadRequest();
             try
             {
-                if(facilityDto == null)
-                return BadRequest();
-
-                if (_facilityService.AddItem(facilityDto) == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot add facility");
-
-                return Ok();
+                _facilityService.AddItem(facilityDto);
+                return Ok("facility added successfully");
+            }
+            catch (ExceptionWhileAdding ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new Facility");
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -73,13 +75,12 @@ namespace PresentationLayer.Controllers
             return BadRequest();
             try
             {
-                var result = _facilityService.UpdateItem(facilityDto);
-
-                if (result == null)
-                {
-                    return NotFound("Facility not found");
-                }
-                return Ok(result);
+                _facilityService.UpdateItem(facilityDto);
+                return Ok("facility updated successfully");
+            }
+            catch (ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -90,19 +91,7 @@ namespace PresentationLayer.Controllers
         [HttpDelete]
         public IActionResult DeleteFacility(string FacilityName)
         {
-            try
-            {
-                var result = _facilityService.DeleteItem(FacilityName);
-
-                if (result == null)
-                return NotFound("facility not found");
-                else
-                return Ok("Deleted successfully");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the facility");
-            }
+            return BadRequest();
         }
     }
 }

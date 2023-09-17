@@ -1,46 +1,77 @@
-﻿using BuisnessLayer.Interfaces;
+﻿using BuisnessLayer.Exceptions;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Interfaces;
 
 namespace BuisnessLayer.Services
 {
-    public class EmployeeService<Tin, Tout> : IService<EmployeeDto, Employee>
+    public class EmployeeService<T> : IService<EmployeeDto>
     {
         private readonly IRepository<Employee> _employeeRepository;
+        private readonly IRepository<Department> _departmentRepository;
 
-        public EmployeeService(IRepository<Employee> repository)
+        public EmployeeService(IRepository<Employee> repository, IRepository<Department> departmentRepository)
         {
             this._employeeRepository = repository;
+            _departmentRepository = departmentRepository;
         }
 
-        public Employee[] GetAllItems()
+        public EmployeeDto[] GetAllItems()
         {
-            return _employeeRepository.GetAllItems().ToArray();
+            Employee[] employees =  _employeeRepository.GetAllItems().ToArray();
+            EmployeeDto[] employeeDtos = new EmployeeDto[employees.Length];
+
+            for(int i = 0; i < employees.Length; i++)
+            {
+                employeeDtos[i] = ConvertEmployeToEmployeeDto(employees[i]);
+            }
+            return employeeDtos;
         }
 
-        public Employee GetItemById(int employeeId)
+        public EmployeeDto GetItemById(int employeeId)
         {
-            return _employeeRepository.GetItemById(employeeId);
+            var employee = _employeeRepository.GetItemById(employeeId);
+            if (employee == null)
+                throw new ExceptionWhileFetching("Employee not found");
+            else
+                return ConvertEmployeToEmployeeDto(employee);
         }
 
-        public Employee AddItem(EmployeeDto employeeDto)
+        public void AddItem(EmployeeDto employeeDto)
         {
-            if (employeeDto == null)
-            return null;
-
+            if (_departmentRepository.GetItemById(employeeDto.DeptId) == null)
+                throw new ExceptionWhileAdding("Department not found");
             Employee employee = new Employee()
             {
                 EmployeeName = employeeDto.EmployeeName,
                 DeptId = employeeDto.DeptId,
-                RoomTypeId = 1                          //default value -> not allocated to any room
+                RoomTypeId = 1                          
             };
-                                
             _employeeRepository.AddItem(employee);
-            return employee;
         }
 
-        public Employee DeleteItem(string id)
+        public void UpdateItem(EmployeeDto employeeDto)
+        {
+            var employee = _employeeRepository.GetItemById(employeeDto.EmployeeId);
+
+            if (employee == null)
+                throw new ExceptionWhileUpdating("Employee not found");
+
+            employee.EmployeeName = employeeDto.EmployeeName;
+            employee.DeptId = employeeDto.DeptId;
+            _employeeRepository.UpdateItem(employee);
+        }
+        private EmployeeDto ConvertEmployeToEmployeeDto(Employee employee)
+        {
+           return new EmployeeDto()
+            {
+                EmployeeId = employee.EmployeeId,
+                EmployeeName = employee.EmployeeName,
+                DeptId= employee.DeptId,
+            };
+        }
+        public void DeleteItem(string id)
         {
             /*refactor 
             var employee = _employeeRepository.GetItemById(id);
@@ -51,22 +82,6 @@ namespace BuisnessLayer.Services
             _employeeRepository.DeleteItem(id);
             return employee;
             */
-            return null;
-        }
-
-        public Employee UpdateItem(EmployeeDto employeeDto)
-        {
-            var employee = _employeeRepository.GetItemById(employeeDto.EmployeeId);
-
-            if (employee == null)
-            return null;
-
-            employee.EmployeeName = employeeDto.EmployeeName;
-            employee.DeptId = employeeDto.DeptId;
-            //existingEmployee.RoomTypeId = newEmployee.RoomTypeId;            need to change allocation too
-
-            _employeeRepository.UpdateItem(employee);
-            return employee;
         }
     }
 }

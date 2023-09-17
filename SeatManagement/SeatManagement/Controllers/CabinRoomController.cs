@@ -3,6 +3,7 @@ using DataAccessLayer.Interfaces;
 using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
+using BuisnessLayer.Exceptions;
 
 namespace PresentationLayer.Controllers
 {
@@ -10,36 +11,37 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class CabinRoomController : ControllerBase
     {
-        IService<CabinRoomDto, CabinRoom> _cabinRoomService;
-        public CabinRoomController(IService<CabinRoomDto, CabinRoom> _cabinRoomService)
+        IService<CabinRoomDto> _cabinRoomService;
+        public CabinRoomController(IService<CabinRoomDto> _cabinRoomService)
         {
             this._cabinRoomService = _cabinRoomService;
         }
 
         [HttpGet]
-        public IActionResult GetOpenRooms()
+        public IActionResult GetCabinRooms()
         {
             try
             {
-                return Ok(_cabinRoomService.GetAllItems());
+                var cabinrooms = (_cabinRoomService.GetAllItems());
+                return Ok(cabinrooms);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error while retrieving file");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error while retrieving cabin rooms");
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetCabinRoom(int id)
         {
             try
             {
                 var result = _cabinRoomService.GetItemById(id);
-
-                if (result == null)
-                    return NotFound();
-
                 return Ok(result);
+            }
+            catch(ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -50,16 +52,16 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public IActionResult CreateCabinRoom(CabinRoomDto cabinRoomDto)
         {
+            if (cabinRoomDto == null)
+                return BadRequest();
             try
             {
-                if (cabinRoomDto == null)
-                return BadRequest();
-
-                if (_cabinRoomService.AddItem(cabinRoomDto) == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, "Cannot create a CabinRoom");
-
-                return Ok();
-
+                _cabinRoomService.AddItem(cabinRoomDto);
+                return Ok("cabin created successfully");
+            }
+            catch(ExceptionWhileAdding ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -75,12 +77,16 @@ namespace PresentationLayer.Controllers
 
             try
             {
-                var result = _cabinRoomService.UpdateItem(cabinRoomDto);
-
-                if (result == null)
-                return NotFound("Cabinroom doesn't exist");
-                
-                return Ok(result);
+                _cabinRoomService.UpdateItem(cabinRoomDto);
+                return Ok("cabin room updated successfully");
+            }
+            catch(ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -91,19 +97,7 @@ namespace PresentationLayer.Controllers
         [HttpDelete]
         public IActionResult DeleteCabinRoom(string CabinNumber)
         {
-            try
-            {
-                var result = _cabinRoomService.DeleteItem(CabinNumber);
-
-                if (result == null)
-                return NotFound("Cabinroom not found");
-                else
-                return Ok("Deleted successfully");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the Cabinroom");
-            }
+            return BadRequest();
         }
     }
 }

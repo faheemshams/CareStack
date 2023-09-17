@@ -1,4 +1,5 @@
-﻿using BuisnessLayer.Interfaces;
+﻿using BuisnessLayer.Exceptions;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class BuildingController : ControllerBase
     {
-        IService<BuildingDto, Building> _buildingService;
+        IService<BuildingDto> _buildingService;
 
-        public BuildingController(IService<BuildingDto, Building> _buildingService) 
+        public BuildingController(IService<BuildingDto> _buildingService) 
         {
             this._buildingService = _buildingService;
         }
@@ -21,7 +22,8 @@ namespace PresentationLayer.Controllers
         {
             try
             {
-                return Ok(_buildingService.GetAllItems());
+                var buildings = _buildingService.GetAllItems();
+                return Ok(buildings);
             }
             catch (Exception)
             {
@@ -29,17 +31,17 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetBuilding(int id)
         {
             try
             {
-                var result = _buildingService.GetItemById(id);
-
-                if (result == null)
-                return NotFound();
-
-                return Ok(result);
+                var building = _buildingService.GetItemById(id);
+                return Ok(building);
+            }
+            catch(ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -53,32 +55,35 @@ namespace PresentationLayer.Controllers
             try
             {
                 if (buildingDto == null)
-                return BadRequest();
+                    return BadRequest();
 
-                if (_buildingService.AddItem(buildingDto) == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Duplicate abbreviation");
-
-                return Ok();
+                _buildingService.AddItem(buildingDto);   
+                return Ok("Building added successfully");
             }
-            catch (Exception)
+            catch (ExceptionWhileAdding ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new Building");
+                return Conflict(ex.Message);
+            }
+            catch(Exception) 
+            {
+                return StatusCode(500, "An error occurred while adding Building");
             }
         }
 
         [HttpPut]
         public IActionResult UpdateBuilding(BuildingDto newBuilding)
         {
+            if(newBuilding == null)
+                return BadRequest();
+            
             try
             {
-                var result = _buildingService.UpdateItem(newBuilding);
-
-                if (result == null)
-                {
-                    return NotFound("Building not found");
-                }
-
-                return Ok(result);
+                _buildingService.UpdateItem(newBuilding);
+                 return Ok("Building updated successfully");
+            }
+            catch(ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -89,19 +94,7 @@ namespace PresentationLayer.Controllers
         [HttpDelete]
         public IActionResult DeleteBuilding(string buildingAbbreviation)
         {
-            try
-            {
-                var result = _buildingService.DeleteItem(buildingAbbreviation);
-
-                if (result == null)
-                    return NotFound("Building not found");
-                else
-                    return Ok("Deleted successfully");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the City");
-            }
+            return BadRequest();
         }
     }
 }

@@ -1,10 +1,6 @@
-﻿using SeatManagementConsole.Dto.Cabin;
-using SeatManagementConsole.Dto.Employee;
-using SeatManagementConsole.Dto.OpenRoom;
-using SeatManagementConsole.Dto.OpenRoomSeatAllocation;
-using SeatManagementConsole.Implementation;
+﻿using SeatManagementConsole.Implementation;
 using SeatManagementConsole.Interfaces;
-using System.Globalization;
+using SeatManagementConsole.Dto
 
 namespace SeatManagementConsole
 {
@@ -12,12 +8,12 @@ namespace SeatManagementConsole
     {
         public void AllocateEmployeeToSeat()
         {
-            IAllocationManagerApi<OpenRoomAllocationDto> openSeatAllocation = new SeatManagementAPICall<OpenRoomAllocationDto>("OpenRoomSeatMap");
+            IAllocationManagerApi<OpenRoomSeatAllocationDto> openSeatAllocation = new SeatManagementAPICall<OpenRoomSeatAllocationDto>("OpenRoomSeatMap");
             IAllocationManagerApi<EmployeeDto> employeeData = new SeatManagementAPICall<EmployeeDto>("Employee");
+            IAllocationManagerApi<FilterConditionsDto> report = new SeatManagementAPICall<FilterConditionsDto>("Report");
             IAllocationManagerApi<OpenRoomDto> openRooms = new SeatManagementAPICall<OpenRoomDto>("OpenRoom");
-            IAllocationManagerApi<AllocateOpenRoomAllocation> AllocateOpenRoomseat = new SeatManagementAPICall<AllocateOpenRoomAllocation>("OpenRoomSeatMap");
 
-            var unAllocatedEmployees = employeeData.GetData().Where(e => e.RoomTypeId == 1).ToList();
+            var unAllocatedEmployees = report.GetData().Where(e => e.RoomTypeId == 1).ToList();
             
             Console.WriteLine("\n Unallocated Employees\n");
 

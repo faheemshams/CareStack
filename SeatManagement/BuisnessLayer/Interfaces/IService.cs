@@ -1,13 +1,11 @@
-﻿using DataAccessLayer.Entities;
-
-namespace BuisnessLayer.Interfaces
+﻿namespace BuisnessLayer.Interfaces
 {
-    public interface IService<Tin, Tout> 
+    public interface IService<T> 
     {
-        Tout[] GetAllItems();
-        Tout GetItemById(int id);
-        Tout AddItem(Tin entity);
-        Tout UpdateItem(Tin entity);
-        Tout DeleteItem(string name);
+        T[] GetAllItems();
+        T GetItemById(int id);
+        void AddItem(T entity);
+        void UpdateItem(T entity);
+        void DeleteItem(string name);
     }
 }

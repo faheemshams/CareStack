@@ -1,4 +1,5 @@
-﻿using BuisnessLayer.Interfaces;
+﻿using BuisnessLayer.Exceptions;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 using DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +10,9 @@ namespace PresentationLayer.Controllers
     [ApiController]
     public class CityController : ControllerBase
     {
-        IService<CityDto,City> _cityService;
+        IService<CityDto> _cityService;
 
-        public CityController(IService<CityDto, City> _cityService)
+        public CityController(IService<CityDto> _cityService)
         {
             this._cityService = _cityService;   
         }
@@ -29,17 +30,17 @@ namespace PresentationLayer.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public IActionResult GetCity(int id)  
         {
             try
             {
                 var result = _cityService.GetItemById(id);
-                
-                if(result == null)
-                return NotFound();
-
                 return Ok(result);
+            }
+            catch(ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -50,15 +51,16 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         public IActionResult CreateCity(CityDto cityDto) 
         {
+            if (cityDto == null)
+                return BadRequest();
             try
             {
-                if(cityDto == null)
-                return BadRequest();
-
-                if(_cityService.AddItem(cityDto) == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, "Duplicate abbreviation");
-
-                return Ok();
+                _cityService.AddItem(cityDto);
+                return Ok("city added successfully");
+            }
+            catch (ExceptionWhileAdding ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception) 
             {
@@ -69,16 +71,20 @@ namespace PresentationLayer.Controllers
         [HttpPut]
         public IActionResult UpdateCity(CityDto newCity)
         {
+            if(newCity == null)
+                return BadRequest();
             try
             {
-                var result = _cityService.UpdateItem(newCity);
-
-                if (result == null)
-                {
-                    return NotFound("City not found");
-                }
-
-                return Ok(result);
+                _cityService.UpdateItem(newCity);
+                 return Ok("city updated successfully");
+            }
+            catch (ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
+            }
+            catch (ExceptionWhileUpdating ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
@@ -89,19 +95,7 @@ namespace PresentationLayer.Controllers
         [HttpDelete]
         public IActionResult DeleteCity(string cityAbbreviation)
         {
-            try
-            {
-                var result = _cityService.GetItemById(0);
-
-                if (result == null)
-                return NotFound("City not found");
-                else
-                return Ok("Deleted successfully");
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting the City");
-            }
+           return BadRequest(); 
         }
     }
 }
