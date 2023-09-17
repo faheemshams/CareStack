@@ -13,5 +13,6 @@ namespace DataAccessLayer.Dto.ReportDto
         public int? Floor { get; set; }  
         public string? FacilityName {get; set; }
         public string? SeatState { get; set; } 
+        public string? BuildingAbbrevation { get; set; }    
     }
 }

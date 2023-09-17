@@ -18,7 +18,7 @@ namespace SeatManagementConsole.Implementation
             client = new HttpClient();
             client.BaseAddress = new Uri("https://localhost:7225/api/");
         }
-        public List<T> GetData()
+        public List<T> GetItems()
         {
             var response = client.GetAsync(apiEndpoint).Result;
             if (response.IsSuccessStatusCode)
@@ -32,7 +32,23 @@ namespace SeatManagementConsole.Implementation
                 return null;
             }
         }
-        public string CreateData(T data)
+
+        public T GetItemById(int id)
+        {
+            var response = client.GetAsync($"{apiEndpoint}/{id}").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = response.Content.ReadAsStringAsync().Result;
+                var getResponse = JsonConvert.DeserializeObject<T>(responseContent);
+                return getResponse;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public string AddItem(T data)
         {
             try
             {
@@ -40,19 +56,14 @@ namespace SeatManagementConsole.Implementation
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = client.PostAsync(apiEndpoint, content).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return "Added a new entry.";
-                }
                 return response.Content.ReadAsStringAsync().Result;
-
             }
             catch (Exception ex)
             {
                 return ex.Message;
             }
         }
-        public string Allocate(T data)
+        public string UpdateItem(T data)
         {
             try
             {
@@ -60,12 +71,7 @@ namespace SeatManagementConsole.Implementation
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 var response = client.PutAsync($"{apiEndpoint}/", content).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    return "Allocated to the seat.";
-                }
                 return response.Content.ReadAsStringAsync().Result;
-
             }
             catch (Exception ex)
             {

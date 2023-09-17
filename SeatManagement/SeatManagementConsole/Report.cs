@@ -1,5 +1,4 @@
 ﻿using SeatManagementConsole.Interfaces;
-using SeatManagementConsole.Dto.ReportDto;
 using SeatManagementConsole.Implementation;
 using Newtonsoft.Json;
 using System.Net;
@@ -10,7 +9,7 @@ namespace SeatManagementConsole
 {
     public class Report
     {
-        void addFilters()
+        public void addFilters()
         {
             Console.WriteLine("Enter filters if needed or press Enter");
 
@@ -39,99 +38,38 @@ namespace SeatManagementConsole
                 filterConditionsDto.SeatState = seatState;
             if(!FacilityName.Equals("\n"))
                 filterConditionsDto.FacilityName = FacilityName;        
+
+            getReportAsync(filterConditionsDto);
         }
 
-        void getReport(FilterConditionsDto filters)
+        async Task getReportAsync(FilterConditionsDto filters)
         {
-            var json = JsonConvert.SerializeObject(filters);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var requestJson = JsonConvert.SerializeObject(filters);
+            string apiUrl = "https://localhost:7225/api/Report";
 
-            var response = client.PostAsync(apiEndpoint, content).Result;
-            if (response.IsSuccessStatusCode)
+            using(var httpClient = new HttpClient())
             {
-                return "Added a new entry.";
-            }
-            return response.Content.ReadAsStringAsync().Result;
+                var content = new StringContent(requestJson, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
 
-        }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-}
-        
-          
-            
-
-
-            
-            
-            
-            
-            
-            
-            
-            
-            var json = JsonConvert.SerializeObject(data);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = client.PostAsync(apiEndpoint, content).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                return "Added a new entry.";
-            }
-            return response.Content.ReadAsStringAsync().Result;
-
-        }
-            catch (Exception ex)
-            {
-                return ex.Message;
-            }
-}
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        /*public void Allocatedreport()
-        {
-            IAllocationManagerApi<OpenRoomView> Allocatedreport = new SeatManagementAPICall<OpenRoomView>("OpenRoomView");
-            var report = Allocatedreport.GetData();
-            Console.WriteLine("Allocated Seats:\n");
-            if (report != null)
-            {
-                foreach (var r in report)
+                if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"{r.CityAbbreviation}-{r.BuildingAbbreviation}-{r.Floor}-{r.FacilityName}-S{r.SeatNumber}");
+                    string responseJson = await response.Content.ReadAsStringAsync();
+                    var responseDtos = JsonConvert.DeserializeObject<List<ReportView>>(responseJson);
+
+                    Console.WriteLine("SEAT NUMBER\tEMPLOYEE NAME\tEMPLOYEE ID\tFACILITY NAME\tFLOOR");
+
+                    foreach(var dto in responseDtos)
+                    {
+                        Console.WriteLine(dto.CityAbbreviation+ "-"+dto.BuildingAbbreviation+dto+"-"+dto.SeatNumber + "\t" + dto.EmployeeName + "\t" + dto.EmployeeId + "\t" + dto.FacilityName + "\t"+ dto.Floor);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"API request failed: {response.StatusCode}");
                 }
             }
-            else
-            {
-                Console.WriteLine("No Allocated Seats");
-            }
         }
-        public void unAllocatedreport()
-        {
-            IAllocationManagerApi<UnAllocatedSeat> Allocatedreport = new SeatManagementAPICall<UnAllocatedSeat>("UnAllocated");
-            var report = Allocatedreport.GetData();
-            Console.WriteLine("UnAllocated Seats:\n");
-            if (report != null)
-            {
-                foreach (var r in report)
-                {
-                    Console.WriteLine($"{r.CityAbbreviation}-{r.BuildingAbbreviation}-{r.Floor}-{r.FacilityName}-S{r.SeatNumber}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("No UnAllocated Seats.");
-            }
-        }*/
     }
 }
 

@@ -12,5 +12,6 @@ namespace SeatManagementConsole.Dto
         public int? EmployeeId { get; set; }
         public string EmployeeName { get; set; }
         public int DeptId { get; set; }
+        public int RoomType { get; set; }   
     }
 }

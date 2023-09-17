@@ -6,7 +6,7 @@
         {
             Onboarding onboarding = new Onboarding();
             Allocate allocation = new Allocate();
-            //Report reporting = new Report();
+            Report reporting = new Report();
 
             Console.WriteLine("Welcome to the Seat Management System!");
             while (true)
@@ -66,8 +66,7 @@
                         }
                         break;
 
-                    case "7": 
-                        
+                    case "7": reporting.addFilters();
                         break;
 
                     case "8":

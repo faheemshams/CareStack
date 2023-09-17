@@ -1,10 +1,4 @@
-﻿using SeatManagementConsole.Dto.Building;
-using SeatManagementConsole.Dto.Cabin;
-using SeatManagementConsole.Dto.City;
-using SeatManagementConsole.Dto.Employee;
-using SeatManagementConsole.Dto.Facility;
-using SeatManagementConsole.Dto.MeetingRoom;
-using SeatManagementConsole.Dto.OpenRoom;
+﻿using SeatManagementConsole.Dto;
 using SeatManagementConsole.Implementation;
 using SeatManagementConsole.Interfaces;
 
@@ -14,14 +8,15 @@ namespace SeatManagementConsole
     {
         public void OnboardFacility()
         {
-            IAllocationManagerApi<CreateFacilityDto> facilityManager = new SeatManagementAPICall<CreateFacilityDto>("Facility");
-            IAllocationManagerApi<City> citymanager = new SeatManagementAPICall<City>("City");
-            IAllocationManagerApi<Building> buildingmanager = new SeatManagementAPICall<Building>("Building");
+            IAllocationManagerApi<FacilityDto> facilityManager = new SeatManagementAPICall<FacilityDto>("Facility");
+            IAllocationManagerApi<CityDto> citymanager = new SeatManagementAPICall<CityDto>("City");
+            IAllocationManagerApi<BuildingDto> buildingmanager = new SeatManagementAPICall<BuildingDto>("Building");
 
-            var citylist = citymanager.GetData();
-            var buildinglist = buildingmanager.GetData();
+            var citylist = citymanager.GetItems();
+            var buildinglist = buildingmanager.GetItems();
 
             Console.WriteLine("\n<----- * Available Buildings * ----->");
+            
             foreach (var building in buildinglist)
             {
                 Console.WriteLine(building.BuildingId + "\t" + building.BuildingName + "\t" + building.BuildingAbbreviation + "\t" + building.FloorCount);
@@ -47,7 +42,7 @@ namespace SeatManagementConsole
             Console.WriteLine("Enter Facility Name: ");
             string facilityname = Console.ReadLine();
 
-            var item = new CreateFacilityDto
+            var item = new FacilityDto
             {
                 FacilityName = facilityname,
                 Floor = floorno,
@@ -55,14 +50,11 @@ namespace SeatManagementConsole
                 CityId = CityId
             };
 
-            Console.WriteLine(facilityManager.CreateData(item));
+            Console.WriteLine(facilityManager.AddItem(item));
         }
         public void OnboardOpenSeats()
         {
             IAllocationManagerApi<OpenRoomDto> addseat = new SeatManagementAPICall<OpenRoomDto>("OpenRoom");
-
-            Console.WriteLine("Enter Openroom name:");
-            string openRoomName = Console.ReadLine();
             Console.WriteLine("Enter facility id:");
             int facilityid = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter number of seats: ");
@@ -70,19 +62,16 @@ namespace SeatManagementConsole
 
             var openRoom = new OpenRoomDto
             {
-                OpenRoomName = openRoomName,
                 FacilityId = facilityid,
                 SeatCount = seatCount
             };
 
-            Console.WriteLine(addseat.CreateData(openRoom));
+            Console.WriteLine(addseat.AddItem(openRoom));
         }
         public void OnboardMeetingroom()
         {
             IAllocationManagerApi<MeetingRoomDto> addmeetingroom = new SeatManagementAPICall<MeetingRoomDto>("Meetingroom");
 
-            Console.WriteLine("Enter Meeting Room name: ");
-            string meetingRoomName = Console.ReadLine();
             Console.WriteLine("Enter number of seats: ");
             int seatCount = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter FacilityId: ");
@@ -91,45 +80,41 @@ namespace SeatManagementConsole
             var meetingroom = new MeetingRoomDto
             {
                 FacilityId = facilityid,
-                MeetingRoomName = meetingRoomName,
                 SeatCount = seatCount
             };
 
-            Console.WriteLine(addmeetingroom.CreateData(meetingroom));
+            Console.WriteLine(addmeetingroom.AddItem(meetingroom));
         }
         public void OnboardCabin()
         {
             IAllocationManagerApi<CabinRoomDto> addcabin = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
 
-            Console.WriteLine("Enter Cabin name: ");
-            string cabinName = Console.ReadLine();
             Console.WriteLine("Enter FacilityId: ");
             int facilityid = Convert.ToInt32(Console.ReadLine());
            
             var cabin = new CabinRoomDto
             {
                 FacilityId = facilityid,
-                CabinName = cabinName
             };
 
-            Console.WriteLine(addcabin.CreateData(cabin));
+            Console.WriteLine(addcabin.AddItem(cabin));
         }
         public void OnboardEmployee()
         {
-            IAllocationManagerApi<CreateEmployeeDto> addemployee = new SeatManagementAPICall<CreateEmployeeDto>("Employee");
+            IAllocationManagerApi<EmployeeDto> addemployee = new SeatManagementAPICall<EmployeeDto>("Employee");
 
             Console.WriteLine("Enter Employee Name: ");
             string name = Console.ReadLine();
             Console.WriteLine("Enter DepartmentId: ");
             int departmentid = Convert.ToInt32(Console.ReadLine());
 
-            var employee = new CreateEmployeeDto
+            var employee = new EmployeeDto
             {
                 EmployeeName = name,
                 DeptId = departmentid,
             };
 
-            Console.WriteLine(addemployee.CreateData(employee));
+            Console.WriteLine(addemployee.AddItem(employee));
         } 
     }
 }

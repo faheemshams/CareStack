@@ -8,8 +8,9 @@ namespace SeatManagementConsole.Interfaces
 {
     internal interface IAllocationManagerApi<T> where T : class
     {
-        string CreateData(T data);
-        List<T> GetData();
-        string Allocate(T data);
+        string AddItem(T data);
+        List<T> GetItems();
+        T GetItemById(int id);
+        string UpdateItem(T data);
     }
 }

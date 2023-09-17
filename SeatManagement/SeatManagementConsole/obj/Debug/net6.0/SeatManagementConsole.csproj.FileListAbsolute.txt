@@ -23,3 +23,12 @@ C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\refint\SeatManagementConsole.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.pdb
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.exe
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.deps.json
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.runtimeconfig.json
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\SeatManagementConsole.pdb
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.csproj.CopyComplete
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\SeatManagementConsole.genruntimeconfig.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagementConsole\obj\Debug\net6.0\ref\SeatManagementConsole.dll
