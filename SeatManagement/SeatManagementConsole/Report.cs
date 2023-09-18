@@ -11,49 +11,36 @@ namespace SeatManagementConsole
     {
         public void addFilters()
         {
-            Console.WriteLine("Enter filters if needed or press Enter");
+            Console.WriteLine("\nENTER FILTERS IF NEEDED | ENTER\n");
 
             Console.WriteLine("Seat type : All | OpenRoom | CabinRoom");
             string seatType = Console.ReadLine();
             Console.WriteLine("City abbrevation if any");
             string city = Console.ReadLine();
             Console.WriteLine("Floor if any | 0");
-            int Floor = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Seat State : All | Free | Allocated");
+            int Floor = 0;
+            try
+            {
+                Floor = Convert.ToInt32(Console.ReadLine());
+            }
+            catch (Exception) { }
+           
+            Console.WriteLine("Seat State : All | Free | Allocated"); 
             string seatState = Console.ReadLine();
             Console.WriteLine("Facility name if any");
             string FacilityName = Console.ReadLine();
-
-            FilterConditionsDto filterConditionsDto = new FilterConditionsDto();
-            {
-
-            }
-
-            if(seatType == "OpenRoom")
-                filterConditionsDto.SeatType = seatType;
-            else if (seatType == "CabinRoom")
-                filterConditionsDto.SeatType= seatType;
-            if (!city.Equals(""))
-                filterConditionsDto.Locations = city;
-            if (Floor != 0)
-                filterConditionsDto.Floor = Floor;
-            if (!seatState.Equals(""))
-                filterConditionsDto.SeatState = seatState;
-            if(!FacilityName.Equals(""))
-                filterConditionsDto.FacilityName = FacilityName;        
-
-            getReportAsync(filterConditionsDto);
+            getReportAsync(seatType, city, Floor, seatState, FacilityName);
         }
 
-        async Task getReportAsync(FilterConditionsDto filters)
+        async Task getReportAsync(string seatType, string city, int Floor, string seatState, string FacilityName)
         {
-            var requestJson = JsonConvert.SerializeObject(filters);
+            
             string apiUrl = "https://localhost:7225/api/Report";
 
             using(var httpClient = new HttpClient())
             {
-                var content = new StringContent(requestJson, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await httpClient.PostAsync(apiUrl, content);
+                apiUrl = $"{apiUrl}?SeatType={seatType}&City={city}&Floor={Floor}&SeatState={seatState}&FacilityName={FacilityName}";
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
                 {

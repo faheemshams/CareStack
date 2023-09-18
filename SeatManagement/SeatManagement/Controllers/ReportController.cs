@@ -14,9 +14,17 @@ namespace PresentationLayer.Controllers
             this._openRoomReportService = _openRoomReportService;
         }
 
-        [HttpPut]
-        public IActionResult GetOpenRoomSeatView(FilterConditionsDto filters)
+        [HttpGet]
+        public IActionResult GetOpenRoomSeatView([FromQuery] string? SeatType, [FromQuery] string? City, [FromQuery] int Floor, [FromQuery] string? SeatState, [FromQuery] string? FacilityName)
         {
+            var filters = new FilterConditionsDto()
+            {
+                SeatState = SeatState,
+                SeatType = SeatType,
+                Locations = City,
+                Floor = Floor,
+                FacilityName = FacilityName
+            };
             try
             {
                 return Ok(_openRoomReportService.GetView(filters));
