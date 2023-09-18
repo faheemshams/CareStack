@@ -14,7 +14,7 @@ namespace PresentationLayer.Controllers
             this._openRoomReportService = _openRoomReportService;
         }
 
-        [HttpPost]
+        [HttpPut]
         public IActionResult GetOpenRoomSeatView(FilterConditionsDto filters)
         {
             try
