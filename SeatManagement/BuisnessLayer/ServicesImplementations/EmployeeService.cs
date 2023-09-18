@@ -69,6 +69,7 @@ namespace BuisnessLayer.Services
                 EmployeeId = employee.EmployeeId,
                 EmployeeName = employee.EmployeeName,
                 DeptId= employee.DeptId,
+                RoomType = employee.RoomTypeId
             };
         }
         public void DeleteItem(string id)

@@ -31,14 +31,14 @@ namespace BuisnessLayer.ReportImplementations
             if(filterCondition.Locations != null)
                 report = report.Where(x => x.CityAbbreviation == filterCondition.Locations).ToArray();
 
-            if(filterCondition.Floor != null)
+            if(filterCondition.Floor != 0)
                 report = report.Where(x => x.Floor == filterCondition.Floor).ToArray();
 
-            if(filterCondition.SeatState == "free")
+            if(filterCondition.SeatState == "Free")
                 report = report.Where(x => x.EmployeeId == null).ToArray();
 
-            if (filterCondition.SeatState == "allocated")
-                report = report.Where(x => x.EmployeeId == null).ToArray();
+            if (filterCondition.SeatState == "Allocated")
+                report = report.Where(x => x.EmployeeId != null).ToArray();
 
             if (filterCondition.FacilityName != null)
                 report = report.Where(x => x.FacilityName == filterCondition.FacilityName).ToArray();   

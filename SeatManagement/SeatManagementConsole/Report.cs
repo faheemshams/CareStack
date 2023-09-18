@@ -17,7 +17,7 @@ namespace SeatManagementConsole
             string seatType = Console.ReadLine();
             Console.WriteLine("City abbrevation if any");
             string city = Console.ReadLine();
-            Console.WriteLine("Floor if any");
+            Console.WriteLine("Floor if any | 0");
             int Floor = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Seat State : All | Free | Allocated");
             string seatState = Console.ReadLine();
@@ -25,18 +25,21 @@ namespace SeatManagementConsole
             string FacilityName = Console.ReadLine();
 
             FilterConditionsDto filterConditionsDto = new FilterConditionsDto();
+            {
+
+            }
 
             if(seatType == "OpenRoom")
                 filterConditionsDto.SeatType = seatType;
             else if (seatType == "CabinRoom")
                 filterConditionsDto.SeatType= seatType;
-            if (!city.Equals("\n"))
+            if (!city.Equals(""))
                 filterConditionsDto.Locations = city;
             if (Floor != 0)
                 filterConditionsDto.Floor = Floor;
-            if (!seatState.Equals("\n"))
+            if (!seatState.Equals(""))
                 filterConditionsDto.SeatState = seatState;
-            if(!FacilityName.Equals("\n"))
+            if(!FacilityName.Equals(""))
                 filterConditionsDto.FacilityName = FacilityName;        
 
             getReportAsync(filterConditionsDto);
@@ -57,11 +60,11 @@ namespace SeatManagementConsole
                     string responseJson = await response.Content.ReadAsStringAsync();
                     var responseDtos = JsonConvert.DeserializeObject<List<ReportView>>(responseJson);
 
-                    Console.WriteLine("SEAT NUMBER\tEMPLOYEE NAME\tEMPLOYEE ID\tFACILITY NAME\tFLOOR");
+                    Console.WriteLine("\nSEAT NUMBER\tEMPLOYEE NAME\tEMPLOYEE ID\tFACILITY NAME\tFLOOR");
 
                     foreach(var dto in responseDtos)
                     {
-                        Console.WriteLine(dto.CityAbbreviation+ "-"+dto.BuildingAbbreviation+dto+"-"+dto.SeatNumber + "\t" + dto.EmployeeName + "\t" + dto.EmployeeId + "\t" + dto.FacilityName + "\t"+ dto.Floor);
+                        Console.WriteLine(dto.CityAbbreviation+ "-"+dto.BuildingAbbreviation+"-"+dto.SeatNumber + "\t" + dto.EmployeeName + "\t\t\t" + dto.EmployeeId + "\t" + dto.FacilityName + "\t"+ dto.Floor);
                     }
                 }
                 else

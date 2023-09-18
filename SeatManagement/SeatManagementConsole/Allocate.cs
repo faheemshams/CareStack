@@ -14,7 +14,6 @@ public class Allocate
         IAllocationManagerApi<OpenRoomDto> openRooms = new SeatManagementAPICall<OpenRoomDto>("OpenRoom");
 
         display.displayUnallocatedEmployee();
-        display.displayAvailableOpenRooms();
         display.diplayeEmptyOpenSeats();
        
         Console.WriteLine("Enter EmployeeId: ");
@@ -34,7 +33,6 @@ public class Allocate
         };
         Console.WriteLine(openSeatAllocation.UpdateItem(seatAllocate));
     }
-
     public void AllocateEmployeeToCabin()
     {
         IAllocationManagerApi<EmployeeDto> employeeList = new SeatManagementAPICall<EmployeeDto>("Employee");

@@ -13,17 +13,17 @@ namespace SeatManagementConsole
     {
         IAllocationManagerApi<EmployeeDto> employeeList = new SeatManagementAPICall<EmployeeDto>("Employee");
         IAllocationManagerApi<CabinRoomDto> cabinRoomList = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
-        IAllocationManagerApi<CabinRoomDto> allocateCabinRoom = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
         IAllocationManagerApi<OpenRoomDto> openRooms = new SeatManagementAPICall<OpenRoomDto>("OpenRoom");
-        IAllocationManagerApi<OpenRoomSeatAllocationDto> openSeatAllocation = new SeatManagementAPICall<OpenRoomSeatAllocationDto>("OpenRoomSeatAllocation");
+        IAllocationManagerApi<OpenRoomSeatAllocationDto> openSeatAllocation = new SeatManagementAPICall<OpenRoomSeatAllocationDto>("OpenRoomSeatMap");
 
         public void displayUnallocatedEmployee()
         {
-            var unAllocatedEmployees = employeeList.GetItems().Where(e => e.RoomType == 1).ToList();
+            var Employees = employeeList.GetItems();
 
-            if (unAllocatedEmployees != null)
+            if (Employees != null)
             {
-                Console.WriteLine("\n Unallocated Employees\n");
+                var unAllocatedEmployees = Employees.Where(x => x.RoomType == 1).ToList();
+                Console.WriteLine("\nUnallocated Employees\n");
                 foreach (var employee in unAllocatedEmployees)
                 {
                     Console.WriteLine(employee.EmployeeId + "\t" + employee.EmployeeName + "\t" + employee.DeptId);
@@ -58,12 +58,13 @@ namespace SeatManagementConsole
         }
         public void diplayeEmptyOpenSeats()
         {
-            var availableOpenSeat = openSeatAllocation.GetItems().Where(e => e.EmployeeId == null).ToList();
+            var availableOpenSeat = openSeatAllocation.GetItems();
 
             if (availableOpenSeat != null)
             {
+                var unallocatedSeats = availableOpenSeat.Where(e => e.EmployeeId == null).ToList();
                 Console.WriteLine("Available Open unallocated seats\n");
-                foreach (var seat in availableOpenSeat)
+                foreach (var seat in unallocatedSeats)
                 {
                     Console.WriteLine(seat.AllocationId + "\t" + seat.SeatNumber + "\t" + seat.OpenRoomId);
                 }
@@ -71,7 +72,7 @@ namespace SeatManagementConsole
             }
             else
             {
-                Console.WriteLine("All the open rooms are full");
+                Console.WriteLine("All the seats are full");
             }
         }
         public void displayEmptyCabins()

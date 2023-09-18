@@ -32,7 +32,6 @@ namespace SeatManagementConsole.Implementation
                 return null;
             }
         }
-
         public T GetItemById(int id)
         {
             var response = client.GetAsync($"{apiEndpoint}/{id}").Result;
@@ -47,7 +46,6 @@ namespace SeatManagementConsole.Implementation
                 return null;
             }
         }
-
         public string AddItem(T data)
         {
             try
@@ -70,7 +68,7 @@ namespace SeatManagementConsole.Implementation
                 var json = JsonConvert.SerializeObject(data);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = client.PutAsync($"{apiEndpoint}/", content).Result;
+                var response = client.PutAsync(apiEndpoint, content).Result;
                 return response.Content.ReadAsStringAsync().Result;
             }
             catch (Exception ex)
@@ -78,6 +76,5 @@ namespace SeatManagementConsole.Implementation
                 return ex.Message;
             }
         }
-
     }
 }

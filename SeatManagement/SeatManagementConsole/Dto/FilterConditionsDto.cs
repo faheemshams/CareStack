@@ -10,7 +10,7 @@ namespace SeatManagementConsole.Dto
     {
         public string? SeatType { get; set; }
         public string? Locations { get; set; }
-        public int? Floor { get; set; }
+        public int Floor { get; set; }
         public string? FacilityName { get; set; }
         public string? SeatState { get; set; }
     }
