@@ -4,6 +4,7 @@ using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ServiceDto;
 using BuisnessLayer.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PresentationLayer.Controllers
 {
@@ -18,6 +19,7 @@ namespace PresentationLayer.Controllers
         }
          
         [HttpGet]
+        [Authorize]
         public IActionResult GetFacilities()
         {
             try

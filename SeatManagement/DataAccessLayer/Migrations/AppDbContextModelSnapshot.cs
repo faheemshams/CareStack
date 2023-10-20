@@ -80,7 +80,7 @@ namespace DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CabinId"), 1L, 1);
 
-                    b.Property<string>("CabinName")
+                    b.Property<string>("CabinNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -239,7 +239,7 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("FacilityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MeetingRoomName")
+                    b.Property<string>("MeetingRoomNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -264,10 +264,6 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("FacilityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("OpenRoomName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("SeatCount")
                         .HasColumnType("int");
 
@@ -278,7 +274,7 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("OpenRooms");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Entities.OpenRoomSeatMap", b =>
+            modelBuilder.Entity("DataAccessLayer.Entities.OpenRoomSeatAllocation", b =>
                 {
                     b.Property<int>("SeatId")
                         .ValueGeneratedOnAdd()
@@ -292,8 +288,9 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("OpenRoomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("SeatNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SeatId");
 
@@ -302,6 +299,30 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("OpenRoomId");
 
                     b.ToTable("OpenRoomSeatMaps");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Entities.User", b =>
+                {
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserID"), 1L, 1);
+
+                    b.Property<string>("email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserID");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Entities.AssetMap", b =>
@@ -400,7 +421,7 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Facilities");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Entities.OpenRoomSeatMap", b =>
+            modelBuilder.Entity("DataAccessLayer.Entities.OpenRoomSeatAllocation", b =>
                 {
                     b.HasOne("DataAccessLayer.Entities.Employee", "Employee")
                         .WithMany()

@@ -1,6 +1,7 @@
 ﻿using SeatManagementConsole.Implementation;
 using SeatManagementConsole.Interfaces;
 using SeatManagementConsole.Dto;
+using System;
 
 namespace SeatManagementConsole;
 
@@ -10,8 +11,6 @@ public class Allocate
     public void AllocateEmployeeToSeat()
     {
         IAllocationManagerApi<OpenRoomSeatAllocationDto> openSeatAllocation = new SeatManagementAPICall<OpenRoomSeatAllocationDto>("OpenRoomSeatMap");
-        IAllocationManagerApi<EmployeeDto> employeeData = new SeatManagementAPICall<EmployeeDto>("Employee");
-        IAllocationManagerApi<OpenRoomDto> openRooms = new SeatManagementAPICall<OpenRoomDto>("OpenRoom");
 
         display.displayUnallocatedEmployee();
         display.diplayeEmptyOpenSeats();
@@ -35,9 +34,7 @@ public class Allocate
     }
     public void AllocateEmployeeToCabin()
     {
-        IAllocationManagerApi<EmployeeDto> employeeList = new SeatManagementAPICall<EmployeeDto>("Employee");
-        IAllocationManagerApi<CabinRoomDto> cabinRoomList = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
-        IAllocationManagerApi<CabinRoomDto> allocateCabinRoom = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
+       IAllocationManagerApi<CabinRoomDto> allocateCabinRoom = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
 
         display.displayUnallocatedEmployee();
         display.displayEmptyCabins();
@@ -53,5 +50,24 @@ public class Allocate
            CabinRoomId = cabinId
         };
         Console.WriteLine(allocateCabinRoom.UpdateItem(cabinallocate));
+    }
+    public void AllocateAsset()
+    {
+        IAllocationManagerApi<AssetDto> mapAssetToMeetingRoom = new SeatManagementAPICall<AssetDto>("Asset");
+
+        Console.WriteLine("Enter Asset Id");
+        int assetId = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Enter Meeting room id");
+        int meetingRoomId = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Enter Quantity");
+        int quantity = Convert.ToInt32(Console.ReadLine());
+
+        var assetMap = new AssetDto()
+        {
+            LookUpAssetId = assetId,
+            MeetingRoomId = meetingRoomId,
+            Quantity = quantity
+        };
+        Console.WriteLine(mapAssetToMeetingRoom.AddItem(assetMap));
     }
 }

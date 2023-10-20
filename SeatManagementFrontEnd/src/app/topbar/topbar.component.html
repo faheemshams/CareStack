@@ -1,0 +1,8 @@
+<mat-toolbar color="primary" class="mat-elevation-z8">
+    <span><mat-icon>face</mat-icon> CARESEAT</span>
+    <div class="spacer"></div>
+    <a mat-button *ngIf="!authService.isLoggedIn" routerLink="Login">Login</a>
+    <a mat-raised-button *ngIf="!authService.isLoggedIn" routerLink="Signup" color="accent">SignUp</a>
+    <a mat-raised-button *ngIf="authService.isLoggedIn" (click)="Logout()" color="accent">Logout</a>
+  </mat-toolbar>
+  

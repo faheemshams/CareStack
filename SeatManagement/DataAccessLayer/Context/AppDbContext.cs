@@ -10,7 +10,6 @@ namespace DataAccessLayer.Context
         {
 
         }
-
         public DbSet<AssetMap> AssetMappings { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<CabinRoom> CabinRooms { get; set; }
@@ -23,5 +22,6 @@ namespace DataAccessLayer.Context
         public DbSet<OpenRoom> OpenRooms { get; set; }
         public DbSet<OpenRoomSeatAllocation> OpenRoomSeatMaps { get; set; }
         public DbSet<LookupRoomType> LookupRoomsType { get; set;}
+        public DbSet<User> Users { get; set; }
     }
 }

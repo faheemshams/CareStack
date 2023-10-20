@@ -47,11 +47,11 @@ namespace SeatManagementConsole
                     string responseJson = await response.Content.ReadAsStringAsync();
                     var responseDtos = JsonConvert.DeserializeObject<List<ReportView>>(responseJson);
 
-                    Console.WriteLine("\nSEAT NUMBER\tEMPLOYEE NAME\tEMPLOYEE ID\tFACILITY NAME\tFLOOR");
+                    Console.WriteLine("\n\nSEAT NUMBER\tEMPLOYEE NAME\tEMPLOYEE ID\tFACILITY NAME\tFLOOR");
 
                     foreach(var dto in responseDtos)
                     {
-                        Console.WriteLine(dto.CityAbbreviation+ "-"+dto.BuildingAbbreviation+"-"+dto.SeatNumber + "\t" + dto.EmployeeName + "\t\t\t" + dto.EmployeeId + "\t" + dto.FacilityName + "\t"+ dto.Floor);
+                        Console.WriteLine(dto.CityAbbreviation+"-"+dto.BuildingAbbreviation+"-"+dto.SeatNumber + "\t" + dto.EmployeeName + "\t\t\t" + dto.EmployeeId + "\t" + dto.FacilityName + "\t"+ dto.Floor);
                     }
                 }
                 else

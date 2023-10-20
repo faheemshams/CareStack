@@ -1,9 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
 using DataAccessLayer.Dto.ServiceDto;
 using BuisnessLayer.Exceptions;
 
@@ -50,7 +47,6 @@ namespace BuisnessLayer.Services
                 BuildingName = building.BuildingName,
                 FloorCount = building.FloorCount,
             };
-
             _buildingRepository.AddItem(newBuilding);
         }
 

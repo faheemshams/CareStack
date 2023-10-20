@@ -11,13 +11,9 @@ namespace SeatManagementConsole
 {
     public class Display
     {
-        IAllocationManagerApi<EmployeeDto> employeeList = new SeatManagementAPICall<EmployeeDto>("Employee");
-        IAllocationManagerApi<CabinRoomDto> cabinRoomList = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
-        IAllocationManagerApi<OpenRoomDto> openRooms = new SeatManagementAPICall<OpenRoomDto>("OpenRoom");
-        IAllocationManagerApi<OpenRoomSeatAllocationDto> openSeatAllocation = new SeatManagementAPICall<OpenRoomSeatAllocationDto>("OpenRoomSeatMap");
-
         public void displayUnallocatedEmployee()
         {
+            IAllocationManagerApi<EmployeeDto> employeeList = new SeatManagementAPICall<EmployeeDto>("Employee");
             var Employees = employeeList.GetItems();
 
             if (Employees != null)
@@ -38,6 +34,7 @@ namespace SeatManagementConsole
         }
         public void displayAvailableOpenRooms()
         {
+            IAllocationManagerApi<OpenRoomDto> openRooms = new SeatManagementAPICall<OpenRoomDto>("OpenRoom");
             Console.WriteLine("Available Open Rooms\n");
 
             var availableOpenRooms = openRooms.GetItems().ToArray();
@@ -58,6 +55,7 @@ namespace SeatManagementConsole
         }
         public void diplayeEmptyOpenSeats()
         {
+            IAllocationManagerApi<OpenRoomSeatAllocationDto> openSeatAllocation = new SeatManagementAPICall<OpenRoomSeatAllocationDto>("OpenRoomSeatMap");
             var availableOpenSeat = openSeatAllocation.GetItems();
 
             if (availableOpenSeat != null)
@@ -78,11 +76,12 @@ namespace SeatManagementConsole
         public void displayEmptyCabins()
         {
             IAllocationManagerApi<CabinRoomDto> cabinRoomList = new SeatManagementAPICall<CabinRoomDto>("CabinRoom");
-            var cabinlist = cabinRoomList.GetItems().Where(e => e.EmployeeId == null).ToList();
+            var cabinlist = cabinRoomList.GetItems();
 
             if (cabinlist != null)
             {
-                foreach (var cabin in cabinlist)
+                var unallocatedCabins = cabinlist.Where(e => e.EmployeeId == null).ToList();
+                foreach (var cabin in unallocatedCabins)
                 {
                     Console.WriteLine(cabin.CabinNumber + "\t" + cabin.FacilityId);
                 }

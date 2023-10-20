@@ -1,10 +1,6 @@
 ﻿using DataAccessLayer.Entities;
 using BuisnessLayer.Interfaces;
 using DataAccessLayer.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
-using System.Globalization;
 using DataAccessLayer.Dto.ServiceDto;
 using BuisnessLayer.Exceptions;
 

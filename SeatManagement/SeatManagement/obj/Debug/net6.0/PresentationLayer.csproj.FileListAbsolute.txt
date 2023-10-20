@@ -69,16 +69,6 @@ D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagement\obj\Debug\net6.0\refint\Pres
 D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.pdb
 D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.genruntimeconfig.cache
 D:\.NET\.NET\MvcAug18\SeatManagement\SeatManagement\obj\Debug\net6.0\ref\PresentationLayer.dll
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.csproj.AssemblyReference.cache
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.AssemblyInfoInputs.cache
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.AssemblyInfo.cs
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.csproj.CoreCompileInputs.cache
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.dll
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\refint\PresentationLayer.dll
-C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.pdb
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\appsettings.json
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\PresentationLayer.exe
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\PresentationLayer.deps.json
@@ -86,6 +76,7 @@ C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\PresentationLayer.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\PresentationLayer.pdb
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Humanizer.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -102,6 +93,7 @@ C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Microsoft.OpenApi.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -129,6 +121,13 @@ C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\DataAccessLayer.dll
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\BuisnessLayer.pdb
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\bin\Debug\net6.0\DataAccessLayer.pdb
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.csproj.AssemblyReference.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.AssemblyInfoInputs.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.AssemblyInfo.cs
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.csproj.CoreCompileInputs.cache
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\staticwebassets\msbuild.PresentationLayer.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\staticwebassets\msbuild.build.PresentationLayer.props
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.PresentationLayer.props
@@ -138,5 +137,8 @@ C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\staticwebassets.development.json
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\scopedcss\bundle\PresentationLayer.styles.css
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.csproj.CopyComplete
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\refint\PresentationLayer.dll
+C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.pdb
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\PresentationLayer.genruntimeconfig.cache
 C:\Users\muhammedfaheem\Documents\GitHub\CareStack\SeatManagement\SeatManagement\obj\Debug\net6.0\ref\PresentationLayer.dll

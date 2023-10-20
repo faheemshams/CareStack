@@ -1,10 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "ohOdBXd3BRVMluJzUvaol5dnI+hLqCKLSw9m48PX6Nn5xUjL95VLgwTKoUJognJssHbAuWwJYz9OES5/cUTR0Q==",
+  "dgSpecHash": "BhE+N3OUklNj2nm7AvYYLODaVVdH5ms9h/6i0XcIq6GvhqwoA9J0BpxIrWPqLumzX0CWY7zJT2a80HifufKztQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\muhammedfaheem\\Documents\\GitHub\\CareStack\\SeatManagement\\SeatManagementConsole\\SeatManagementConsole.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.22\\microsoft.aspnetcore.authentication.jwtbearer.6.0.22.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.10.0\\microsoft.identitymodel.jsonwebtokens.6.10.0.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\microsoft.identitymodel.logging\\6.10.0\\microsoft.identitymodel.logging.6.10.0.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\microsoft.identitymodel.protocols\\6.10.0\\microsoft.identitymodel.protocols.6.10.0.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.10.0\\microsoft.identitymodel.protocols.openidconnect.6.10.0.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.10.0\\microsoft.identitymodel.tokens.6.10.0.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.10.0\\system.identitymodel.tokens.jwt.6.10.0.nupkg.sha512",
+    "C:\\Users\\muhammedfaheem\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }

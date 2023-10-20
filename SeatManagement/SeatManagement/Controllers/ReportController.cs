@@ -1,4 +1,5 @@
-﻿using BuisnessLayer.Interfaces;
+﻿using BuisnessLayer.Exceptions;
+using BuisnessLayer.Interfaces;
 using DataAccessLayer.Dto.ReportDto;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,11 @@ namespace PresentationLayer.Controllers
             };
             try
             {
-                return Ok(_openRoomReportService.GetView(filters));
+                return Ok(_openRoomReportService.GetView(filters,1,100));
+            }
+            catch(ExceptionWhileFetching ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception)
             {
